@@ -15,6 +15,11 @@
 		ABA48A670680BB690089EB4F /* CPRHelperFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA48A660680BB690089EB4F /* CPRHelperFilter.m */; };
 		FC5E43C11D1C8EAD00AEC5F8 /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = FC5E43C01D1C8EAD00AEC5F8 /* Controller.m */; };
 		FC5E43C41D1C902100AEC5F8 /* CPRHelperWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = FC5E43C31D1C902100AEC5F8 /* CPRHelperWindow.xib */; };
+		FCE73AF71D2F062F00C34F89 /* PlotManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCE73AF51D2F062F00C34F89 /* PlotManager.cpp */; };
+		FCE73AF81D2F062F00C34F89 /* PlotManager.h in Headers */ = {isa = PBXBuildFile; fileRef = FCE73AF61D2F062F00C34F89 /* PlotManager.h */; };
+		FCE73AFB1D2F0C2F00C34F89 /* ObjcWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCE73AFA1D2F0C2F00C34F89 /* ObjcWrapper.mm */; };
+		FCE73AFE1D2F0F2700C34F89 /* GraphUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCE73AFC1D2F0F2700C34F89 /* GraphUtils.cpp */; };
+		FCE73AFF1D2F0F2700C34F89 /* GraphUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = FCE73AFD1D2F0F2700C34F89 /* GraphUtils.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +36,12 @@
 		FC5E43C01D1C8EAD00AEC5F8 /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
 		FC5E43C21D1C8EBE00AEC5F8 /* Controller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
 		FC5E43C31D1C902100AEC5F8 /* CPRHelperWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CPRHelperWindow.xib; sourceTree = "<group>"; };
+		FCE73AF51D2F062F00C34F89 /* PlotManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlotManager.cpp; sourceTree = "<group>"; };
+		FCE73AF61D2F062F00C34F89 /* PlotManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlotManager.h; sourceTree = "<group>"; };
+		FCE73AF91D2F0C0000C34F89 /* ObjcWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjcWrapper.h; sourceTree = "<group>"; };
+		FCE73AFA1D2F0C2F00C34F89 /* ObjcWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ObjcWrapper.mm; sourceTree = "<group>"; };
+		FCE73AFC1D2F0F2700C34F89 /* GraphUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GraphUtils.cpp; sourceTree = "<group>"; };
+		FCE73AFD1D2F0F2700C34F89 /* GraphUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphUtils.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,10 +132,16 @@
 		AB2C26750677B0C400A08910 /* CPRHelperFilter */ = {
 			isa = PBXGroup;
 			children = (
+				FCE73AFD1D2F0F2700C34F89 /* GraphUtils.h */,
+				FCE73AFC1D2F0F2700C34F89 /* GraphUtils.cpp */,
 				ABA48A640680BB600089EB4F /* CPRHelperFilter.h */,
 				ABA48A660680BB690089EB4F /* CPRHelperFilter.m */,
 				FC5E43C21D1C8EBE00AEC5F8 /* Controller.h */,
 				FC5E43C01D1C8EAD00AEC5F8 /* Controller.m */,
+				FCE73AF61D2F062F00C34F89 /* PlotManager.h */,
+				FCE73AF51D2F062F00C34F89 /* PlotManager.cpp */,
+				FCE73AF91D2F0C0000C34F89 /* ObjcWrapper.h */,
+				FCE73AFA1D2F0C2F00C34F89 /* ObjcWrapper.mm */,
 				FC5E43C31D1C902100AEC5F8 /* CPRHelperWindow.xib */,
 			);
 			name = CPRHelperFilter;
@@ -137,6 +154,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FCE73AF81D2F062F00C34F89 /* PlotManager.h in Headers */,
+				FCE73AFF1D2F0F2700C34F89 /* GraphUtils.h in Headers */,
 				8D5B49AE048680CD000E48DA /* CPRHelper_Prefix.pch in Headers */,
 				ABA48A650680BB600089EB4F /* CPRHelperFilter.h in Headers */,
 			);
@@ -218,8 +237,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FCE73AFE1D2F0F2700C34F89 /* GraphUtils.cpp in Sources */,
+				FCE73AF71D2F062F00C34F89 /* PlotManager.cpp in Sources */,
 				ABA48A670680BB690089EB4F /* CPRHelperFilter.m in Sources */,
 				FC5E43C11D1C8EAD00AEC5F8 /* Controller.m in Sources */,
+				FCE73AFB1D2F0C2F00C34F89 /* ObjcWrapper.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,6 +262,7 @@
 		CE6A9A9108AC841300D0C1EE /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				COPY_PHASE_STRIP = NO;
 				DEBUGGING_SYMBOLS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -255,16 +278,30 @@
 				GCC_PREFIX_HEADER = CPRHelper_Prefix.pch;
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = /usr/local/include;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Plug-ins";
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-undefined",
 					dynamic_lookup,
+					"-lopencv_calib3d",
+					"-lopencv_core",
+					"-lopencv_features2d",
+					"-lopencv_flann",
+					"-lopencv_highgui",
+					"-lopencv_imgproc",
+					"-lopencv_ml",
+					"-lopencv_objdetect",
+					"-lopencv_photo",
+					"-lopencv_stitching",
+					"-lopencv_superres",
+					"-lopencv_ts",
+					"-lopencv_video",
+					"-lopencv_videostab",
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = CPRHelper;
@@ -283,6 +320,7 @@
 		CE6A9A9208AC841300D0C1EE /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -294,16 +332,30 @@
 				GCC_PREFIX_HEADER = CPRHelper_Prefix.pch;
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				HEADER_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = /usr/local/include;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Plug-ins";
-				LIBRARY_SEARCH_PATHS = "";
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-undefined",
 					dynamic_lookup,
+					"-lopencv_calib3d",
+					"-lopencv_core",
+					"-lopencv_features2d",
+					"-lopencv_flann",
+					"-lopencv_highgui",
+					"-lopencv_imgproc",
+					"-lopencv_ml",
+					"-lopencv_objdetect",
+					"-lopencv_photo",
+					"-lopencv_stitching",
+					"-lopencv_superres",
+					"-lopencv_ts",
+					"-lopencv_video",
+					"-lopencv_videostab",
 				);
 				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = CPRHelper;

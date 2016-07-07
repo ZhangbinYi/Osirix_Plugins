@@ -11,6 +11,8 @@
 #import <OsiriXAPI/PluginFilter.h>
 #import "OsiriXAPI/CPRTransverseView.h"
 
+#import "ObjcWrapper.h"
+
 
 @class CPRHelperFilter;
 @class ViewerController;
@@ -27,6 +29,8 @@
     NSTextView *_textView3;
     NSTextView *_textView4;
     NSImageView *_imageView1;
+    
+    ObjcWrapper *_objcWrapper;
 }
 
 @property (nonatomic, assign) CPRHelperFilter *filter;
@@ -39,11 +43,19 @@
 @property (assign) IBOutlet NSTextView *textView4;
 @property (assign) IBOutlet NSImageView *imageView1;
 
+@property (assign) ObjcWrapper *objcWrapper;
+
 - (id) init: (CPRHelperFilter*) f;
 
 - (IBAction)openCPRViewer:(id)sender;
-- (IBAction)dcmPixListSize:(id)sender;
+- (IBAction)testShowInfo:(id)sender;
 - (IBAction)changeTransverseSectionPosition:(id)sender;
+- (IBAction)saveTransverseImages:(id)sender;
+- (IBAction)drawPlot:(id)sender;
+
+
+- (NSImage*) moveTransverseImageWithStepLength:(CGFloat)stepLength;
+- (void) saveTransverseImageWithStepLength:(NSImage*)curImage index:(int)idx;
 
 @end
 

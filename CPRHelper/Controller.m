@@ -31,12 +31,15 @@
 @synthesize textView3 = _textView3;
 @synthesize textView4 = _textView4;
 @synthesize imageView1 = _imageView1;
+@synthesize objcWrapper = _objcWrapper;
 
 - (id) init: (CPRHelperFilter*) f
 {
     _filter = f;
     self = [super initWithWindowNibName:@"CPRHelperWindow"];
     [[self window] setDelegate:self];   //In order to receive the windowWillClose notification
+    
+    _objcWrapper = [[ObjcWrapper alloc] init];
     return self;    
 }
 
@@ -47,7 +50,7 @@
     [_cprController showWindow:self];
 }
 
-- (IBAction)dcmPixListSize:(id)sender {
+- (IBAction)testShowInfo:(id)sender {
     
     //NSUInteger size = [_cprController.topTransverseView.dcmPixList count];
     CPRTransverseView *middleTransverseView = _cprController.middleTransverseView;
@@ -91,40 +94,60 @@
 }
 
 
-
-
 - (IBAction)changeTransverseSectionPosition:(id)sender {
+    [self moveTransverseImageWithStepLength:0.01];
+}
+
+
+
+- (IBAction)saveTransverseImages:(id)sender {
+    CPRTransverseView *middleTransverseView = _cprController.middleTransverseView;
+    CPRCurvedPath *curvedPath = middleTransverseView.curvedPath;
+    curvedPath.transverseSectionPosition = 0;
+    
+    for (int i = 1; i <= 100; i++) {
+        NSImage *curImage = [self moveTransverseImageWithStepLength:0.01];
+        [self saveTransverseImage:curImage index:i];
+    }
+}
+
+- (IBAction)drawPlot:(id)sender {
+    [_objcWrapper showPlot];
+}
+
+
+
+- (NSImage*) moveTransverseImageWithStepLength:(CGFloat)stepLength {
     CPRTransverseView *middleTransverseView = _cprController.middleTransverseView;
     CPRCurvedPath *curvedPath = middleTransverseView.curvedPath;
     
     NSString *positionStr = [NSString stringWithFormat: @"%.3lf", curvedPath.transverseSectionPosition];
-    [_textView3 setString:[_textView3.string stringByAppendingString:positionStr]];
-    [_textView3 setString:[_textView3.string stringByAppendingString:@"    "]];
-
+    [_textView4 setString:[_textView4.string stringByAppendingString:positionStr]];
+    [_textView4 setString:[_textView4.string stringByAppendingString:@"    "]];
+    
     
     //transverseSectionPosition = MIN(MAX(_curvedPath.transverseSectionPosition + [theEvent deltaY] * .002, 0.0), 1.0);
-    if ([middleTransverseView.delegate respondsToSelector:@selector(CPRViewWillEditCurvedPath:)]) {
-        [_textView4 setString:[_textView4.string stringByAppendingString:@"CPRViewWillEditCurvedPath    "]];
+    if ([middleTransverseView.delegate respondsToSelector:@selector(CPRViewWillEditCurvedPath:)]) {;
         [middleTransverseView.delegate CPRViewWillEditCurvedPath:middleTransverseView];
     }
-    curvedPath.transverseSectionPosition += 0.01;
+    curvedPath.transverseSectionPosition += stepLength;
     if ([middleTransverseView.delegate respondsToSelector:@selector(CPRViewDidEditCurvedPath:)])  {
-        [_textView4 setString:[_textView4.string stringByAppendingString:@"CPRViewDidEditCurvedPath    "]];
         [middleTransverseView.delegate CPRViewDidEditCurvedPath:middleTransverseView];
     }
     [middleTransverseView _sendNewRequest];
     [middleTransverseView setNeedsDisplay:YES];
     
-    NSImage *image1 = [middleTransverseView.curDCM image];
-    [_imageView1 setImage:image1];
+    NSImage *curImage = [middleTransverseView.curDCM image];
+    [_imageView1 setImage:curImage];
+    return curImage;
+}
+
+
+- (void) saveTransverseImage:(NSImage*)curImage index:(int) idx; {
     
-    NSString *sizeStr2 = [NSString stringWithFormat: @"%.3f", curvedPath.transverseSectionPosition];
-    
-    NSString * result1 = [[curvedPath valueForKey:@"description"] componentsJoinedByString:@""];
-    
-    //[_label3 setStringValue:[_label3.stringValue stringByAppendingString:result2]];
-    
-    
+    NSString *idxWithFormat = [NSString stringWithFormat:@"%03d", idx];
+    NSString *curFileName = [NSString stringWithFormat:@"/Users/wb-vesselwall/Documents/osirix_transverse/CPR%@.tiff", idxWithFormat];
+    [[curImage TIFFRepresentation] writeToFile:curFileName atomically:YES];
 }
 
 
