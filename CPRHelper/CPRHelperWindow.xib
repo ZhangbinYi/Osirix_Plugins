@@ -9,6 +9,7 @@
             <connections>
                 <outlet property="imageView1" destination="0Po-8N-yZl" id="ytN-1A-sdp"/>
                 <outlet property="imageView2" destination="dxU-Cc-xTZ" id="MnT-n6-2j7"/>
+                <outlet property="slider1" destination="OW9-Hs-7YV" id="yM9-pz-BSL"/>
                 <outlet property="textView1" destination="c6t-U6-Q2I" id="qYo-ZV-b5X"/>
                 <outlet property="textView2" destination="2Ld-OP-Da8" id="Pys-Tp-XAY"/>
                 <outlet property="textView3" destination="P51-cD-CHg" id="LCg-cp-1cy"/>
@@ -20,14 +21,14 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="1044" height="549"/>
+            <rect key="contentRect" x="196" y="240" width="1188" height="627"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="1044" height="549"/>
+                <rect key="frame" x="0.0" y="0.0" width="1188" height="627"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button verticalHuggingPriority="750" id="G7i-tE-zlM">
-                        <rect key="frame" x="14" y="491" width="145" height="32"/>
+                        <rect key="frame" x="14" y="555" width="145" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="openCPRWindow" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="P58-Ec-Db3">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -49,7 +50,7 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="v9N-eh-Qhc">
-                        <rect key="frame" x="14" y="362" width="177" height="32"/>
+                        <rect key="frame" x="14" y="426" width="177" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="saveTransverseImages" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="n9m-gG-764">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -176,12 +177,12 @@
                         </scroller>
                     </scrollView>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="0Po-8N-yZl">
-                        <rect key="frame" x="298" y="292" width="313" height="240"/>
+                        <rect key="frame" x="298" y="292" width="336" height="306"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="YHT-Wi-z1X"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="groove" id="YHT-Wi-z1X"/>
                     </imageView>
                     <button verticalHuggingPriority="750" id="2wY-UV-wnw">
-                        <rect key="frame" x="14" y="423" width="245" height="32"/>
+                        <rect key="frame" x="14" y="487" width="245" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="changeTransverseSectionPosition" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="g4l-eU-G1c">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -192,7 +193,7 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="1Qr-xF-fkF">
-                        <rect key="frame" x="14" y="310" width="231" height="32"/>
+                        <rect key="frame" x="14" y="374" width="231" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="drawPlotWithCVNamedWindow" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lyp-50-bFe">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -203,7 +204,7 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="Lmt-GU-Nac">
-                        <rect key="frame" x="14" y="257" width="187" height="32"/>
+                        <rect key="frame" x="14" y="321" width="187" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="drawPlotWithImageView" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="uVy-F4-7Bx">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -213,14 +214,22 @@
                             <action selector="drawPlotWithImageView:" target="-2" id="ex7-xX-Wab"/>
                         </connections>
                     </button>
-                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="dxU-Cc-xTZ">
-                        <rect key="frame" x="691" y="292" width="323" height="240"/>
+                    <slider verticalHuggingPriority="750" id="OW9-Hs-7YV">
+                        <rect key="frame" x="692" y="275" width="404" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="MMA-H1-iVS"/>
+                        <sliderCell key="cell" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="SIe-ZS-owk"/>
+                        <connections>
+                            <action selector="sliderValueChanged:" target="-2" id="mmH-aV-pi1"/>
+                        </connections>
+                    </slider>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="dxU-Cc-xTZ">
+                        <rect key="frame" x="691" y="292" width="406" height="306"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="groove" id="MMA-H1-iVS"/>
                     </imageView>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="466" y="614.5"/>
+            <point key="canvasLocation" x="538" y="575.5"/>
         </window>
     </objects>
 </document>

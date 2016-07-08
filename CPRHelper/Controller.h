@@ -45,6 +45,7 @@
 @property (assign) IBOutlet NSTextView *textView4;
 @property (assign) IBOutlet NSImageView *imageView1;
 @property (assign) IBOutlet NSImageView *imageView2;
+@property (assign) IBOutlet NSSlider *slider1;
 
 @property (assign) ObjcWrapper *objcWrapper;
 
@@ -56,6 +57,7 @@
 - (IBAction)saveTransverseImages:(id)sender;
 - (IBAction)drawPlotWithCVNamedWindow:(id)sender;
 - (IBAction)drawPlotWithImageView:(id)sender;
+- (IBAction)sliderValueChanged:(id)sender;
 
 
 - (NSImage*) moveTransverseImageWithStepLength:(CGFloat)stepLength;

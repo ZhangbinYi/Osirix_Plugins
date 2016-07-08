@@ -33,4 +33,8 @@
     wrapped.showPlot();
 }
 
+- (IplImage*) getPlotWithLine:(float)pos {
+    return wrapped.getPlotWithLine(pos);
+}
+
 @end

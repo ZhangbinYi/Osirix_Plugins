@@ -13,5 +13,6 @@
 - (void) printWithString:(NSString*)str;
 - (IplImage*) getPlot;
 - (void) showPlot;
+- (IplImage*) getPlotWithLine:(float)pos;
 
 @end

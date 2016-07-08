@@ -31,6 +31,9 @@
 @synthesize textView3 = _textView3;
 @synthesize textView4 = _textView4;
 @synthesize imageView1 = _imageView1;
+@synthesize imageView2 = _imageView2;
+@synthesize slider1 = _slider1;
+
 @synthesize objcWrapper = _objcWrapper;
 
 - (id) init: (CPRHelperFilter*) f
@@ -89,7 +92,7 @@
     [_textView2 setString:[_textView2.string stringByAppendingString:result2]];
     [_textView2 setString:[_textView2.string stringByAppendingString:@"\n\n"]];
     
-    [_imageView1 setImage:image1];
+    //[_imageView1 setImage:image1];
     
 }
 
@@ -116,9 +119,18 @@
 }
 
 - (IBAction)drawPlotWithImageView:(id)sender {
-    IplImage *cvImagePlot = [_objcWrapper getPlot];
-    NSImage *imagePlot = [self imageWithCVImage:cvImagePlot];
-    [_imageView2 setImage:imagePlot];
+    IplImage *cvPlotImage = [_objcWrapper getPlot];
+    NSImage *plotImage = [self imageWithCVImage:cvPlotImage];
+    [_imageView2 setImage:plotImage];
+}
+
+- (IBAction)sliderValueChanged:(id)sender {
+    float pos = _slider1.floatValue;
+    IplImage* cvPlotImage = [_objcWrapper getPlotWithLine:pos];
+    NSImage *plotImage = [self imageWithCVImage:cvPlotImage];
+    [_imageView2 setImage:plotImage];
+    [_textView1 setString:[_textView1.string stringByAppendingString:[NSString stringWithFormat:@"%f", _slider1.floatValue]]];
+    [_textView1 setString:[_textView1.string stringByAppendingString:@"    "]];
 }
 
 
@@ -172,9 +184,9 @@
     for(int x=0; x < iplImage->width; x++) {
         for(int y=0; y < iplImage->height; y++) {
             CvScalar scal= cvGet2D(iplImage, y, x);
-            val[0]= scal.val[0];
+            val[0]= scal.val[2];
             val[1]= scal.val[1];
-            val[2]= scal.val[2];
+            val[2]= scal.val[0];
             [bmp setPixel:val atX:x y:y];
         }
     }

@@ -27,6 +27,8 @@ public:
     IplImage* getPlot();
     void showFloatPlot(const char *name, const float *arraySrc, int nArrayLength);
     void showPlot();
+    IplImage* drawLineInPlot(IplImage* plotImage, float pos);
+    IplImage* getPlotWithLine(float pos);
 };
 
 #endif /* PlotManager_h */

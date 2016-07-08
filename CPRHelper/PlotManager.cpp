@@ -17,7 +17,8 @@ void PlotManager::print(string& str) {
 }
 
 IplImage* PlotManager::getFloatPlot(const float *arraySrc, int nArrayLength) {
-    return drawFloatGraph(arraySrc, nArrayLength);
+    setCustomGraphColor(60, 60, 255);
+    return drawFloatGraph(arraySrc, nArrayLength, NULL, 0, 0, 400, 300);
 }
 
 IplImage* PlotManager::getPlot() {
@@ -33,6 +34,23 @@ void PlotManager::showFloatPlot(const char *name, const float *arraySrc, int nAr
 void PlotManager::showPlot() {
     showFloatPlot("Ratio Plot", floatArray, numFloats);
 }
+
+
+IplImage* PlotManager::drawLineInPlot(IplImage* plotImage, float pos) {
+    int width = plotImage->width;
+    int height = plotImage->height;
+    cvLine(plotImage, cvPoint(width * pos / 100, 0), cvPoint(width * pos / 100, height), CV_RGB(255,60,40));
+    return plotImage;
+}
+
+IplImage* PlotManager::getPlotWithLine(float pos) {
+    IplImage *plotImage = getPlot();
+    plotImage = drawLineInPlot(plotImage, pos);
+    return plotImage;
+}
+
+
+
 
 
 

@@ -35,10 +35,13 @@ int usingCustomGraphColor = 0;
 // Get a new color to draw graphs. Will use the latest custom color, or change between blue, green, red, dark-blue, dark-green and dark-red until a new image is created.
 CvScalar getGraphColor(void)
 {
+    
 	if (usingCustomGraphColor) {
 		usingCustomGraphColor = 0;
 		return customGraphColor;
 	}
+    
+    //return CV_RGB(60,60,255);
 
 	countGraph++;
 	switch (countGraph) {
@@ -63,7 +66,7 @@ void setGraphColor(int index)
 	usingCustomGraphColor = 0;	// dont use a custom color.
 }
 // Specify the exact color that the next graph should be drawn as.
-void setCustomGraphColor(int R, int B, int G)
+void setCustomGraphColor(int R, int G, int B)
 {
 	customGraphColor = CV_RGB(R, G, B);
 	usingCustomGraphColor = 1;	// show that it will be used.
