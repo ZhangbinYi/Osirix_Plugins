@@ -111,8 +111,14 @@
     }
 }
 
-- (IBAction)drawPlot:(id)sender {
+- (IBAction)drawPlotWithCVNamedWindow:(id)sender {
     [_objcWrapper showPlot];
+}
+
+- (IBAction)drawPlotWithImageView:(id)sender {
+    IplImage *cvImagePlot = [_objcWrapper getPlot];
+    NSImage *imagePlot = [self imageWithCVImage:cvImagePlot];
+    [_imageView2 setImage:imagePlot];
 }
 
 
@@ -151,6 +157,87 @@
 }
 
 
+- (NSImage *)imageWithCVImage:(IplImage *)iplImage {
+    NSBitmapImageRep *bmp= [[NSBitmapImageRep alloc]
+                            initWithBitmapDataPlanes:0
+                            pixelsWide:iplImage->width
+                            pixelsHigh:iplImage->height
+                            bitsPerSample:iplImage->depth
+                            samplesPerPixel:iplImage->nChannels
+                            hasAlpha:NO isPlanar:NO
+                            colorSpaceName:NSDeviceRGBColorSpace
+                            bytesPerRow:iplImage->widthStep
+                            bitsPerPixel:0];
+    NSUInteger val[3]= {0, 0, 0};
+    for(int x=0; x < iplImage->width; x++) {
+        for(int y=0; y < iplImage->height; y++) {
+            CvScalar scal= cvGet2D(iplImage, y, x);
+            val[0]= scal.val[0];
+            val[1]= scal.val[1];
+            val[2]= scal.val[2];
+            [bmp setPixel:val atX:x y:y];
+        }
+    }
+    NSImage *im= [[NSImage alloc] initWithData:[bmp TIFFRepresentation]];
+    return [im autorelease];
+    
+    // bug version
+    /*
+    int x, y;
+    int width = cvImage->width;
+    int height = cvImage->height;
+    int step = cvImage->widthStep;
+    int stride = width;
+    
+    UInt8 *pixelData = (UInt8 *) malloc(width * height);
+    UInt8 *cvdata = (UInt8 *) cvImage->imageData;
+    
+    // Equalize histogram.
+//    IplImage *red = cvCreateImage(cvSize(width, height), 8, 1);
+//    IplImage *green = cvCreateImage(cvSize(width, height), 8, 1);
+//    IplImage *blue = cvCreateImage(cvSize(width, height), 8, 1);
+//    
+//    cvCvtPixToPlane(cvImage, red, green, blue, NULL);
+//    cvEqualizeHist(red, red);
+//    cvEqualizeHist(green, green);
+//    cvEqualizeHist(blue, blue);
+//    cvCvtPlaneToPix(red, green, blue, NULL, cvImage);
+    
+    for(y = 0; y < height; y++) {
+        UInt8 *row = (UInt8 *) pixelData + (y * stride);
+        UInt8 *row1 = (UInt8 *) cvdata + (y * step);
+        for(x = 0; x < width; x++) {
+            int offset = x;
+            int offset1 = x;
+            row[offset]     = row1[offset1];  // R
+            row[offset + 1] = row1[offset1 + 1];  // G
+            row[offset + 2] = row1[offset1 + 0];  // B
+            row[offset + 3] = 255;
+        }
+    }
+    
+    NSData *rawBytes = [NSData dataWithBytesNoCopy:pixelData length:width * height];
+    CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef) rawBytes);
+    CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceGray();
+    
+    CGImageRef imageRef = CGImageCreate(width, height,
+                                        8, 8,
+                                        width,
+                                        colorspace,
+                                        kCGImageAlphaNoneSkipLast,
+                                        provider, NULL,
+                                        YES,
+                                        kCGRenderingIntentDefault);
+    
+    CGDataProviderRelease(provider);
+    CGColorSpaceRelease(colorspace);
+    
+    NSImage *image = [[NSImage alloc] initWithCGImage: imageRef size: NSMakeSize(width, height)];
+    CGImageRelease(imageRef);
+    
+    return image;
+     */
+}
 
 
 @end

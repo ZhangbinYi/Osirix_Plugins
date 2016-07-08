@@ -25,6 +25,10 @@
     wrapped.print(cpp_str);
 }
 
+- (IplImage*) getPlot {
+    return wrapped.getPlot();
+}
+
 - (void) showPlot {
     wrapped.showPlot();
 }

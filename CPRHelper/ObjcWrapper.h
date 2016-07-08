@@ -7,9 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <opencv/cv.h>
 
 @interface ObjcWrapper : NSObject
 - (void) printWithString:(NSString*)str;
+- (IplImage*) getPlot;
 - (void) showPlot;
 
 @end

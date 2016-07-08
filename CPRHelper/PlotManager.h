@@ -19,7 +19,12 @@
 
 class PlotManager {
 public:
+    float floatArray[9] = {1,8,3,6,5,4,7,2,9};
+    int numFloats = 9;
+
     void print(std::string& str);
+    IplImage* getFloatPlot(const float *arraySrc, int nArrayLength);
+    IplImage* getPlot();
     void showFloatPlot(const char *name, const float *arraySrc, int nArrayLength);
     void showPlot();
 };

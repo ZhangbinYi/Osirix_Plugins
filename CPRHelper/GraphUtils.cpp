@@ -77,9 +77,10 @@ IplImage* drawFloatGraph(const float *arraySrc, int nArrayLength, IplImage *imag
 	int h = height;
 	int b = 20;		// border around graph within the image
 	if (w <= 20)
-		w = nArrayLength*20 + b*2;	// width of the image
+		w = nArrayLength*40 + b*2;	// width of the image
+    if (w > 1000) w = 1000;
 	if (h <= 20)
-		h = 220;
+		h = 440;
 
 	int s = h - b*2;// size of graph height
 	float xscale = 1.0;
@@ -136,7 +137,7 @@ IplImage* drawFloatGraph(const float *arraySrc, int nArrayLength, IplImage *imag
 		cvPutText(imageGraph, text, cvPoint(1, b+4), &font, clr);
 		// Write the scale of the x axis
 		sprintf(text, "%d", (nArrayLength-1) );
-		cvPutText(imageGraph, text, cvPoint(w-b+4-5*strlen(text), h-(b-y0)-10), &font, clr);
+		cvPutText(imageGraph, text, cvPoint(w-b+4-5*strlen(text), h-(b-y0)+10), &font, clr);
 	}
 
 	// Draw the values
@@ -225,7 +226,7 @@ IplImage* drawIntGraph(const int *arraySrc, int nArrayLength, IplImage *imageDst
 		cvPutText(imageGraph, text, cvPoint(1, b+4), &font, clr);
 		// Write the scale of the x axis
 		sprintf(text, "%d", (nArrayLength-1) );
-		cvPutText(imageGraph, text, cvPoint(w-b+4-5*strlen(text), h-(b-y0)-10), &font, clr);
+		cvPutText(imageGraph, text, cvPoint(w-b+4-5*strlen(text), h-(b-y0)+10), &font, clr);
 	}
 
 	// Draw the values
@@ -314,7 +315,7 @@ IplImage* drawUCharGraph(const uchar *arraySrc, int nArrayLength, IplImage *imag
 		cvPutText(imageGraph, text, cvPoint(1, b+4), &font, clr);
 		// Write the scale of the x axis
 		sprintf(text, "%d", (nArrayLength-1) );
-		cvPutText(imageGraph, text, cvPoint(w-b+4-5*strlen(text), h-(b-y0)-10), &font, clr);
+		cvPutText(imageGraph, text, cvPoint(w-b+4-5*strlen(text), h-(b-y0)+10), &font, clr);
 	}
 
 	// Draw the values

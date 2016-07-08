@@ -16,12 +16,23 @@ void PlotManager::print(string& str) {
     cout << str << endl;
 }
 
+IplImage* PlotManager::getFloatPlot(const float *arraySrc, int nArrayLength) {
+    return drawFloatGraph(arraySrc, nArrayLength);
+}
+
+IplImage* PlotManager::getPlot() {
+    return getFloatPlot(floatArray, numFloats);
+}
+
+
 void PlotManager::showFloatPlot(const char *name, const float *arraySrc, int nArrayLength) {
     showFloatGraph(name, arraySrc, nArrayLength);
 }
 
+
 void PlotManager::showPlot() {
-    float floatArray[9] = {1,8,3,6,5,4,7,2,9};
-    int numFloats = 9;
-    showFloatPlot("Ratio Plot",  floatArray, numFloats);
+    showFloatPlot("Ratio Plot", floatArray, numFloats);
 }
+
+
+
