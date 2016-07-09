@@ -217,7 +217,7 @@
                     <slider verticalHuggingPriority="750" id="OW9-Hs-7YV">
                         <rect key="frame" x="692" y="275" width="404" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="SIe-ZS-owk"/>
+                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="SIe-ZS-owk"/>
                         <connections>
                             <action selector="sliderValueChanged:" target="-2" id="mmH-aV-pi1"/>
                         </connections>

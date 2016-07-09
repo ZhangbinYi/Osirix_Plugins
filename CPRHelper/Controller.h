@@ -60,7 +60,7 @@
 - (IBAction)sliderValueChanged:(id)sender;
 
 
-- (NSImage*) moveTransverseImageWithStepLength:(CGFloat)stepLength;
+- (NSImage*) setTransverseSectionPosition:(CGFloat)newPos;
 - (void) saveTransverseImageWithStepLength:(NSImage*)curImage index:(int)idx;
 - (NSImage *)imageWithCVImage:(IplImage *)cvImage;
 

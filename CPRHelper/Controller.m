@@ -108,8 +108,8 @@
     CPRCurvedPath *curvedPath = middleTransverseView.curvedPath;
     curvedPath.transverseSectionPosition = 0;
     
-    for (int i = 1; i <= 100; i++) {
-        NSImage *curImage = [self moveTransverseImageWithStepLength:0.01];
+    for (int i = 0; i < 100; i++) {
+        NSImage *curImage = [self setTransverseSectionPosition:0.01 * i];
         [self saveTransverseImage:curImage index:i];
     }
 }
@@ -129,13 +129,14 @@
     IplImage* cvPlotImage = [_objcWrapper getPlotWithLine:pos];
     NSImage *plotImage = [self imageWithCVImage:cvPlotImage];
     [_imageView2 setImage:plotImage];
+    [self setTransverseSectionPosition:(pos / _slider1.maxValue)];
+    
     [_textView1 setString:[_textView1.string stringByAppendingString:[NSString stringWithFormat:@"%f", _slider1.floatValue]]];
     [_textView1 setString:[_textView1.string stringByAppendingString:@"    "]];
 }
 
 
-
-- (NSImage*) moveTransverseImageWithStepLength:(CGFloat)stepLength {
+- (NSImage*) setTransverseSectionPosition:(CGFloat)newPos {
     CPRTransverseView *middleTransverseView = _cprController.middleTransverseView;
     CPRCurvedPath *curvedPath = middleTransverseView.curvedPath;
     
@@ -148,7 +149,7 @@
     if ([middleTransverseView.delegate respondsToSelector:@selector(CPRViewWillEditCurvedPath:)]) {;
         [middleTransverseView.delegate CPRViewWillEditCurvedPath:middleTransverseView];
     }
-    curvedPath.transverseSectionPosition += stepLength;
+    curvedPath.transverseSectionPosition = newPos;
     if ([middleTransverseView.delegate respondsToSelector:@selector(CPRViewDidEditCurvedPath:)])  {
         [middleTransverseView.delegate CPRViewDidEditCurvedPath:middleTransverseView];
     }
@@ -159,6 +160,13 @@
     [_imageView1 setImage:curImage];
     return curImage;
 }
+
+
+- (NSImage*) moveTransverseImageWithStepLength:(CGFloat)stepLength {
+    CGFloat curPos = _cprController.middleTransverseView.curvedPath.transverseSectionPosition;
+    return [self setTransverseSectionPosition:(curPos + stepLength)];
+}
+
 
 
 - (void) saveTransverseImage:(NSImage*)curImage index:(int) idx; {
