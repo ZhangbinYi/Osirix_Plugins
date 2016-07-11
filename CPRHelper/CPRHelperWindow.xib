@@ -203,6 +203,11 @@
                             <action selector="drawPlotWithCVNamedWindow:" target="-2" id="u52-eL-O3Y"/>
                         </connections>
                     </button>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="dxU-Cc-xTZ">
+                        <rect key="frame" x="691" y="292" width="406" height="306"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="groove" id="MMA-H1-iVS"/>
+                    </imageView>
                     <button verticalHuggingPriority="750" id="Lmt-GU-Nac">
                         <rect key="frame" x="14" y="321" width="187" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -215,18 +220,13 @@
                         </connections>
                     </button>
                     <slider verticalHuggingPriority="750" id="OW9-Hs-7YV">
-                        <rect key="frame" x="692" y="275" width="404" height="20"/>
+                        <rect key="frame" x="712" y="276" width="364" height="20"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="SIe-ZS-owk"/>
                         <connections>
                             <action selector="sliderValueChanged:" target="-2" id="mmH-aV-pi1"/>
                         </connections>
                     </slider>
-                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="dxU-Cc-xTZ">
-                        <rect key="frame" x="691" y="292" width="406" height="306"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="groove" id="MMA-H1-iVS"/>
-                    </imageView>
                 </subviews>
             </view>
             <point key="canvasLocation" x="538" y="575.5"/>

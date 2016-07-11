@@ -39,7 +39,8 @@ void PlotManager::showPlot() {
 IplImage* PlotManager::drawLineInPlot(IplImage* plotImage, float pos) {
     int width = plotImage->width;
     int height = plotImage->height;
-    cvLine(plotImage, cvPoint(width * pos / 100, 0), cvPoint(width * pos / 100, height), CV_RGB(255,60,40));
+    int b = width * 0.05;
+    cvLine(plotImage, cvPoint(b + (width - 2 * b) * pos / 100, 0), cvPoint(b + (width - 2 * b) * pos / 100, height), CV_RGB(255,60,40));
     return plotImage;
 }
 

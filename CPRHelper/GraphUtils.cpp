@@ -79,11 +79,11 @@ IplImage* drawFloatGraph(const float *arraySrc, int nArrayLength, IplImage *imag
 	int w = width;
 	int h = height;
 	int b = 20;		// border around graph within the image
-	if (w <= 20)
-		w = nArrayLength*40 + b*2;	// width of the image
-    if (w > 1000) w = 1000;
-	if (h <= 20)
-		h = 440;
+//	if (w <= 20)
+//		w = nArrayLength*40 + b*2;	// width of the image
+//    if (w > 1000) w = 1000;
+    if (w <= 20) w = 400;
+	if (h <= 20) h = 300;
 
 	int s = h - b*2;// size of graph height
 	float xscale = 1.0;
