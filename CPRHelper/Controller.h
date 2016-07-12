@@ -45,7 +45,11 @@
 @property (assign) IBOutlet NSTextView *textView4;
 @property (assign) IBOutlet NSImageView *imageView1;
 @property (assign) IBOutlet NSImageView *imageView2;
-@property (assign) IBOutlet NSSlider *slider1;
+@property (assign) IBOutlet NSImageView *imageView3;
+@property (assign) IBOutlet NSImageView *imageView4;
+@property (assign) IBOutlet NSSlider *slider2;
+@property (assign) IBOutlet NSSlider *slider3;
+@property (assign) IBOutlet NSSlider *slider4;
 
 @property (assign) ObjcWrapper *objcWrapper;
 
@@ -57,9 +61,12 @@
 - (IBAction)saveTransverseImages:(id)sender;
 - (IBAction)drawPlotWithCVNamedWindow:(id)sender;
 - (IBAction)drawPlotWithImageView:(id)sender;
-- (IBAction)sliderValueChanged:(id)sender;
+- (IBAction)slider2ValueChanged:(id)sender;
+- (IBAction)slider3ValueChanged:(id)sender;
+- (IBAction)slider4ValueChanged:(id)sender;
 
 
+- (void) sliderValueChanged:(float)pos;
 - (NSImage*) setTransverseSectionPosition:(CGFloat)newPos;
 - (void) saveTransverseImageWithStepLength:(NSImage*)curImage index:(int)idx;
 - (NSImage *)imageWithCVImage:(IplImage *)cvImage;

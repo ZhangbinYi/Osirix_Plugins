@@ -32,7 +32,6 @@
 @synthesize textView4 = _textView4;
 @synthesize imageView1 = _imageView1;
 @synthesize imageView2 = _imageView2;
-@synthesize slider1 = _slider1;
 
 @synthesize objcWrapper = _objcWrapper;
 
@@ -103,6 +102,8 @@
 
 
 
+
+
 - (IBAction)saveTransverseImages:(id)sender {
     CPRTransverseView *middleTransverseView = _cprController.middleTransverseView;
     CPRCurvedPath *curvedPath = middleTransverseView.curvedPath;
@@ -114,26 +115,83 @@
     }
 }
 
+
+
+
+
 - (IBAction)drawPlotWithCVNamedWindow:(id)sender {
     [_objcWrapper showPlot];
 }
 
+
+
 - (IBAction)drawPlotWithImageView:(id)sender {
-    IplImage *cvPlotImage = [_objcWrapper getPlot];
-    NSImage *plotImage = [self imageWithCVImage:cvPlotImage];
-    [_imageView2 setImage:plotImage];
+    [_objcWrapper initArrays];
+    
+    IplImage *cvPlotImage2 = [_objcWrapper getPlot:2];
+    NSImage *plotImage2 = [self imageWithCVImage:cvPlotImage2];
+    [_imageView2 setImage:plotImage2];
+    
+    IplImage *cvPlotImage0 = [_objcWrapper getPlot:0];
+    NSImage *plotImage0 = [self imageWithCVImage:cvPlotImage0];
+    [_imageView3 setImage:plotImage0];
+    
+    IplImage *cvPlotImage1 = [_objcWrapper getPlot:0];
+    NSImage *plotImage1 = [self imageWithCVImage:cvPlotImage1];
+    [_imageView4 setImage:plotImage1];
 }
 
-- (IBAction)sliderValueChanged:(id)sender {
-    float pos = _slider1.floatValue;
-    IplImage* cvPlotImage = [_objcWrapper getPlotWithLine:pos];
-    NSImage *plotImage = [self imageWithCVImage:cvPlotImage];
-    [_imageView2 setImage:plotImage];
-    [self setTransverseSectionPosition:(pos / _slider1.maxValue)];
+
+
+
+
+- (IBAction)slider2ValueChanged:(id)sender {
+    float pos = _slider2.floatValue;
+    _slider3.floatValue = pos;
+    _slider4.floatValue = pos;
+    [self sliderValueChanged:pos];
+}
+
+- (IBAction)slider3ValueChanged:(id)sender {
+    float pos = _slider3.floatValue;
+    _slider2.floatValue = pos;
+    _slider4.floatValue = pos;
+    [self sliderValueChanged:pos];
+}
+
+- (IBAction)slider4ValueChanged:(id)sender {
+    float pos = _slider4.floatValue;
+    _slider3.floatValue = pos;
+    _slider2.floatValue = pos;
+    [self sliderValueChanged:pos];
+}
+
+
+
+
+
+- (void)sliderValueChanged:(float)pos {
+    IplImage* cvPlotImage2 = [_objcWrapper getPlotWithLineOfIdx:2 atPosition:pos];
+    NSImage *plotImage2 = [self imageWithCVImage:cvPlotImage2];
+    [_imageView2 setImage:plotImage2];
     
-    [_textView1 setString:[_textView1.string stringByAppendingString:[NSString stringWithFormat:@"%f", _slider1.floatValue]]];
+    IplImage* cvPlotImage0 = [_objcWrapper getPlotWithLineOfIdx:0 atPosition:pos];
+    NSImage *plotImage0 = [self imageWithCVImage:cvPlotImage0];
+    [_imageView3 setImage:plotImage0];
+    
+    IplImage* cvPlotImage1 = [_objcWrapper getPlotWithLineOfIdx:1 atPosition:pos];
+    NSImage *plotImage1 = [self imageWithCVImage:cvPlotImage1];
+    [_imageView4 setImage:plotImage1];
+    
+    [self setTransverseSectionPosition:(pos / _slider2.maxValue)];
+
+    [_textView1 setString:[_textView1.string stringByAppendingString:[NSString stringWithFormat:@"%f", _slider2.floatValue]]];
     [_textView1 setString:[_textView1.string stringByAppendingString:@"    "]];
 }
+
+
+
+
 
 
 - (NSImage*) setTransverseSectionPosition:(CGFloat)newPos {

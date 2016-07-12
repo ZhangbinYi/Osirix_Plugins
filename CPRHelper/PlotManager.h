@@ -19,16 +19,20 @@
 
 class PlotManager {
 public:
-    float floatArray[9] = {1,8,3,6,5,4,7,2,9};
-    int numFloats = 9;
+    int numFloats = 100;
+    float floatArray0[100] = {0};
+    float floatArray1[100] = {0};
+    float floatArray2[100] = {0};
 
     void print(std::string& str);
+    
+    void initArrays();
     IplImage* getFloatPlot(const float *arraySrc, int nArrayLength);
-    IplImage* getPlot();
+    IplImage* getPlot(int i);
     void showFloatPlot(const char *name, const float *arraySrc, int nArrayLength);
     void showPlot();
     IplImage* drawLineInPlot(IplImage* plotImage, float pos);
-    IplImage* getPlotWithLine(float pos);
+    IplImage* getPlotWithLine(int idx, float pos);
 };
 
 #endif /* PlotManager_h */

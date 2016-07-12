@@ -10,9 +10,10 @@
 #import <opencv/cv.h>
 
 @interface ObjcWrapper : NSObject
+- (void) initArrays;
 - (void) printWithString:(NSString*)str;
-- (IplImage*) getPlot;
+- (IplImage*) getPlot:(int)idx;
 - (void) showPlot;
-- (IplImage*) getPlotWithLine:(float)pos;
+- (IplImage*) getPlotWithLineOfIdx:(int)idx atPosition:(float)pos;
 
 @end
