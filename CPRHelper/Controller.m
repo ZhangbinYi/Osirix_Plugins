@@ -136,7 +136,7 @@
     NSImage *plotImage0 = [self imageWithCVImage:cvPlotImage0];
     [_imageView3 setImage:plotImage0];
     
-    IplImage *cvPlotImage1 = [_objcWrapper getPlot:0];
+    IplImage *cvPlotImage1 = [_objcWrapper getPlot:1];
     NSImage *plotImage1 = [self imageWithCVImage:cvPlotImage1];
     [_imageView4 setImage:plotImage1];
 }

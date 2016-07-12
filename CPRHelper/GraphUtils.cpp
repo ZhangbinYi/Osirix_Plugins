@@ -144,7 +144,9 @@ IplImage* drawFloatGraph(const float *arraySrc, int nArrayLength, IplImage *imag
 	}
 
 	// Draw the values
-	CvPoint ptPrev = cvPoint(b,h-(b-y0));	// Start the lines at the 1st point.
+	//CvPoint ptPrev = cvPoint(b,h-(b-y0));	// Start the lines at the 1st point.
+    int yPrev = cvRound((arraySrc[0] - minV) * fscale);
+    CvPoint ptPrev = cvPoint(b, h-(b+yPrev));
 	for (int i=0; i<nArrayLength; i++) {
 		int y = cvRound((arraySrc[i] - minV) * fscale);	// Get the values at a bigger scale
 		int x = cvRound(i * xscale);
