@@ -28,16 +28,16 @@ dependencies: /Applications/osirixplugins/_help/CPRHelper/Controller.m \
   /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/ColorView.h \
   /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/CPRCurvedPath.h \
   /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/CPRProjectionOperation.h \
-  /usr/local/Cellar/opencv3/3.1.0_3/include/opencv/cv.h \
-  /usr/local/Cellar/opencv3/3.1.0_3/include/opencv2/core/core_c.h \
-  /usr/local/Cellar/opencv3/3.1.0_3/include/opencv2/core/types_c.h \
-  /usr/local/Cellar/opencv3/3.1.0_3/include/opencv2/core/cvdef.h \
-  /usr/local/Cellar/opencv3/3.1.0_3/include/opencv2/core/hal/interface.h \
-  /usr/local/Cellar/opencv3/3.1.0_3/include/opencv2/imgproc/imgproc_c.h \
-  /usr/local/Cellar/opencv3/3.1.0_3/include/opencv2/imgproc/types_c.h \
-  /usr/local/Cellar/opencv3/3.1.0_3/include/opencv2/photo/photo_c.h \
-  /usr/local/Cellar/opencv3/3.1.0_3/include/opencv2/video/tracking_c.h \
-  /usr/local/Cellar/opencv3/3.1.0_3/include/opencv2/objdetect/objdetect_c.h \
+  /usr/local/opt/opencv3/include/opencv/cv.h \
+  /usr/local/opt/opencv3/include/opencv2/core/core_c.h \
+  /usr/local/opt/opencv3/include/opencv2/core/types_c.h \
+  /usr/local/opt/opencv3/include/opencv2/core/cvdef.h \
+  /usr/local/opt/opencv3/include/opencv2/core/hal/interface.h \
+  /usr/local/opt/opencv3/include/opencv2/imgproc/imgproc_c.h \
+  /usr/local/opt/opencv3/include/opencv2/imgproc/types_c.h \
+  /usr/local/opt/opencv3/include/opencv2/photo/photo_c.h \
+  /usr/local/opt/opencv3/include/opencv2/video/tracking_c.h \
+  /usr/local/opt/opencv3/include/opencv2/objdetect/objdetect_c.h \
   /Applications/osirixplugins/_help/CPRHelper/ObjcWrapper.h \
   /Applications/osirixplugins/_help/CPRHelper/CPRHelperFilter.h \
   /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/CPRController.h \
