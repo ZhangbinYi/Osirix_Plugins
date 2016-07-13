@@ -32,6 +32,11 @@
 @synthesize textView4 = _textView4;
 @synthesize imageView1 = _imageView1;
 @synthesize imageView2 = _imageView2;
+@synthesize imageView3 = _imageView3;
+@synthesize imageView4 = _imageView4;
+@synthesize slider2 = _slider2;
+@synthesize slider3 = _slider3;
+@synthesize slider4 = _slider4;
 
 @synthesize objcWrapper = _objcWrapper;
 

@@ -31,6 +31,12 @@
     NSTextView *_textView3;
     NSTextView *_textView4;
     NSImageView *_imageView1;
+    NSImageView *_imageView2;
+    NSImageView *_imageView3;
+    NSImageView *_imageView4;
+    NSSlider *_slider2;
+    NSSlider *_slider3;
+    NSSlider *_slider4;
     
     ObjcWrapper *_objcWrapper;
 }

@@ -278,10 +278,10 @@
 				GCC_PREFIX_HEADER = CPRHelper_Prefix.pch;
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				HEADER_SEARCH_PATHS = /usr/local/include;
+				HEADER_SEARCH_PATHS = /usr/local/Cellar/opencv3/3.1.0_3/include;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Plug-ins";
-				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				LIBRARY_SEARCH_PATHS = /usr/local/Cellar/opencv3/3.1.0_3/lib;
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_CFLAGS = "";
@@ -299,7 +299,6 @@
 					"-lopencv_photo",
 					"-lopencv_stitching",
 					"-lopencv_superres",
-					"-lopencv_ts",
 					"-lopencv_video",
 					"-lopencv_videostab",
 				);
@@ -332,10 +331,10 @@
 				GCC_PREFIX_HEADER = CPRHelper_Prefix.pch;
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				HEADER_SEARCH_PATHS = /usr/local/include;
+				HEADER_SEARCH_PATHS = /usr/local/Cellar/opencv3/3.1.0_3/include;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Plug-ins";
-				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				LIBRARY_SEARCH_PATHS = /usr/local/Cellar/opencv3/3.1.0_3/lib;
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_CFLAGS = "";
@@ -353,7 +352,6 @@
 					"-lopencv_photo",
 					"-lopencv_stitching",
 					"-lopencv_superres",
-					"-lopencv_ts",
 					"-lopencv_video",
 					"-lopencv_videostab",
 				);
