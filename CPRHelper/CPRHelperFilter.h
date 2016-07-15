@@ -12,6 +12,8 @@
     
 }
 
+@property (assign) ViewerController* curViewerController;
+
 - (long) filterImage:(NSString*) menuName;
 
 @end

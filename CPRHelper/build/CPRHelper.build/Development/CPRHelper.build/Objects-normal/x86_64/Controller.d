@@ -8,6 +8,7 @@ dependencies: /Applications/osirixplugins/_help/CPRHelper/Controller.m \
   /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/N3Geometry.h \
   /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/MyPoint.h \
   /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/ROI.h \
+  /Applications/osirixplugins/_help/CPRHelper/CPRHelperFilter.h \
   /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/CPRTransverseView.h \
   /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/CPRMPRDCMView.h \
   /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/VRController.h \
@@ -39,7 +40,6 @@ dependencies: /Applications/osirixplugins/_help/CPRHelper/Controller.m \
   /usr/local/opt/opencv3/include/opencv2/video/tracking_c.h \
   /usr/local/opt/opencv3/include/opencv2/objdetect/objdetect_c.h \
   /Applications/osirixplugins/_help/CPRHelper/ObjcWrapper.h \
-  /Applications/osirixplugins/_help/CPRHelper/CPRHelperFilter.h \
   /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/CPRController.h \
   /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/VRView.h \
   /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/WaitRendering.h \

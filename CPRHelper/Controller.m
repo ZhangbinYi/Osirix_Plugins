@@ -40,6 +40,8 @@
 
 @synthesize objcWrapper = _objcWrapper;
 
+
+
 - (id) init: (CPRHelperFilter*) f
 {
     _filter = f;
@@ -51,7 +53,8 @@
 }
 
 - (IBAction)openCPRViewer:(id)sender {
-    _viewerController = [_filter duplicateCurrent2DViewerWindow];
+    //_viewerController = [_filter duplicateCurrent2DViewerWindow];
+    _viewerController = _filter.curViewerController;
     _cprController = [_viewerController openCPRViewer];
     [_viewerController place3DViewerWindow:(NSWindowController *) _cprController];
     [_cprController showWindow:self];

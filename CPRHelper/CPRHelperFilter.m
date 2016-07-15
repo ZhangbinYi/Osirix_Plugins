@@ -16,6 +16,7 @@
 
 - (long) filterImage:(NSString*) menuName
 {
+    _curViewerController = viewerController;
     Controller *window = [[Controller alloc] init:self];
     [window showWindow:self];
     return 0;

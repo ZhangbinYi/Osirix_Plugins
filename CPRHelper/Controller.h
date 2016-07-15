@@ -9,6 +9,7 @@
 #import <AppKit/AppKit.h>
 #import <Foundation/Foundation.h>
 #import <OsiriXAPI/PluginFilter.h>
+#import "CPRHelperFilter.h"
 #import "OsiriXAPI/CPRTransverseView.h"
 
 #import <opencv/cv.h>
@@ -84,3 +85,7 @@
 - (void) _sendNewRequest;
 
 @end
+
+
+
+
