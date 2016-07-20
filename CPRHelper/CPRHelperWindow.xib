@@ -239,6 +239,14 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="groove" id="blX-0c-1ya"/>
                     </imageView>
+                    <slider verticalHuggingPriority="750" id="POR-p5-lPa" userLabel="Slider4">
+                        <rect key="frame" x="853" y="205" width="364" height="20"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="y9M-8C-dT7"/>
+                        <connections>
+                            <action selector="slider4ValueChanged:" target="-2" id="vPw-xR-4rG"/>
+                        </connections>
+                    </slider>
                     <button verticalHuggingPriority="750" id="d7F-lb-ezQ">
                         <rect key="frame" x="55" y="151" width="120" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -250,14 +258,39 @@
                             <action selector="testShowInfo:" target="-2" id="F06-Wq-of6"/>
                         </connections>
                     </button>
-                    <slider verticalHuggingPriority="750" id="POR-p5-lPa" userLabel="Slider4">
-                        <rect key="frame" x="853" y="205" width="364" height="20"/>
+                    <button verticalHuggingPriority="750" id="WaI-PC-RsA">
+                        <rect key="frame" x="14" y="496" width="112" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="y9M-8C-dT7"/>
+                        <buttonCell key="cell" type="push" title="invertImage" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DOd-UF-UH3">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
                         <connections>
-                            <action selector="slider4ValueChanged:" target="-2" id="vPw-xR-4rG"/>
+                            <action selector="invertImage:" target="-2" id="r7o-t3-bnR"/>
                         </connections>
-                    </slider>
+                    </button>
+                    <button verticalHuggingPriority="750" id="iQN-h0-2ft">
+                        <rect key="frame" x="14" y="403" width="161" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="assistedCurvedPath" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jjG-iT-3hX">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="assistedCurvedPath:" target="-2" id="h3F-G7-m8M"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" id="YLw-OI-gxC">
+                        <rect key="frame" x="14" y="450" width="96" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="addNode" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="FBR-wO-qoD">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="addNode:" target="-2" id="A2H-yg-JnZ"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <point key="canvasLocation" x="609.5" y="718"/>

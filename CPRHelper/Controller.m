@@ -19,6 +19,8 @@
 #import "OsiriXAPI/CPRCurvedPath.h"
 #import "OsiriXAPI/CPRMPRDCMView.h"
 
+#import "OsiriXAPI/FlyAssistant.h"
+
 
 
 @implementation Controller
@@ -26,6 +28,16 @@
 @synthesize filter = _filter;
 @synthesize viewerController = _viewerController;
 @synthesize cprController = _cprController;
+@synthesize cprVolumeData = _cprVolumeData;
+
+
+@synthesize mprView1 = _mprView1;
+@synthesize mprView2 = _mprView2;
+@synthesize mprView3 = _mprView3;
+@synthesize cprView = _cprView;
+ 
+
+
 @synthesize textView1 = _textView1;
 @synthesize textView2 = _textView2;
 @synthesize textView3 = _textView3;
@@ -49,6 +61,7 @@
     [[self window] setDelegate:self];   //In order to receive the windowWillClose notification
     
     _objcWrapper = [[ObjcWrapper alloc] init];
+    
     return self;    
 }
 
@@ -58,6 +71,12 @@
     _cprController = [_viewerController openCPRViewer];
     [_viewerController place3DViewerWindow:(NSWindowController *) _cprController];
     [_cprController showWindow:self];
+    
+    _mprView1 = _cprController.mprView1;
+    _mprView2 = _cprController.mprView2;
+    _mprView3 = _cprController.mprView3;
+    _cprView = _cprController.cprView;
+    
 }
 
 - (IBAction)testShowInfo:(id)sender {
@@ -174,6 +193,363 @@
     [self sliderValueChanged:pos];
 }
 
+- (IBAction)invertImage:(id)sender {
+    long			i, x, z;
+    float			*fImage;
+    unsigned char   *rgbImage;
+    
+    
+    // Display a waiting window
+    id waitWindow = [_viewerController startWaitWindow:@"Inverting..."];
+    
+    // Contains a list of DCMPix objects: they contain the pixels of current series
+    //NSArray		*pixList = [viewerController pixList: z];
+    DCMPix		*curPix;
+    
+    // Loop through all images contained in the current series
+
+    //curPix = [pixList objectAtIndex: i];
+    curPix = _cprView.curDCM;
+    
+    // fImage is a pointer on the pixels, ALWAYS represented in float (float*) or in ARGB (unsigned char*)
+    
+    if( [curPix isRGB])
+    {
+        rgbImage = (unsigned char*) [curPix fImage];
+        
+        x = [curPix pheight] * [curPix pwidth] / 4;
+        
+        while ( x-- > 0)
+        {
+            rgbImage++;
+            *rgbImage = 255-*rgbImage;		rgbImage++;
+            *rgbImage = 255-*rgbImage;		rgbImage++;
+            *rgbImage = 255-*rgbImage;		rgbImage++;
+            
+            rgbImage++;
+            *rgbImage = 255-*rgbImage;		rgbImage++;
+            *rgbImage = 255-*rgbImage;		rgbImage++;
+            *rgbImage = 255-*rgbImage;		rgbImage++;
+            
+            rgbImage++;
+            *rgbImage = 255-*rgbImage;		rgbImage++;
+            *rgbImage = 255-*rgbImage;		rgbImage++;
+            *rgbImage = 255-*rgbImage;		rgbImage++;
+            
+            rgbImage++;
+            *rgbImage = 255-*rgbImage;		rgbImage++;
+            *rgbImage = 255-*rgbImage;		rgbImage++;
+            *rgbImage = 255-*rgbImage;		rgbImage++;
+        }
+    }
+    else
+    {
+        
+        fImage = [curPix fImage];
+        
+        x = [curPix pheight] * [curPix pwidth]/4;
+        
+        while ( x-- > 0)
+        {
+            *fImage = -*fImage;
+            fImage++;
+            *fImage = -*fImage;
+            fImage++;
+            *fImage = -*fImage;
+            fImage++;
+            *fImage = -*fImage;
+            fImage++;
+        }
+    }
+    
+    // Close the waiting window
+    [_viewerController endWaitWindow: waitWindow];
+    
+    // Update the current displayed WL & WW : we just inverted the image -> invert the WL !
+    {
+        
+        float wl, ww;
+        
+        [_cprView getWLWW: &wl :&ww];
+        if( [curPix isRGB]) wl = 255-wl;
+        else wl = -wl;
+        [_cprView setWLWW: wl :ww];
+    }
+    // We modified the pixels: OsiriX please update the display!
+    [_viewerController needsDisplayUpdate];
+}
+
+
+
+- (IBAction)addNode:(id)sender {
+    _mprView2 = _cprController.mprView2;
+    
+    if (!_mprView2.curvedPath) {
+        [_textView2 setString:[_textView2.string stringByAppendingString:@"_mprView2.curvedPath == nil\n"]];
+    } else {
+        [_textView2 setString:[_textView2.string stringByAppendingString:@"_mprView2.curvedPath != nil\n"]];
+    }
+    NSArray* nodes = _mprView2.curvedPath.nodes;
+    if (!nodes) {
+        [_textView2 setString:[_textView2.string stringByAppendingString:@"nodes == nil\n"]];
+    } else {
+        [_textView2 setString:[_textView2.string stringByAppendingString:@"nodes != nil\n"]];
+    }
+    int nodeCount = nodes.count;
+    NSValue *pointValue1 = nodes[0];
+    N3Vector point1 = pointValue1.N3VectorValue;
+    [_textView2 setString:[_textView2.string stringByAppendingString:[NSString stringWithFormat:@"nodes.count: %d\n", nodeCount]]];
+    [_textView2 setString:[_textView2.string stringByAppendingString:[NSString stringWithFormat:@"%f  %f  %f\n", point1.x, point1.y, point1.z]]];
+    
+    // add this line when create a new curved path
+    [_mprView2 stopCurvedPathCreationMode];
+    
+    CPRController *windowController = [_mprView2 windowController];
+    if( windowController.curvedPathCreationMode == NO && windowController.curvedPath.nodes.count == 0)
+        windowController.curvedPathCreationMode = YES;
+    
+    NSPoint mouseLocation = {550, 150};
+    
+    if (windowController.curvedPathCreationMode) {
+        
+        N3AffineTransform viewToDicomTransform = N3AffineTransformConcat([_mprView2 viewToPixTransform], [_mprView2 pixToDicomTransform]);
+        N3Vector newCrossCenter = N3VectorApplyTransform(N3VectorMakeFromNSPoint(mouseLocation), viewToDicomTransform);
+        
+        [_textView3 setString:[_textView3.string stringByAppendingString:[NSString stringWithFormat:@"%f   %f   %f\n",
+                                                                          newCrossCenter.x, newCrossCenter.y, newCrossCenter.z]]];
+        /*
+        [_mprView2 sendWillEditCurvedPath];
+        
+        //[_curvedPath addNode:mouseLocation transform:viewToDicomTransform];
+        
+        N3Vector node = N3VectorMake(20, 10, 10);
+        [_curvedPath addPatientNode:node];
+        
+        [_mprView2 sendDidUpdateCurvedPath];
+        [_mprView2 sendDidEditCurvedPath];
+        [_mprView2 setNeedsDisplay:YES];
+         */
+        
+        if ([_mprView2.delegate respondsToSelector:@selector(CPRViewWillEditCurvedPath:)]) {;
+            [_mprView2.delegate CPRViewWillEditCurvedPath:_mprView2];
+        }
+        N3Vector node1 = N3VectorMake(50, 0, 0);
+        N3Vector node2 = N3VectorMake(0, 50, 0);
+        N3Vector node3 = N3VectorMake(0, 0, 50);
+        [_mprView2.curvedPath addPatientNode:node1];
+        [_mprView2.curvedPath addPatientNode:node2];
+        [_mprView2.curvedPath addPatientNode:node3];
+        
+        if ([_mprView2.delegate respondsToSelector:@selector(CPRViewDidEditCurvedPath:)])  {
+            [_mprView2.delegate CPRViewDidEditCurvedPath:_mprView2];
+        }
+        [_mprView2 setNeedsDisplay:YES];
+        
+        // Center the views to the last point
+        //[windowController CPRView:_mprView2 setCrossCenter:newCrossCenter];
+    }
+    
+    nodeCount = [windowController.curvedPath.nodes count];
+    [_textView2 setString:[_textView2.string stringByAppendingString:[NSString stringWithFormat:@"%d\n", nodeCount]]];
+    
+    
+    
+    // mouseUp
+    /*
+    [NSObject cancelPreviousPerformRequestsWithTarget: windowController selector:@selector(delayedFullLODRendering:) object: nil];
+    
+    windowController.lowLOD = NO;
+    
+    [_mprView2 restoreCamera];
+    
+    [windowController propagateWLWW: _mprView2];
+    for( ROI *r in _mprView2.curRoiList)
+    {
+        if( [r type] == t2DPoint && r.parentROI == nil)
+        {
+            float location[ 3];
+            [_mprView2.pix convertPixX: r.rect.origin.x pixY: r.rect.origin.y toDICOMCoords: location pixelCenter: YES];
+            [_mprView2 add2DPoint: location];
+        }
+    }
+    [_mprView2 detect2DPointInThisSlice];
+     */
+}
+
+
+
+- (IBAction)assistedCurvedPath:(id)sender {
+    /*
+    int nodeCount = [_cprController.curvedPath.nodes count];
+    [_textView2 setString:[_textView2.string stringByAppendingString:[NSString stringWithFormat:@"%d", nodeCount]]];
+    [_textView2 setString:[_textView2.string stringByAppendingString:@"    "]];
+    
+    
+    if( [_cprController.curvedPath.nodes count] > 1 && [_cprController.curvedPath.nodes count] <= 5)
+        [_cprController assistedCurvedPath:nil];
+    else
+        NSRunAlertPanel(NSLocalizedString(@"Path Assistant error", nil), NSLocalizedString(@"Path Assistant requires at least 2 points, and no more than 5 points. Use the Curved Path tool to define at least two points.", nil), NSLocalizedString(@"OK", nil), nil, nil);
+    
+    [_cprController willChangeValueForKey: @"onSliderEnabled"];
+    [_cprController didChangeValueForKey: @"onSliderEnabled"];
+     */
+    
+    
+    int dim[3];
+    NSMutableArray *pix = [_viewerController pixList];
+    DCMPix* firstObject = [pix objectAtIndex:0];
+    dim[0] = [firstObject pwidth];
+    dim[1] = [firstObject pheight];
+    dim[2] = [pix count];
+    float spacing[3];
+    spacing[0]=[firstObject pixelSpacingX];
+    spacing[1]=[firstObject pixelSpacingY];
+    float sliceThickness = [firstObject sliceInterval];
+    if( sliceThickness == 0)
+    {
+        NSLog(@"Slice interval = slice thickness!");
+        sliceThickness = [firstObject sliceThickness];
+    }
+    spacing[2]=sliceThickness;
+    float resamplesize=spacing[0];
+    if(dim[0]>256 || dim[1]>256)
+    {
+        if(spacing[0]*(float)dim[0]>spacing[1]*(float)dim[1])
+            resamplesize = spacing[0]*(float)dim[0]/256.0;
+        else {
+            resamplesize = spacing[1]*(float)dim[1]/256.0;
+        }
+        
+    }
+    
+    FlyAssistant *assistant = [[FlyAssistant alloc] initWithVolume:(float*)[[_viewerController volumeData] bytes] WidthDimension:dim Spacing:spacing ResampleVoxelSize:resamplesize];
+    [assistant setCenterlineResampleStepLength:3.0];
+    NSMutableArray *centerline = [[NSMutableArray alloc] init];
+    
+    unsigned int nodeCount = [_cprController.curvedPath.nodes count];
+    if ( nodeCount > 1)
+    {
+        WaitRendering* waiting = [[[WaitRendering alloc] init:NSLocalizedString(@"Finding Path...", nil)] autorelease];
+        [waiting showWindow:self];
+        N3AffineTransform patient2VolumeDataTransform = cprVolumeData.volumeTransform;
+        N3AffineTransform volumeData2PatientTransform = N3AffineTransformInvert(patient2VolumeDataTransform);
+        
+        CPRCurvedPath * newCP = [[[CPRCurvedPath alloc] init] autorelease];
+        N3Vector node;
+        OSIVoxel * pt;
+        
+        for (unsigned int i = 0; i < nodeCount - 1; ++i)
+        {
+            N3Vector na = N3VectorApplyTransform([[_cprController.curvedPath.nodes objectAtIndex:i] N3VectorValue], patient2VolumeDataTransform);
+            N3Vector nb = N3VectorApplyTransform([[_cprController.curvedPath.nodes objectAtIndex:i+1] N3VectorValue], patient2VolumeDataTransform);
+            
+            Point3D *pta = [[[Point3D alloc] initWithX:na.x y:na.y z:na.z] autorelease];
+            Point3D *ptb = [[[Point3D alloc] initWithX:nb.x y:nb.y z:nb.z] autorelease];
+            
+            [centerline removeAllObjects];
+            
+            int err = [assistant createCenterline:centerline FromPointA:pta ToPointB:ptb withSmoothing:NO];
+            if(!err)
+            {
+                unsigned int lineCount = [centerline count] - 1;
+                for( unsigned int i = 0; i < lineCount ; ++i)
+                {
+                    pt = [centerline objectAtIndex:i];
+                    node.x = pt.x;
+                    node.y = pt.y;
+                    node.z = pt.z;
+                    [newCP addPatientNode:N3VectorApplyTransform(node, volumeData2PatientTransform)];
+                }
+            }
+            else if(err == ERROR_NOENOUGHMEM)
+            {
+                NSRunAlertPanel(NSLocalizedString(@"32-bit", nil), NSLocalizedString(@"Path Assistant can not allocate enough memory, try to increase the resample voxel size in the settings.", nil), NSLocalizedString(@"OK", nil), nil, nil);
+            }
+            else if(err == ERROR_CANNOTFINDPATH)
+            {
+                NSRunAlertPanel(NSLocalizedString(@"Can't find path", nil), NSLocalizedString(@"Path Assistant can not find a path from A to B.", nil), NSLocalizedString(@"OK", nil), nil, nil);
+            }
+            else if(err==ERROR_DISTTRANSNOTFINISH)
+            {
+                [waiting close];
+                waiting = [[[WaitRendering alloc] init:NSLocalizedString(@"Distance Transform...", nil)] autorelease];
+                [waiting showWindow:self];
+                
+                for(unsigned int i=0; i<5; i++)
+                {
+                    [centerline removeAllObjects];
+                    err= [assistant createCenterline:centerline FromPointA:pta ToPointB:ptb withSmoothing:NO];
+                    if(err!=ERROR_DISTTRANSNOTFINISH)
+                        break;
+                    
+                    for(unsigned int i=0;i<[centerline count] - 1;i++)
+                    {
+                        pt = [centerline objectAtIndex:i];
+                        node.x = pt.x;
+                        node.y = pt.y;
+                        node.z = pt.z;
+                        [newCP addPatientNode:N3VectorApplyTransform(node, volumeData2PatientTransform)];
+                    }
+                }
+                if(err==ERROR_CANNOTFINDPATH)
+                {
+                    NSRunAlertPanel(NSLocalizedString(@"Can't find path", nil), NSLocalizedString(@"Path Assistant can not find a path from current location.", nil), NSLocalizedString(@"OK", nil), nil, nil);
+                    [waiting close];
+                    return;
+                }
+                else if(err==ERROR_DISTTRANSNOTFINISH)
+                {
+                    NSRunAlertPanel(NSLocalizedString(@"Unexpected error", nil), NSLocalizedString(@"Path Assistant failed to initialize!", nil), NSLocalizedString(@"OK", nil), nil, nil);
+                    [waiting close];
+                    return;
+                }
+            }
+        }
+        pt = [centerline lastObject];
+        node.x = pt.x;
+        node.y = pt.y;
+        node.z = pt.z;
+        [newCP addPatientNode:N3VectorApplyTransform(node, volumeData2PatientTransform)];
+        
+        
+        if ([_mprView2.delegate respondsToSelector:@selector(CPRViewWillEditCurvedPath:)]) {;
+            [_mprView2.delegate CPRViewWillEditCurvedPath:_mprView2];
+        }
+        
+        _cprController.mprView2.curvedPath = newCP;
+        
+        if ([_mprView2.delegate respondsToSelector:@selector(CPRViewDidEditCurvedPath:)])  {
+            [_mprView2.delegate CPRViewDidEditCurvedPath:_mprView2];
+        }
+        
+        [_cprController updateCurvedPathCost];
+        //[pathSimplificationSlider setDoubleValue:[pathSimplificationSlider maxValue]];
+        
+        _cprController.mprView1.curvedPath = _cprController.curvedPath;
+        _cprController.mprView2.curvedPath = _cprController.curvedPath;
+        _cprController.mprView3.curvedPath = _cprController.curvedPath;
+        _cprController.cprView.curvedPath = _cprController.curvedPath;
+        _cprController.topTransverseView.curvedPath = _cprController.curvedPath;
+        _cprController.middleTransverseView.curvedPath = _cprController.curvedPath;
+        _cprController.bottomTransverseView.curvedPath = _cprController.curvedPath;
+        
+        [waiting close];
+    }
+    else {
+        NSLog(@"Not enough points to launch assistant");
+    }
+}
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////
 
 
 
@@ -266,63 +642,6 @@
     }
     NSImage *im= [[NSImage alloc] initWithData:[bmp TIFFRepresentation]];
     return [im autorelease];
-    
-    // bug version
-    /*
-    int x, y;
-    int width = cvImage->width;
-    int height = cvImage->height;
-    int step = cvImage->widthStep;
-    int stride = width;
-    
-    UInt8 *pixelData = (UInt8 *) malloc(width * height);
-    UInt8 *cvdata = (UInt8 *) cvImage->imageData;
-    
-    // Equalize histogram.
-//    IplImage *red = cvCreateImage(cvSize(width, height), 8, 1);
-//    IplImage *green = cvCreateImage(cvSize(width, height), 8, 1);
-//    IplImage *blue = cvCreateImage(cvSize(width, height), 8, 1);
-//    
-//    cvCvtPixToPlane(cvImage, red, green, blue, NULL);
-//    cvEqualizeHist(red, red);
-//    cvEqualizeHist(green, green);
-//    cvEqualizeHist(blue, blue);
-//    cvCvtPlaneToPix(red, green, blue, NULL, cvImage);
-    
-    for(y = 0; y < height; y++) {
-        UInt8 *row = (UInt8 *) pixelData + (y * stride);
-        UInt8 *row1 = (UInt8 *) cvdata + (y * step);
-        for(x = 0; x < width; x++) {
-            int offset = x;
-            int offset1 = x;
-            row[offset]     = row1[offset1];  // R
-            row[offset + 1] = row1[offset1 + 1];  // G
-            row[offset + 2] = row1[offset1 + 0];  // B
-            row[offset + 3] = 255;
-        }
-    }
-    
-    NSData *rawBytes = [NSData dataWithBytesNoCopy:pixelData length:width * height];
-    CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef) rawBytes);
-    CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceGray();
-    
-    CGImageRef imageRef = CGImageCreate(width, height,
-                                        8, 8,
-                                        width,
-                                        colorspace,
-                                        kCGImageAlphaNoneSkipLast,
-                                        provider, NULL,
-                                        YES,
-                                        kCGRenderingIntentDefault);
-    
-    CGDataProviderRelease(provider);
-    CGColorSpaceRelease(colorspace);
-    
-    NSImage *image = [[NSImage alloc] initWithCGImage: imageRef size: NSMakeSize(width, height)];
-    CGImageRelease(imageRef);
-    
-    return image;
-     */
 }
 
 

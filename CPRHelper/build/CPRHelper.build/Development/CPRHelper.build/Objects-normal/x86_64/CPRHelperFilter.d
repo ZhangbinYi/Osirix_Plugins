@@ -10,7 +10,7 @@ dependencies: \
   /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/MyPoint.h \
   /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/ROI.h \
   /Applications/osirixplugins/_help/CPRHelper/Controller.h \
-  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/CPRTransverseView.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/CPRController.h \
   /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/CPRMPRDCMView.h \
   /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/VRController.h \
   /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/ColorTransferView.h \
@@ -30,6 +30,13 @@ dependencies: \
   /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/ColorView.h \
   /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/CPRCurvedPath.h \
   /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/CPRProjectionOperation.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/VRView.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/WaitRendering.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/CLUTOpacityView.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/FlyAssistant.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/OSIVoxel.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/CPRTransverseView.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/CPRVolumeData.h \
   /usr/local/opt/opencv3/include/opencv/cv.h \
   /usr/local/opt/opencv3/include/opencv2/core/core_c.h \
   /usr/local/opt/opencv3/include/opencv2/core/types_c.h \

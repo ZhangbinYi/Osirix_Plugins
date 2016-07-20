@@ -39,11 +39,13 @@
 #define ERROR_CANNOTFINDPATH 2
 #define ERROR_DISTTRANSNOTFINISH 3
 
+
 enum PathAssistantMode {
     None,
     Basic,
     AtoB
 };
+
 typedef enum PathAssistantMode PathAssistantMode;
 
 @interface FlyAssistant : NSObject {
