@@ -31,7 +31,7 @@
     CPRHelperFilter *_filter;
     ViewerController *_viewerController;
     CPRController *_cprController;
-    CPRVolumeData *cprVolumeData;
+    //CPRVolumeData *cprVolumeData;
     
     CPRMPRDCMView *_mprView1;
     CPRMPRDCMView *_mprView2;
@@ -57,7 +57,7 @@
 @property (nonatomic, assign) CPRHelperFilter *filter;
 @property (nonatomic, assign) ViewerController *viewerController;
 @property (nonatomic, assign) CPRController *cprController;
-@property (nonatomic, assign) CPRVolumeData *cprVolumeData;
+//@property (nonatomic, assign) CPRVolumeData *cprVolumeData;
 
 @property (nonatomic, assign) CPRMPRDCMView *mprView1;
 @property (nonatomic, assign) CPRMPRDCMView *mprView2;
@@ -97,7 +97,9 @@
 
 - (void) sliderValueChanged:(float)pos;
 - (NSImage*) setTransverseSectionPosition:(CGFloat)newPos;
-- (void) saveTransverseImageWithStepLength:(NSImage*)curImage index:(int)idx;
+//- (void) saveTransverseImageWithStepLength:(NSImage*)curImage index:(int)idx;
+- (NSImage*) moveTransverseImageWithStepLength:(CGFloat)stepLength;
+- (void) saveTransverseImage:(NSImage*)curImage index:(int) idx;
 - (NSImage *)imageWithCVImage:(IplImage *)cvImage;
 
 @end

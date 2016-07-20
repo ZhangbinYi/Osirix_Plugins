@@ -19,7 +19,7 @@
 #import "Interpolation3D.h"
 
 #ifdef __cplusplus
-#include <vtkCardinalSpline.h>
+#include "vtkCardinalSpline.h"
 #else
 typedef char* vtkCardinalSpline;
 #endif

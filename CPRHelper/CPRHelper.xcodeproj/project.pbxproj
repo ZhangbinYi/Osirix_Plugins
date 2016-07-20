@@ -13,6 +13,8 @@
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		ABA48A650680BB600089EB4F /* CPRHelperFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA48A640680BB600089EB4F /* CPRHelperFilter.h */; };
 		ABA48A670680BB690089EB4F /* CPRHelperFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA48A660680BB690089EB4F /* CPRHelperFilter.m */; };
+		FC01B4671D40190000D81D59 /* FlyAssistant2.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC01B4661D40190000D81D59 /* FlyAssistant2.mm */; };
+		FC01B46A1D401DDA00D81D59 /* FlyAssistant2+Histo.mm in Sources */ = {isa = PBXBuildFile; fileRef = FC01B4691D401DDA00D81D59 /* FlyAssistant2+Histo.mm */; };
 		FC5E43C11D1C8EAD00AEC5F8 /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = FC5E43C01D1C8EAD00AEC5F8 /* Controller.m */; };
 		FC5E43C41D1C902100AEC5F8 /* CPRHelperWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = FC5E43C31D1C902100AEC5F8 /* CPRHelperWindow.xib */; };
 		FCE73AF71D2F062F00C34F89 /* PlotManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCE73AF51D2F062F00C34F89 /* PlotManager.cpp */; };
@@ -34,6 +36,10 @@
 		AB5D36050680E57E00F4007A /* CPRHelper.osirixplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CPRHelper.osirixplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABA48A640680BB600089EB4F /* CPRHelperFilter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CPRHelperFilter.h; sourceTree = "<group>"; };
 		ABA48A660680BB690089EB4F /* CPRHelperFilter.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = CPRHelperFilter.m; sourceTree = "<group>"; };
+		FC01B4651D4018DD00D81D59 /* FlyAssistant2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlyAssistant2.h; sourceTree = "<group>"; };
+		FC01B4661D40190000D81D59 /* FlyAssistant2.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = FlyAssistant2.mm; sourceTree = "<group>"; };
+		FC01B4681D401C6000D81D59 /* FlyAssistant2+Histo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FlyAssistant2+Histo.h"; sourceTree = "<group>"; };
+		FC01B4691D401DDA00D81D59 /* FlyAssistant2+Histo.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "FlyAssistant2+Histo.mm"; sourceTree = "<group>"; };
 		FC5E43C01D1C8EAD00AEC5F8 /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
 		FC5E43C21D1C8EBE00AEC5F8 /* Controller.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
 		FC5E43C31D1C902100AEC5F8 /* CPRHelperWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CPRHelperWindow.xib; sourceTree = "<group>"; };
@@ -63,7 +69,6 @@
 		089C166AFE841209C02AAC07 /* CPRHelper */ = {
 			isa = PBXGroup;
 			children = (
-				FCE73B001D3867CB00C34F89 /* Accelerate.framework */,
 				08FB77AFFE84173DC02AAC07 /* Classes */,
 				32C88E010371C26100C91783 /* Other Sources */,
 				089C167CFE841241C02AAC07 /* Resources */,
@@ -76,6 +81,7 @@
 		089C1671FE841209C02AAC07 /* Frameworks and Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				FCE73B001D3867CB00C34F89 /* Accelerate.framework */,
 				8420023112E829A200E1E9CE /* OsiriXAPI.framework */,
 				1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */,
 				1058C7AEFEA557BF11CA2CBB /* Other Frameworks */,
@@ -146,7 +152,11 @@
 				FCE73AF51D2F062F00C34F89 /* PlotManager.cpp */,
 				FCE73AF91D2F0C0000C34F89 /* ObjcWrapper.h */,
 				FCE73AFA1D2F0C2F00C34F89 /* ObjcWrapper.mm */,
+				FC01B4651D4018DD00D81D59 /* FlyAssistant2.h */,
+				FC01B4661D40190000D81D59 /* FlyAssistant2.mm */,
 				FC5E43C31D1C902100AEC5F8 /* CPRHelperWindow.xib */,
+				FC01B4681D401C6000D81D59 /* FlyAssistant2+Histo.h */,
+				FC01B4691D401DDA00D81D59 /* FlyAssistant2+Histo.mm */,
 			);
 			name = CPRHelperFilter;
 			sourceTree = "<group>";
@@ -244,8 +254,10 @@
 				FCE73AFE1D2F0F2700C34F89 /* GraphUtils.cpp in Sources */,
 				FCE73AF71D2F062F00C34F89 /* PlotManager.cpp in Sources */,
 				ABA48A670680BB690089EB4F /* CPRHelperFilter.m in Sources */,
+				FC01B4671D40190000D81D59 /* FlyAssistant2.mm in Sources */,
 				FC5E43C11D1C8EAD00AEC5F8 /* Controller.m in Sources */,
 				FCE73AFB1D2F0C2F00C34F89 /* ObjcWrapper.mm in Sources */,
+				FC01B46A1D401DDA00D81D59 /* FlyAssistant2+Histo.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

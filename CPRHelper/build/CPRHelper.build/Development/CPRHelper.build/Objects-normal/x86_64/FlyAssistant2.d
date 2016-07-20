@@ -1,0 +1,26 @@
+dependencies: \
+  /Applications/osirixplugins/_help/CPRHelper/FlyAssistant2.mm \
+  /Applications/osirixplugins/_help/CPRHelper/FlyAssistant2.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/Point3D.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/N3Geometry.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/OSIVoxel.h \
+  /Applications/osirixplugins/_help/CPRHelper/FlyAssistant2+Histo.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/Quaternion.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/Spline3D.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/Interpolation3D.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/vtkCardinalSpline.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/vtkSpline.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/vtkObject.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/vtkObjectBase.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/vtkIndent.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/vtkSystemIncludes.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/vtkWin32Header.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/vtkConfigure.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/vtkABI.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/vtkIOStream.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/vtkType.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/vtkOStreamWrapper.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/vtkOStrStreamWrapper.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/vtkSetGet.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/vtkTimeStamp.h \
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/vtkWeakPointerBase.h

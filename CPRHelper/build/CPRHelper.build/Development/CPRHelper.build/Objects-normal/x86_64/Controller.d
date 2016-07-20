@@ -47,4 +47,5 @@ dependencies: /Applications/osirixplugins/_help/CPRHelper/Controller.m \
   /usr/local/opt/opencv3/include/opencv2/video/tracking_c.h \
   /usr/local/opt/opencv3/include/opencv2/objdetect/objdetect_c.h \
   /Applications/osirixplugins/_help/CPRHelper/ObjcWrapper.h \
-  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/CPRView.h
+  /Applications/osirixplugins/_help/CPRHelper/OsiriXAPI.framework/Headers/CPRView.h \
+  /Applications/osirixplugins/_help/CPRHelper/FlyAssistant2.h

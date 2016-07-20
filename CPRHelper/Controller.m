@@ -20,6 +20,7 @@
 #import "OsiriXAPI/CPRMPRDCMView.h"
 
 #import "OsiriXAPI/FlyAssistant.h"
+#import "FlyAssistant2.h"
 
 
 
@@ -28,7 +29,7 @@
 @synthesize filter = _filter;
 @synthesize viewerController = _viewerController;
 @synthesize cprController = _cprController;
-@synthesize cprVolumeData = _cprVolumeData;
+//@synthesize cprVolumeData = _cprVolumeData;
 
 
 @synthesize mprView1 = _mprView1;
@@ -379,24 +380,22 @@
 
 
 - (IBAction)assistedCurvedPath:(id)sender {
-    /*
-    int nodeCount = [_cprController.curvedPath.nodes count];
-    [_textView2 setString:[_textView2.string stringByAppendingString:[NSString stringWithFormat:@"%d", nodeCount]]];
+    
+    unsigned int nodeCount1 = [_cprController.curvedPath.nodes count];
+    [_textView2 setString:[_textView2.string stringByAppendingString:[NSString stringWithFormat:@"%d", nodeCount1]]];
     [_textView2 setString:[_textView2.string stringByAppendingString:@"    "]];
     
+    /*
     
     if( [_cprController.curvedPath.nodes count] > 1 && [_cprController.curvedPath.nodes count] <= 5)
         [_cprController assistedCurvedPath:nil];
     else
         NSRunAlertPanel(NSLocalizedString(@"Path Assistant error", nil), NSLocalizedString(@"Path Assistant requires at least 2 points, and no more than 5 points. Use the Curved Path tool to define at least two points.", nil), NSLocalizedString(@"OK", nil), nil, nil);
-    
-    [_cprController willChangeValueForKey: @"onSliderEnabled"];
-    [_cprController didChangeValueForKey: @"onSliderEnabled"];
      */
     
     
     int dim[3];
-    NSMutableArray *pix = [_viewerController pixList];
+    NSMutableArray *pix = [_viewerController pixList:0];
     DCMPix* firstObject = [pix objectAtIndex:0];
     dim[0] = [firstObject pwidth];
     dim[1] = [firstObject pheight];
@@ -422,9 +421,14 @@
         
     }
     
-    FlyAssistant *assistant = [[FlyAssistant alloc] initWithVolume:(float*)[[_viewerController volumeData] bytes] WidthDimension:dim Spacing:spacing ResampleVoxelSize:resamplesize];
+    NSData *volume = [_viewerController volumeData];
+    
+    FlyAssistant2 *assistant = [[FlyAssistant2 alloc] initWithVolume:(float*)[volume bytes] WidthDimension:dim Spacing:spacing ResampleVoxelSize:resamplesize];
     [assistant setCenterlineResampleStepLength:3.0];
     NSMutableArray *centerline = [[NSMutableArray alloc] init];
+    
+    CPRVolumeData *cprVolumeData = [[CPRVolumeData alloc] initWithWithPixList:pix volume:volume];
+    
     
     unsigned int nodeCount = [_cprController.curvedPath.nodes count];
     if ( nodeCount > 1)
@@ -445,6 +449,12 @@
             
             Point3D *pta = [[[Point3D alloc] initWithX:na.x y:na.y z:na.z] autorelease];
             Point3D *ptb = [[[Point3D alloc] initWithX:nb.x y:nb.y z:nb.z] autorelease];
+            [_textView3 setString:[_textView3.string stringByAppendingString:[NSString stringWithFormat:@"pta: %f   %f   %f\n",
+                                                                              pta.x, pta.y, pta.z]]];
+            [_textView3 setString:[_textView3.string stringByAppendingString:[NSString stringWithFormat:@"ptb: %f   %f   %f\n",
+                                                                              ptb.x, ptb.y, ptb.z]]];
+            NSLog(@"pta: %f   %f   %f\n", pta.x, pta.y, pta.z);
+            NSLog(@"ptb: %f   %f   %f\n", ptb.x, ptb.y, ptb.z);
             
             [centerline removeAllObjects];
             
@@ -538,6 +548,9 @@
     else {
         NSLog(@"Not enough points to launch assistant");
     }
+    
+    [_cprController willChangeValueForKey: @"onSliderEnabled"];
+    [_cprController didChangeValueForKey: @"onSliderEnabled"];
 }
 
 
