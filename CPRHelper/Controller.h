@@ -50,6 +50,7 @@
     NSSlider *_slider2;
     NSSlider *_slider3;
     NSSlider *_slider4;
+    NSTextField *_textField1;
     
     ObjcWrapper *_objcWrapper;
 }
@@ -76,6 +77,7 @@
 @property (assign) IBOutlet NSSlider *slider2;
 @property (assign) IBOutlet NSSlider *slider3;
 @property (assign) IBOutlet NSSlider *slider4;
+@property (assign) IBOutlet NSTextField *textField1;
 
 @property (assign) ObjcWrapper *objcWrapper;
 
@@ -92,7 +94,7 @@
 - (IBAction)slider4ValueChanged:(id)sender;
 - (IBAction)invertImage:(id)sender;
 - (IBAction)addNode:(id)sender;
-- (IBAction)assistedCurvedPath:(id)sender;
+- (IBAction)findPath:(id)sender;
 
 
 - (void) sliderValueChanged:(float)pos;
@@ -101,6 +103,8 @@
 - (NSImage*) moveTransverseImageWithStepLength:(CGFloat)stepLength;
 - (void) saveTransverseImage:(NSImage*)curImage index:(int) idx;
 - (NSImage *)imageWithCVImage:(IplImage *)cvImage;
+
+- (void) assistedCurvedPath;
 
 @end
 

@@ -15,6 +15,7 @@
                 <outlet property="slider2" destination="OW9-Hs-7YV" id="l65-iT-VNT"/>
                 <outlet property="slider3" destination="wDr-de-5Hn" id="Esz-dB-Q9Z"/>
                 <outlet property="slider4" destination="POR-p5-lPa" id="j2z-rD-43L"/>
+                <outlet property="textField1" destination="tML-ht-kPc" id="GEN-oD-zYo"/>
                 <outlet property="textView1" destination="c6t-U6-Q2I" id="qYo-ZV-b5X"/>
                 <outlet property="textView2" destination="2Ld-OP-Da8" id="Pys-Tp-XAY"/>
                 <outlet property="textView3" destination="P51-cD-CHg" id="LCg-cp-1cy"/>
@@ -269,17 +270,6 @@
                             <action selector="invertImage:" target="-2" id="r7o-t3-bnR"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" id="iQN-h0-2ft">
-                        <rect key="frame" x="14" y="403" width="161" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="assistedCurvedPath" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jjG-iT-3hX">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="assistedCurvedPath:" target="-2" id="h3F-G7-m8M"/>
-                        </connections>
-                    </button>
                     <button verticalHuggingPriority="750" id="YLw-OI-gxC">
                         <rect key="frame" x="14" y="450" width="96" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -289,6 +279,35 @@
                         </buttonCell>
                         <connections>
                             <action selector="addNode:" target="-2" id="A2H-yg-JnZ"/>
+                        </connections>
+                    </button>
+                    <textField verticalHuggingPriority="750" id="tML-ht-kPc">
+                        <rect key="frame" x="127" y="382" width="96" height="22"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="50" drawsBackground="YES" id="Ckr-ze-J6p">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="dzH-M1-VPh">
+                        <rect key="frame" x="20" y="385" width="108" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="thresholdRange: " id="7iL-QQ-hwM">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" id="iQN-h0-2ft">
+                        <rect key="frame" x="14" y="403" width="91" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="findPath" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jjG-iT-3hX">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="findPath:" target="-2" id="MOv-XQ-H3d"/>
                         </connections>
                     </button>
                 </subviews>

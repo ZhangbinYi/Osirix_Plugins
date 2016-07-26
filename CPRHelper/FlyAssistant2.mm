@@ -32,6 +32,9 @@
 
 @synthesize centerlineResampleStepLength;
 
+@synthesize thresholdRange = _thresholdRange;
+
+
 - (id) initWithVolume:(float*)data WidthDimension:(int*)dim Spacing:(float*)spacing ResampleVoxelSize:(float)vsize
 {
     self = [super init];
@@ -1103,11 +1106,11 @@ typedef GreaterPathNodeOnF NodeCompare;
     float cost;
     cost =expf(-distmap[index2]);
     return cost;
-    //
-    //	cost = 1.0/distmap[index2];
-    //
     
-    //	return cost*cost*cost;
+//    	cost = 1.0/distmap[index2];
+//    
+//    
+//    	return cost*cost*cost;
 }
 - (void) trackCenterline:(NSMutableArray*)line From:(int)currentindex WithLabel:(unsigned char*)labelmap
 {

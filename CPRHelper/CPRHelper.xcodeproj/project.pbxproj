@@ -154,9 +154,9 @@
 				FCE73AFA1D2F0C2F00C34F89 /* ObjcWrapper.mm */,
 				FC01B4651D4018DD00D81D59 /* FlyAssistant2.h */,
 				FC01B4661D40190000D81D59 /* FlyAssistant2.mm */,
-				FC5E43C31D1C902100AEC5F8 /* CPRHelperWindow.xib */,
 				FC01B4681D401C6000D81D59 /* FlyAssistant2+Histo.h */,
 				FC01B4691D401DDA00D81D59 /* FlyAssistant2+Histo.mm */,
+				FC5E43C31D1C902100AEC5F8 /* CPRHelperWindow.xib */,
 			);
 			name = CPRHelperFilter;
 			sourceTree = "<group>";

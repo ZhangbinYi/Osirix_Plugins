@@ -50,6 +50,7 @@
 @synthesize slider2 = _slider2;
 @synthesize slider3 = _slider3;
 @synthesize slider4 = _slider4;
+@synthesize textField1 = _textField1;
 
 @synthesize objcWrapper = _objcWrapper;
 
@@ -379,7 +380,16 @@
 
 
 
-- (IBAction)assistedCurvedPath:(id)sender {
+- (IBAction)findPath:(id)sender {
+    if( [_cprController.curvedPath.nodes count] > 1 && [_cprController.curvedPath.nodes count] <= 5) {
+        [self assistedCurvedPath];
+    } else {
+        NSRunAlertPanel(NSLocalizedString(@"Path Assistant error", nil), NSLocalizedString(@"Path Assistant requires at least 2 points, and no more than 5 points. Use the Curved Path tool to define at least two points.", nil), NSLocalizedString(@"OK", nil), nil, nil);
+    }
+}
+
+
+- (void) assistedCurvedPath {
     
     unsigned int nodeCount1 = [_cprController.curvedPath.nodes count];
     [_textView2 setString:[_textView2.string stringByAppendingString:[NSString stringWithFormat:@"%d", nodeCount1]]];
@@ -395,7 +405,7 @@
     
     
     int dim[3];
-    NSMutableArray *pix = [_viewerController pixList:0];
+    NSMutableArray *pix = [_viewerController pixList];
     DCMPix* firstObject = [pix objectAtIndex:0];
     dim[0] = [firstObject pwidth];
     dim[1] = [firstObject pheight];
@@ -411,6 +421,7 @@
     }
     spacing[2]=sliceThickness;
     float resamplesize=spacing[0];
+    
     if(dim[0]>256 || dim[1]>256)
     {
         if(spacing[0]*(float)dim[0]>spacing[1]*(float)dim[1])
@@ -425,6 +436,8 @@
     
     FlyAssistant2 *assistant = [[FlyAssistant2 alloc] initWithVolume:(float*)[volume bytes] WidthDimension:dim Spacing:spacing ResampleVoxelSize:resamplesize];
     [assistant setCenterlineResampleStepLength:3.0];
+    assistant.thresholdRange = _textField1.floatValue;
+    
     NSMutableArray *centerline = [[NSMutableArray alloc] init];
     
     CPRVolumeData *cprVolumeData = [[CPRVolumeData alloc] initWithWithPixList:pix volume:volume];

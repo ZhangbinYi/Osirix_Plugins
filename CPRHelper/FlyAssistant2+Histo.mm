@@ -6,6 +6,7 @@
 //
 //
 
+#import "FlyAssistant2.h"
 #import "FlyAssistant2+Histo.h"
 #import <vector>
 #import <iterator>
@@ -40,6 +41,7 @@
 
 - (void) computeIntervalThresholdsFrom:(float)pixValue;
 {
+    /*
     if (!inputHisto) {
         [self computeHistogram];
         [self smoothHistogramWith:5]; // \todo{Trouver une meilleure définition ?}
@@ -78,6 +80,10 @@
     
     thresholdA += inputMinValue;
     thresholdB += inputMinValue;
+     */
+    
+    thresholdA = pixValue - _thresholdRange / 2;
+    thresholdB = pixValue + _thresholdRange / 2;
 }
 
 -(void) getInputMinMaxValues

@@ -52,8 +52,17 @@
     
     vImagePixelCount * inputHisto;
     unsigned int histoSize;
+    
+    float _thresholdRange;
+    
 }
 @property  float centerlineResampleStepLength;
+
+
+@property float thresholdRange;
+
+
+
 - (id) initWithVolume:(float*)data WidthDimension:(int*)dim Spacing:(float*)spacing ResampleVoxelSize:(float)vsize;
 - (int) setResampleVoxelSize:(float)vsize;
 - (void) setThreshold:(float)thres Asynchronous:(BOOL)async;
