@@ -1,0 +1,6 @@
+/* Localized versions of Info.plist keys */
+
+CFBundleName = "Matcher";
+CFBundleShortVersionString = "1.0";
+CFBundleGetInfoString = "Matcher version 1.0, Copyright (c) 2016 CS.";
+NSHumanReadableCopyright = "Copyright (c) 2016 CS.";
