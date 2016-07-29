@@ -694,26 +694,41 @@
 
 
 - (IBAction)createPDFFile:(id)sender {
-    CGRect pageRect = CGRectMake(0, 0, 2550, 3300);
-    const char *filename = "/Users/wb-vesselwall/Documents/OsiriX\ Data/REPORTS/file1.pdf";
-    [self createPDFFileWithRect:pageRect withFilname:filename];
+    //CGRect pageRect1 = CGRectMake(0, 0, 2550, 3300);
+    //const char *filename1 = "/Users/wb-vesselwall/Documents/Projects/Practice1/Practice1/files/file1.pdf";
+    //[self createPDFFileWithRect:pageRect1 withFilname:filename1];
+    
+    NSSavePanel *panel = [NSSavePanel savePanel];
+    [panel setNameFieldStringValue:@"report1.pdf"];
+    // display the panel
+    [panel beginWithCompletionHandler:^(NSInteger result) {
+        if (result == NSFileHandlingPanelOKButton) {
+            CGRect pageRect1 = CGRectMake(0, 0, 2550, 3300);
+            NSURL *saveURL = [panel URL];
+            
+            [self createPDFFileWithRect:pageRect1 withSaveURL:saveURL];
+        }
+    }];
 }
 
 
 
 
 
-- (void) createPDFFileWithRect:(CGRect)pageRect withFilname:(const char*)filename {
+- (void)createPDFFileWithRect:(CGRect)pageRect withSaveURL:(NSURL*)saveURL {
     CGContextRef pdfContext;
-    CFStringRef path;
+    //CFStringRef path;
     CFURLRef url;
+    url = CFBridgingRetain(saveURL);
+    
     CFDataRef boxData = NULL;
     CFMutableDictionaryRef myDictionary = NULL;
     CFMutableDictionaryRef pageDictionary = NULL;
     
-    path = CFStringCreateWithCString (NULL, filename, kCFStringEncodingUTF8);
-    url = CFURLCreateWithFileSystemPath (NULL, path, kCFURLPOSIXPathStyle, 0);
-    CFRelease (path);
+    //path = CFStringCreateWithCString (NULL, filename, kCFStringEncodingUTF8);
+    //url = CFURLCreateWithFileSystemPath (NULL, path, kCFURLPOSIXPathStyle, 0);
+    //CFRelease (path);
+    
     myDictionary = CFDictionaryCreateMutable(NULL, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
     CFDictionarySetValue(myDictionary, kCGPDFContextTitle, CFSTR("My PDF File"));
     CFDictionarySetValue(myDictionary, kCGPDFContextCreator, CFSTR("My Name"));

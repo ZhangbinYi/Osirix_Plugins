@@ -119,7 +119,7 @@
 
 
 // PDF
-- (void)createPDFFileWithRect:(CGRect)pageRect withFilname:(const char*)filename;
+- (void)createPDFFileWithRect:(CGRect)pageRect withSaveURL:(NSURL*)saveURL;
 - (void)drawTextWithContext:(CGContextRef)pdfContext withRect:(CGRect)textRect withFontSize:(float)fontSize withString:(NSString*)inputString;
 - (void)drawImageWithContext:(CGContextRef)pdfContext withRect:(CGRect)imgRect withImage:(NSImage*)img;
 
