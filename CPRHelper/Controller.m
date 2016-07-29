@@ -160,14 +160,17 @@
     IplImage *cvPlotImage2 = [_objcWrapper getPlot:2];
     NSImage *plotImage2 = [self imageWithCVImage:cvPlotImage2];
     [_imageView2 setImage:plotImage2];
+    _curPlotImage2 = plotImage2;
     
     IplImage *cvPlotImage0 = [_objcWrapper getPlot:0];
     NSImage *plotImage0 = [self imageWithCVImage:cvPlotImage0];
     [_imageView3 setImage:plotImage0];
+    _curPlotImage0 = plotImage0;
     
     IplImage *cvPlotImage1 = [_objcWrapper getPlot:1];
     NSImage *plotImage1 = [self imageWithCVImage:cvPlotImage1];
     [_imageView4 setImage:plotImage1];
+    _curPlotImage1 = plotImage1;
 }
 
 
@@ -389,6 +392,10 @@
 }
 
 
+
+
+
+
 - (void) assistedCurvedPath {
     
     unsigned int nodeCount1 = [_cprController.curvedPath.nodes count];
@@ -584,14 +591,17 @@
     IplImage* cvPlotImage2 = [_objcWrapper getPlotWithLineOfIdx:2 atPosition:pos];
     NSImage *plotImage2 = [self imageWithCVImage:cvPlotImage2];
     [_imageView2 setImage:plotImage2];
+    _curPlotImage2 = plotImage2;
     
     IplImage* cvPlotImage0 = [_objcWrapper getPlotWithLineOfIdx:0 atPosition:pos];
     NSImage *plotImage0 = [self imageWithCVImage:cvPlotImage0];
     [_imageView3 setImage:plotImage0];
+    _curPlotImage0 = plotImage0;
     
     IplImage* cvPlotImage1 = [_objcWrapper getPlotWithLineOfIdx:1 atPosition:pos];
     NSImage *plotImage1 = [self imageWithCVImage:cvPlotImage1];
     [_imageView4 setImage:plotImage1];
+    _curPlotImage1 = plotImage1;
     
     [self setTransverseSectionPosition:(pos / _slider2.maxValue)];
 
@@ -605,6 +615,7 @@
 
 
 - (NSImage*) setTransverseSectionPosition:(CGFloat)newPos {
+    _curTransverseSectionPosition = newPos;
     CPRTransverseView *middleTransverseView = _cprController.middleTransverseView;
     CPRCurvedPath *curvedPath = middleTransverseView.curvedPath;
     
@@ -624,9 +635,9 @@
     [middleTransverseView _sendNewRequest];
     [middleTransverseView setNeedsDisplay:YES];
     
-    NSImage *curImage = [middleTransverseView.curDCM image];
-    [_imageView1 setImage:curImage];
-    return curImage;
+    _curTransverseImage = [middleTransverseView.curDCM image];
+    [_imageView1 setImage:_curTransverseImage];
+    return _curTransverseImage;
 }
 
 
@@ -669,6 +680,148 @@
     NSImage *im= [[NSImage alloc] initWithData:[bmp TIFFRepresentation]];
     return [im autorelease];
 }
+
+
+
+
+
+
+
+
+
+//PDF
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+- (IBAction)createPDFFile:(id)sender {
+    CGRect pageRect = CGRectMake(0, 0, 2550, 3300);
+    const char *filename = "/Users/wb-vesselwall/Documents/OsiriX\ Data/REPORTS/file1.pdf";
+    [self createPDFFileWithRect:pageRect withFilname:filename];
+}
+
+
+
+
+
+- (void) createPDFFileWithRect:(CGRect)pageRect withFilname:(const char*)filename {
+    CGContextRef pdfContext;
+    CFStringRef path;
+    CFURLRef url;
+    CFDataRef boxData = NULL;
+    CFMutableDictionaryRef myDictionary = NULL;
+    CFMutableDictionaryRef pageDictionary = NULL;
+    
+    path = CFStringCreateWithCString (NULL, filename, kCFStringEncodingUTF8);
+    url = CFURLCreateWithFileSystemPath (NULL, path, kCFURLPOSIXPathStyle, 0);
+    CFRelease (path);
+    myDictionary = CFDictionaryCreateMutable(NULL, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+    CFDictionarySetValue(myDictionary, kCGPDFContextTitle, CFSTR("My PDF File"));
+    CFDictionarySetValue(myDictionary, kCGPDFContextCreator, CFSTR("My Name"));
+    pdfContext = CGPDFContextCreateWithURL (url, &pageRect, myDictionary);
+    CFRelease(myDictionary);
+    CFRelease(url);
+    pageDictionary = CFDictionaryCreateMutable(NULL, 0,
+                                               &kCFTypeDictionaryKeyCallBacks,
+                                               &kCFTypeDictionaryValueCallBacks);
+    boxData = CFDataCreate(NULL,(const UInt8 *)&pageRect, sizeof (CGRect));
+    CFDictionarySetValue(pageDictionary, kCGPDFContextMediaBox, boxData);
+    CGPDFContextBeginPage (pdfContext, pageDictionary);
+    
+    
+    CGRect titleRect = CGRectMake(1200, 3000, 900, 100);
+    [self drawTextWithContext:pdfContext withRect:titleRect withFontSize:80.0f withString:@"Report"];
+    
+    //myDrawContent (pdfContext);
+    NSString *text1 = @"patientID: 00001";
+    CGRect textRect1 = CGRectMake(200, 2800, 900, 100);
+    [self drawTextWithContext:pdfContext withRect:textRect1 withFontSize:50.0f withString:text1];
+    
+    NSString *text2 = [NSString stringWithFormat:@"curTransverseSectionPosition: %f", _curTransverseSectionPosition];
+    CGRect textRect2 = CGRectMake(200, 2700, 900, 100);
+    [self drawTextWithContext:pdfContext withRect:textRect2 withFontSize:50.0f withString:text2];
+    
+    
+    CGRect imgRect1 = CGRectMake(300, 2000, 600, 600);
+    //NSImage* img1 = [NSImage imageNamed:@"CPR001.tiff"];
+    [self drawImageWithContext:pdfContext withRect:imgRect1 withImage:_curTransverseImage];
+    
+    
+    CGRect imgRect2 = CGRectMake(1450, 2000, 800, 600);
+    [self drawImageWithContext:pdfContext withRect:imgRect2 withImage:_curPlotImage2];
+    
+    
+    CGPDFContextEndPage (pdfContext);
+    CGContextRelease (pdfContext);
+    CFRelease(pageDictionary);
+    CFRelease(boxData);
+}
+
+
+
+
+
+- (void)drawTextWithContext:(CGContextRef)pdfContext withRect:(CGRect)textRect withFontSize:(float)fontSize withString:(NSString*)inputString {
+    
+    // Set the text matrix.
+    CGContextSetTextMatrix(pdfContext, CGAffineTransformIdentity);
+    
+    // Create a path which bounds the area where you will be drawing text.
+    // The path need not be rectangular.
+    CGMutablePathRef textPath = CGPathCreateMutable();
+    
+    // In this simple example, initialize a rectangular path.
+    CGPathAddRect(textPath, NULL, textRect);
+    
+    CFStringRef textString = (__bridge CFStringRef)inputString;
+    // Create a mutable attributed string with a max length of 0.
+    // The max length is a hint as to how much internal storage to reserve.
+    // 0 means no hint.
+    CFMutableAttributedStringRef attrString = CFAttributedStringCreateMutable(kCFAllocatorDefault, 0);
+    
+    // Copy the textString into the newly created attrString
+    CFAttributedStringReplaceString (attrString, CFRangeMake(0, 0), textString);
+    
+    
+    /*
+     // Create a color that will be added as an attribute to the attrString.
+     CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
+     CGFloat components[] = { 1.0, 0.0, 0.0, 0.8 };
+     CGColorRef red = CGColorCreate(rgbColorSpace, components);
+     CGColorSpaceRelease(rgbColorSpace);
+     
+     // Set the color of the first 12 chars to red.
+     CFAttributedStringSetAttribute(attrString, CFRangeMake(0, 12), kCTForegroundColorAttributeName, red);
+     */
+    
+    CTFontRef font = CTFontCreateWithName((CFStringRef)@"Helvetica", fontSize, nil);
+    CFAttributedStringSetAttribute(attrString,CFRangeMake(0, inputString.length),kCTFontAttributeName,font);
+    
+    // Create the framesetter with the attributed string.
+    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString(attrString);
+    CFRelease(attrString);
+    
+    // Create a frame.
+    CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), textPath, NULL);
+    
+    // Draw the specified frame in the given context.
+    CTFrameDraw(frame, pdfContext);
+    
+    CFRelease(frame);
+    CFRelease(textPath);
+    CFRelease(framesetter);
+    
+}
+
+
+
+- (void)drawImageWithContext:(CGContextRef)pdfContext withRect:(CGRect)imgRect withImage:(NSImage*)img {
+    
+    CGImageSourceRef source;
+    source = CGImageSourceCreateWithData((CFDataRef)[img TIFFRepresentation], NULL);
+    CGImageRef imgRef =  CGImageSourceCreateImageAtIndex(source, 0, NULL);
+    CGContextDrawImage(pdfContext, imgRect, imgRef);
+}
+
 
 
 @end

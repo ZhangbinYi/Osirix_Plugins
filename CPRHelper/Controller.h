@@ -81,6 +81,16 @@
 
 @property (assign) ObjcWrapper *objcWrapper;
 
+
+@property (assign) float curTransverseSectionPosition;
+@property (assign) NSImage *curTransverseImage;
+@property (assign) NSImage *curPlotImage0;
+@property (assign) NSImage *curPlotImage1;
+@property (assign) NSImage *curPlotImage2;
+
+
+
+
 - (id) init: (CPRHelperFilter*) f;
 
 - (IBAction)openCPRViewer:(id)sender;
@@ -95,6 +105,7 @@
 - (IBAction)invertImage:(id)sender;
 - (IBAction)addNode:(id)sender;
 - (IBAction)findPath:(id)sender;
+- (IBAction)createPDFFile:(id)sender;
 
 
 - (void) sliderValueChanged:(float)pos;
@@ -105,6 +116,14 @@
 - (NSImage *)imageWithCVImage:(IplImage *)cvImage;
 
 - (void) assistedCurvedPath;
+
+
+// PDF
+- (void)createPDFFileWithRect:(CGRect)pageRect withFilname:(const char*)filename;
+- (void)drawTextWithContext:(CGContextRef)pdfContext withRect:(CGRect)textRect withFontSize:(float)fontSize withString:(NSString*)inputString;
+- (void)drawImageWithContext:(CGContextRef)pdfContext withRect:(CGRect)imgRect withImage:(NSImage*)img;
+
+
 
 @end
 
