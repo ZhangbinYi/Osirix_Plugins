@@ -289,6 +289,9 @@
 - (IBAction)addNode:(id)sender {
     _mprView2 = _cprController.mprView2;
     
+    
+    // test //
+    
     if (!_mprView2.curvedPath) {
         [_textView2 setString:[_textView2.string stringByAppendingString:@"_mprView2.curvedPath == nil\n"]];
     } else {
@@ -305,6 +308,10 @@
     N3Vector point1 = pointValue1.N3VectorValue;
     [_textView2 setString:[_textView2.string stringByAppendingString:[NSString stringWithFormat:@"nodes.count: %d\n", nodeCount]]];
     [_textView2 setString:[_textView2.string stringByAppendingString:[NSString stringWithFormat:@"%f  %f  %f\n", point1.x, point1.y, point1.z]]];
+    
+    // end test //
+    
+    
     
     // add this line when create a new curved path
     [_mprView2 stopCurvedPathCreationMode];
@@ -871,6 +878,18 @@
     }];
 }
 
+- (IBAction)importJSON:(id)sender {
+    
+    NSOpenPanel* panel = [NSOpenPanel openPanel];
+    [panel beginWithCompletionHandler:^(NSInteger result){
+        if (result == NSFileHandlingPanelOKButton) {
+            NSURL*  openURL = [[panel URLs] objectAtIndex:0];
+            NSString *jsonString = [[NSString alloc] initWithContentsOfURL:openURL encoding:NSUTF8StringEncoding error:nil];
+            [self parseJSON:jsonString];
+        }
+    }];
+    
+}
 
 
 - (NSString*)getCurrentTime {
@@ -886,6 +905,47 @@
 
 
 
+- (void) parseJSON:(NSString*)jsonString {
+    NSError* error;
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary* jsonDict = [NSJSONSerialization
+                              JSONObjectWithData:jsonData
+                              options:kNilOptions
+                              error:&error];
+    NSMutableArray *nodesArr = jsonDict[@"nodes"];
+    [self addNodesWithNodesArray:nodesArr];
+}
+
+
+- (void) addNodesWithNodesArray:(NSMutableArray*)nodesArr {
+    _mprView2 = _cprController.mprView2;
+    
+    // add this line when create a new curved path
+    [_mprView2 stopCurvedPathCreationMode];
+    
+    CPRController *windowController = [_mprView2 windowController];
+    if( windowController.curvedPathCreationMode == NO && windowController.curvedPath.nodes.count == 0)
+        windowController.curvedPathCreationMode = YES;
+    
+    if (windowController.curvedPathCreationMode) {
+        
+        if ([_mprView2.delegate respondsToSelector:@selector(CPRViewWillEditCurvedPath:)]) {;
+            [_mprView2.delegate CPRViewWillEditCurvedPath:_mprView2];
+        }
+        for (int i = 0; i < nodesArr.count; i++) {
+            N3Vector nodeVec = N3VectorMake([nodesArr[i][0] doubleValue], [nodesArr[i][1] doubleValue], [nodesArr[i][2] doubleValue]);
+            [_mprView2.curvedPath addPatientNode:nodeVec];
+        }
+        
+        if ([_mprView2.delegate respondsToSelector:@selector(CPRViewDidEditCurvedPath:)])  {
+            [_mprView2.delegate CPRViewDidEditCurvedPath:_mprView2];
+        }
+        [_mprView2 setNeedsDisplay:YES];
+        
+        // Center the views to the last point
+        //[windowController CPRView:_mprView2 setCrossCenter:newCrossCenter];
+    }
+}
 
 
 

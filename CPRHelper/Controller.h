@@ -107,6 +107,7 @@
 - (IBAction)findPath:(id)sender;
 - (IBAction)createPDFFile:(id)sender;
 - (IBAction)exportJSON:(id)sender;
+- (IBAction)importJSON:(id)sender;
 
 
 - (void) sliderValueChanged:(float)pos;
@@ -127,8 +128,8 @@
 
 // JSON
 - (NSString*)getCurrentTime;
-
-
+- (void) parseJSON:(NSString*)jsonString;
+- (void) addNodesWithNodesArray:(NSMutableArray*)nodesArr;
 
 
 @end

@@ -299,8 +299,19 @@
                             <action selector="findPath:" target="-2" id="MOv-XQ-H3d"/>
                         </connections>
                     </button>
+                    <button verticalHuggingPriority="750" id="sB2-N2-Mov">
+                        <rect key="frame" x="14" y="357" width="114" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="exportJSON" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VVy-aF-p7a">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="exportJSON:" target="-2" id="drX-6X-YBw"/>
+                        </connections>
+                    </button>
                     <button verticalHuggingPriority="750" id="Vda-Fp-sW8">
-                        <rect key="frame" x="15" y="269" width="125" height="32"/>
+                        <rect key="frame" x="16" y="255" width="125" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="createPDFFile" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="RuT-En-q9q">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -310,15 +321,15 @@
                             <action selector="createPDFFile:" target="-2" id="XlV-Ol-JMr"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" id="sB2-N2-Mov">
-                        <rect key="frame" x="16" y="357" width="114" height="32"/>
+                    <button verticalHuggingPriority="750" id="zIP-mU-EfW">
+                        <rect key="frame" x="14" y="324" width="115" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="push" title="exportJSON" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="VVy-aF-p7a">
+                        <buttonCell key="cell" type="push" title="importJSON" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="n4D-kB-Z4U">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="exportJSON:" target="-2" id="drX-6X-YBw"/>
+                            <action selector="importJSON:" target="-2" id="J0o-vh-5pV"/>
                         </connections>
                     </button>
                 </subviews>
