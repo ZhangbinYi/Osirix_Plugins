@@ -320,8 +320,7 @@
         N3AffineTransform viewToDicomTransform = N3AffineTransformConcat([_mprView2 viewToPixTransform], [_mprView2 pixToDicomTransform]);
         N3Vector newCrossCenter = N3VectorApplyTransform(N3VectorMakeFromNSPoint(mouseLocation), viewToDicomTransform);
         
-        [_textView3 setString:[_textView3.string stringByAppendingString:[NSString stringWithFormat:@"%f   %f   %f\n",
-                                                                          newCrossCenter.x, newCrossCenter.y, newCrossCenter.z]]];
+        //[_textView3 setString:[_textView3.string stringByAppendingString:[NSString stringWithFormat:@"%f   %f   %f\n", newCrossCenter.x, newCrossCenter.y, newCrossCenter.z]]];
         /*
         [_mprView2 sendWillEditCurvedPath];
         
@@ -399,8 +398,8 @@
 - (void) assistedCurvedPath {
     
     unsigned int nodeCount1 = [_cprController.curvedPath.nodes count];
-    [_textView2 setString:[_textView2.string stringByAppendingString:[NSString stringWithFormat:@"%d", nodeCount1]]];
-    [_textView2 setString:[_textView2.string stringByAppendingString:@"    "]];
+    //[_textView2 setString:[_textView2.string stringByAppendingString:[NSString stringWithFormat:@"%d", nodeCount1]]];
+    //[_textView2 setString:[_textView2.string stringByAppendingString:@"    "]];
     
     /*
     
@@ -469,10 +468,8 @@
             
             Point3D *pta = [[[Point3D alloc] initWithX:na.x y:na.y z:na.z] autorelease];
             Point3D *ptb = [[[Point3D alloc] initWithX:nb.x y:nb.y z:nb.z] autorelease];
-            [_textView3 setString:[_textView3.string stringByAppendingString:[NSString stringWithFormat:@"pta: %f   %f   %f\n",
-                                                                              pta.x, pta.y, pta.z]]];
-            [_textView3 setString:[_textView3.string stringByAppendingString:[NSString stringWithFormat:@"ptb: %f   %f   %f\n",
-                                                                              ptb.x, ptb.y, ptb.z]]];
+            //[_textView3 setString:[_textView3.string stringByAppendingString:[NSString stringWithFormat:@"pta: %f   %f   %f\n", pta.x, pta.y, pta.z]]];
+            //[_textView3 setString:[_textView3.string stringByAppendingString:[NSString stringWithFormat:@"ptb: %f   %f   %f\n", ptb.x, ptb.y, ptb.z]]];
             NSLog(@"pta: %f   %f   %f\n", pta.x, pta.y, pta.z);
             NSLog(@"ptb: %f   %f   %f\n", ptb.x, ptb.y, ptb.z);
             
@@ -615,7 +612,6 @@
 
 
 - (NSImage*) setTransverseSectionPosition:(CGFloat)newPos {
-    _curTransverseSectionPosition = newPos;
     CPRTransverseView *middleTransverseView = _cprController.middleTransverseView;
     CPRCurvedPath *curvedPath = middleTransverseView.curvedPath;
     
@@ -713,8 +709,6 @@
 
 
 
-
-
 - (void)createPDFFileWithRect:(CGRect)pageRect withSaveURL:(NSURL*)saveURL {
     CGContextRef pdfContext;
     //CFStringRef path;
@@ -751,7 +745,7 @@
     CGRect textRect1 = CGRectMake(200, 2800, 900, 100);
     [self drawTextWithContext:pdfContext withRect:textRect1 withFontSize:50.0f withString:text1];
     
-    NSString *text2 = [NSString stringWithFormat:@"curTransverseSectionPosition: %f", _curTransverseSectionPosition];
+    NSString *text2 = [NSString stringWithFormat:@"curTransverseSectionPosition: %f", _cprController.curvedPath.transverseSectionPosition];
     CGRect textRect2 = CGRectMake(200, 2700, 900, 100);
     [self drawTextWithContext:pdfContext withRect:textRect2 withFontSize:50.0f withString:text2];
     
@@ -836,6 +830,69 @@
     CGImageRef imgRef =  CGImageSourceCreateImageAtIndex(source, 0, NULL);
     CGContextDrawImage(pdfContext, imgRect, imgRef);
 }
+
+
+
+
+
+
+//exportJSON & importJSON
+////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+- (IBAction)exportJSON:(id)sender {
+    NSArray *nodes = _cprController.curvedPath.nodes;
+    NSMutableArray *nodesArr = [[NSMutableArray alloc] init];
+    
+    for (NSValue *nodeValue in nodes) {
+        N3Vector node = [nodeValue N3VectorValue];
+        NSArray *nodeArr = @[@(node.x), @(node.y), @(node.z)];
+        [nodesArr addObject:nodeArr];
+    }
+    NSDictionary *inventory = @{@"patientID" : @"00001",
+                                @"time" : [self getCurrentTime],
+                                @"nodes" : nodesArr,
+                                @"curTransverseSectionPosition" : @(_cprController.curvedPath.transverseSectionPosition)
+                                };
+    NSError* error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:inventory options:NSJSONWritingPrettyPrinted error:&error];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    [_textView3 setString:[_textView3.string stringByAppendingString:jsonString]];
+    
+    NSSavePanel *panel = [NSSavePanel savePanel];
+    [panel setNameFieldStringValue:@"record1.txt"];
+    // display the panel
+    [panel beginWithCompletionHandler:^(NSInteger result) {
+        if (result == NSFileHandlingPanelOKButton) {
+            NSURL *saveURL = [panel URL];
+            [jsonString writeToURL:saveURL atomically:NO encoding:NSStringEncodingConversionAllowLossy error:nil];
+        }
+    }];
+}
+
+
+
+- (NSString*)getCurrentTime {
+    NSLocale* currentLocale = [NSLocale currentLocale];
+    [[NSDate date] descriptionWithLocale:currentLocale];
+    NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    // or @"yyyy-MM-dd hh:mm:ss a" if you prefer the time with AM/PM
+    NSString *curTime = [dateFormatter stringFromDate:[NSDate date]];
+    NSLog(@"%@",curTime);
+    return curTime;
+}
+
+
+
+
+
+
+
+
+
+
 
 
 

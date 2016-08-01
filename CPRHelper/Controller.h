@@ -82,7 +82,7 @@
 @property (assign) ObjcWrapper *objcWrapper;
 
 
-@property (assign) float curTransverseSectionPosition;
+//@property (assign) float curTransverseSectionPosition;
 @property (assign) NSImage *curTransverseImage;
 @property (assign) NSImage *curPlotImage0;
 @property (assign) NSImage *curPlotImage1;
@@ -106,6 +106,7 @@
 - (IBAction)addNode:(id)sender;
 - (IBAction)findPath:(id)sender;
 - (IBAction)createPDFFile:(id)sender;
+- (IBAction)exportJSON:(id)sender;
 
 
 - (void) sliderValueChanged:(float)pos;
@@ -113,7 +114,7 @@
 //- (void) saveTransverseImageWithStepLength:(NSImage*)curImage index:(int)idx;
 - (NSImage*) moveTransverseImageWithStepLength:(CGFloat)stepLength;
 - (void) saveTransverseImage:(NSImage*)curImage index:(int) idx;
-- (NSImage *)imageWithCVImage:(IplImage *)cvImage;
+- (NSImage*)imageWithCVImage:(IplImage *)cvImage;
 
 - (void) assistedCurvedPath;
 
@@ -122,6 +123,11 @@
 - (void)createPDFFileWithRect:(CGRect)pageRect withSaveURL:(NSURL*)saveURL;
 - (void)drawTextWithContext:(CGContextRef)pdfContext withRect:(CGRect)textRect withFontSize:(float)fontSize withString:(NSString*)inputString;
 - (void)drawImageWithContext:(CGContextRef)pdfContext withRect:(CGRect)imgRect withImage:(NSImage*)img;
+
+
+// JSON
+- (NSString*)getCurrentTime;
+
 
 
 
