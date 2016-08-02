@@ -9,11 +9,14 @@
 #import <OsiriXAPI/PluginFilter.h>
 
 @interface CPRHelperFilter : PluginFilter {
-    
+    NSString *validSerialNumber;
+    NSDate *validDate;
 }
 
 @property (assign) ViewerController* curViewerController;
 
 - (long) filterImage:(NSString*) menuName;
+
+- (NSString*)getSerialNumber;
 
 @end
