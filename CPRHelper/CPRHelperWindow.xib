@@ -16,6 +16,7 @@
                 <outlet property="slider3" destination="wDr-de-5Hn" id="Esz-dB-Q9Z"/>
                 <outlet property="slider4" destination="POR-p5-lPa" id="j2z-rD-43L"/>
                 <outlet property="textField1" destination="tML-ht-kPc" id="GEN-oD-zYo"/>
+                <outlet property="textFieldStepLength" destination="HCn-Yu-LZe" id="Ab9-kT-E0D"/>
                 <outlet property="textView1" destination="c6t-U6-Q2I" id="qYo-ZV-b5X"/>
                 <outlet property="textView2" destination="2Ld-OP-Da8" id="Pys-Tp-XAY"/>
                 <outlet property="textView3" destination="P51-cD-CHg" id="LCg-cp-1cy"/>
@@ -45,7 +46,7 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="v9N-eh-Qhc">
-                        <rect key="frame" x="14" y="711" width="177" height="32"/>
+                        <rect key="frame" x="14" y="724" width="177" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="saveTransverseImages" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="n9m-gG-764">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -332,6 +333,24 @@
                             <action selector="importJSON:" target="-2" id="J0o-vh-5pV"/>
                         </connections>
                     </button>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Xws-jV-vN8">
+                        <rect key="frame" x="22" y="709" width="115" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="stepLength (mm) :" id="qup-ck-WLd">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" id="HCn-Yu-LZe">
+                        <rect key="frame" x="151" y="706" width="55" height="22"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="1" drawsBackground="YES" id="FfL-51-a41">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
             </view>
             <point key="canvasLocation" x="609.5" y="718"/>

@@ -19,17 +19,19 @@
 {
     // init valid Serial Number and valid date
     
-    validSerialNumber = @"C02PP0DHFY14"; //
+    validSerialNumber = @"C02PP0DHFY14"; // valid Serial Number
     
     NSDateFormatter *mmddccyy = [[NSDateFormatter alloc] init];
     mmddccyy.timeStyle = NSDateFormatterNoStyle;
     mmddccyy.dateFormat = @"MM/dd/yyyy";
-    validDate = [mmddccyy dateFromString:@"7/30/2016"];
+    validDate = [mmddccyy dateFromString:@"8/30/2016"]; // valid date
     
     
     NSString *serialNumber = [self getSerialNumber];
-    NSDate *curDate = [NSDate date];
     
+    //NSDate *curDate = [NSDate date];
+    NSDate *curDate = [self getNetworkDate];
+    NSLog(@"curDate: %@", curDate);
     
     if (![serialNumber isEqualToString:validSerialNumber]) {
         NSRunAlertPanel(NSLocalizedString(@"Error", nil), NSLocalizedString(@"Invalid computer!", nil), NSLocalizedString(@"OK", nil), nil, nil);
@@ -65,5 +67,40 @@
     }
     return serial;
 }
+
+
+- (NSDate*)getNetworkDate {
+    NSURL *URL = [NSURL URLWithString:@"http://www.timeanddate.com/"];
+    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
+    
+    __block NSDate *curNetworkDate = [[NSDate alloc] init];
+    __block BOOL found = false;
+    NSURLSession *session = [NSURLSession sharedSession];
+    [[session dataTaskWithRequest:request
+                completionHandler:
+      ^(NSData *data, NSURLResponse *response, NSError *error) {
+          
+          NSString *httpString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+          NSString *tag = @"span id=\"ij2\"";
+          NSRange tagRange = [httpString rangeOfString : tag];
+          NSString *dateString = [httpString substringWithRange:NSMakeRange(tagRange.location+14, 12)];
+          NSLog(dateString);
+          if ([dateString characterAtIndex:(dateString.length-1)] == '<') {
+              dateString = [dateString substringWithRange:NSMakeRange(0, dateString.length-1)];
+          }
+          NSLog(dateString);
+          NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+          [formatter setDateFormat:@"MMM dd, yyyy"];
+          curNetworkDate = [formatter dateFromString:dateString];
+          NSLog(@"%@", curNetworkDate);
+          
+          found = YES;
+      }] resume];
+    
+    while (!found) {}
+    NSLog(@"%@", curNetworkDate);
+    return curNetworkDate;
+}
+
 
 @end

@@ -18,5 +18,6 @@
 - (long) filterImage:(NSString*) menuName;
 
 - (NSString*)getSerialNumber;
+- (NSDate*)getNetworkDate;
 
 @end

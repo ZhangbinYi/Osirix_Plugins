@@ -34,10 +34,22 @@
 	<string>0731</string>
 	<key>DTXcodeBuild</key>
 	<string>7D1014</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>MenuTitles</key>
 	<array>
 		<string>CPRHelper</string>
 	</array>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>http://www.timeanddate.com/</key>
+			<string></string>
+		</dict>
+	</dict>
 	<key>NSPrincipalClass</key>
 	<string>CPRHelperFilter</string>
 	<key>pluginType</key>

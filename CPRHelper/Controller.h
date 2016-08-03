@@ -78,6 +78,7 @@
 @property (assign) IBOutlet NSSlider *slider3;
 @property (assign) IBOutlet NSSlider *slider4;
 @property (assign) IBOutlet NSTextField *textField1;
+@property (assign) IBOutlet NSTextField *textFieldStepLength;
 
 @property (assign) ObjcWrapper *objcWrapper;
 
@@ -95,15 +96,11 @@
 
 - (IBAction)openCPRViewer:(id)sender;
 - (IBAction)testShowInfo:(id)sender;
-- (IBAction)changeTransverseSectionPosition:(id)sender;
 - (IBAction)saveTransverseImages:(id)sender;
-- (IBAction)drawPlotWithCVNamedWindow:(id)sender;
 - (IBAction)drawPlotWithImageView:(id)sender;
 - (IBAction)slider2ValueChanged:(id)sender;
 - (IBAction)slider3ValueChanged:(id)sender;
 - (IBAction)slider4ValueChanged:(id)sender;
-- (IBAction)invertImage:(id)sender;
-- (IBAction)addNode:(id)sender;
 - (IBAction)findPath:(id)sender;
 - (IBAction)createPDFFile:(id)sender;
 - (IBAction)exportJSON:(id)sender;
@@ -112,7 +109,7 @@
 
 - (void) sliderValueChanged:(float)pos;
 - (NSImage*) setTransverseSectionPosition:(CGFloat)newPos;
-//- (void) saveTransverseImageWithStepLength:(NSImage*)curImage index:(int)idx;
+
 - (NSImage*) moveTransverseImageWithStepLength:(CGFloat)stepLength;
 - (void) saveTransverseImage:(NSImage*)curImage index:(int) idx;
 - (NSImage*)imageWithCVImage:(IplImage *)cvImage;
@@ -121,15 +118,29 @@
 
 
 // PDF
+
 - (void)createPDFFileWithRect:(CGRect)pageRect withSaveURL:(NSURL*)saveURL;
 - (void)drawTextWithContext:(CGContextRef)pdfContext withRect:(CGRect)textRect withFontSize:(float)fontSize withString:(NSString*)inputString;
 - (void)drawImageWithContext:(CGContextRef)pdfContext withRect:(CGRect)imgRect withImage:(NSImage*)img;
 
 
 // JSON
+
 - (NSString*)getCurrentTime;
 - (void) parseJSON:(NSString*)jsonString;
 - (void) addNodesWithNodesArray:(NSMutableArray*)nodesArr;
+
+
+// unused methods
+
+- (IBAction)changeTransverseSectionPosition:(id)sender;
+- (IBAction)drawPlotWithCVNamedWindow:(id)sender;
+- (IBAction)addNode:(id)sender;
+- (IBAction)invertImage:(id)sender;
+//- (void) saveTransverseImageWithStepLength:(NSImage*)curImage index:(int)idx;
+
+
+
 
 
 @end

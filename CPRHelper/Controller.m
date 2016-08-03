@@ -18,6 +18,8 @@
 #import "OsiriXAPI/CPRView.h"
 #import "OsiriXAPI/CPRCurvedPath.h"
 #import "OsiriXAPI/CPRMPRDCMView.h"
+#import "OsiriXAPI/N3BezierPath.h"
+#import "OsiriXAPI/N3BezierCoreAdditions.h"
 
 #import "OsiriXAPI/FlyAssistant.h"
 #import "FlyAssistant2.h"
@@ -138,19 +140,25 @@
     CPRCurvedPath *curvedPath = middleTransverseView.curvedPath;
     curvedPath.transverseSectionPosition = 0;
     
-    for (int i = 0; i < 100; i++) {
-        NSImage *curImage = [self setTransverseSectionPosition:0.01 * i];
+    CGFloat length = _cprController.curvedPath.bezierPath.length;
+    float stepLength = 1.0f;
+    if (_textFieldStepLength.floatValue > 0) {
+        stepLength = _textFieldStepLength.floatValue;
+    }
+    int numImages = (int) (length / stepLength);
+    NSString *numImagesString = [NSString stringWithFormat:@"%d  ", numImages];
+    [_textView1 setString:[_textView1.string stringByAppendingString:numImagesString]];
+    
+    for (int i = 0; i < numImages; i++) {
+        NSImage *curImage = [self setTransverseSectionPosition:((1.0 * i) / numImages)];
+        
+        NSString *positionString = [NSString stringWithFormat:@"%f  ", ((1.0 * i) / numImages)];
+        [_textView1 setString:[_textView1.string stringByAppendingString:positionString]];
         [self saveTransverseImage:curImage index:i];
     }
 }
 
 
-
-
-
-- (IBAction)drawPlotWithCVNamedWindow:(id)sender {
-    [_objcWrapper showPlot];
-}
 
 
 
@@ -286,106 +294,7 @@
 
 
 
-- (IBAction)addNode:(id)sender {
-    _mprView2 = _cprController.mprView2;
-    
-    
-    // test //
-    
-    if (!_mprView2.curvedPath) {
-        [_textView2 setString:[_textView2.string stringByAppendingString:@"_mprView2.curvedPath == nil\n"]];
-    } else {
-        [_textView2 setString:[_textView2.string stringByAppendingString:@"_mprView2.curvedPath != nil\n"]];
-    }
-    NSArray* nodes = _mprView2.curvedPath.nodes;
-    if (!nodes) {
-        [_textView2 setString:[_textView2.string stringByAppendingString:@"nodes == nil\n"]];
-    } else {
-        [_textView2 setString:[_textView2.string stringByAppendingString:@"nodes != nil\n"]];
-    }
-    int nodeCount = nodes.count;
-    NSValue *pointValue1 = nodes[0];
-    N3Vector point1 = pointValue1.N3VectorValue;
-    [_textView2 setString:[_textView2.string stringByAppendingString:[NSString stringWithFormat:@"nodes.count: %d\n", nodeCount]]];
-    [_textView2 setString:[_textView2.string stringByAppendingString:[NSString stringWithFormat:@"%f  %f  %f\n", point1.x, point1.y, point1.z]]];
-    
-    // end test //
-    
-    
-    
-    // add this line when create a new curved path
-    [_mprView2 stopCurvedPathCreationMode];
-    
-    CPRController *windowController = [_mprView2 windowController];
-    if( windowController.curvedPathCreationMode == NO && windowController.curvedPath.nodes.count == 0)
-        windowController.curvedPathCreationMode = YES;
-    
-    NSPoint mouseLocation = {550, 150};
-    
-    if (windowController.curvedPathCreationMode) {
-        
-        N3AffineTransform viewToDicomTransform = N3AffineTransformConcat([_mprView2 viewToPixTransform], [_mprView2 pixToDicomTransform]);
-        N3Vector newCrossCenter = N3VectorApplyTransform(N3VectorMakeFromNSPoint(mouseLocation), viewToDicomTransform);
-        
-        //[_textView3 setString:[_textView3.string stringByAppendingString:[NSString stringWithFormat:@"%f   %f   %f\n", newCrossCenter.x, newCrossCenter.y, newCrossCenter.z]]];
-        /*
-        [_mprView2 sendWillEditCurvedPath];
-        
-        //[_curvedPath addNode:mouseLocation transform:viewToDicomTransform];
-        
-        N3Vector node = N3VectorMake(20, 10, 10);
-        [_curvedPath addPatientNode:node];
-        
-        [_mprView2 sendDidUpdateCurvedPath];
-        [_mprView2 sendDidEditCurvedPath];
-        [_mprView2 setNeedsDisplay:YES];
-         */
-        
-        if ([_mprView2.delegate respondsToSelector:@selector(CPRViewWillEditCurvedPath:)]) {;
-            [_mprView2.delegate CPRViewWillEditCurvedPath:_mprView2];
-        }
-        N3Vector node1 = N3VectorMake(50, 0, 0);
-        N3Vector node2 = N3VectorMake(0, 50, 0);
-        N3Vector node3 = N3VectorMake(0, 0, 50);
-        [_mprView2.curvedPath addPatientNode:node1];
-        [_mprView2.curvedPath addPatientNode:node2];
-        [_mprView2.curvedPath addPatientNode:node3];
-        
-        if ([_mprView2.delegate respondsToSelector:@selector(CPRViewDidEditCurvedPath:)])  {
-            [_mprView2.delegate CPRViewDidEditCurvedPath:_mprView2];
-        }
-        [_mprView2 setNeedsDisplay:YES];
-        
-        // Center the views to the last point
-        //[windowController CPRView:_mprView2 setCrossCenter:newCrossCenter];
-    }
-    
-    nodeCount = [windowController.curvedPath.nodes count];
-    [_textView2 setString:[_textView2.string stringByAppendingString:[NSString stringWithFormat:@"%d\n", nodeCount]]];
-    
-    
-    
-    // mouseUp
-    /*
-    [NSObject cancelPreviousPerformRequestsWithTarget: windowController selector:@selector(delayedFullLODRendering:) object: nil];
-    
-    windowController.lowLOD = NO;
-    
-    [_mprView2 restoreCamera];
-    
-    [windowController propagateWLWW: _mprView2];
-    for( ROI *r in _mprView2.curRoiList)
-    {
-        if( [r type] == t2DPoint && r.parentROI == nil)
-        {
-            float location[ 3];
-            [_mprView2.pix convertPixX: r.rect.origin.x pixY: r.rect.origin.y toDICOMCoords: location pixelCenter: YES];
-            [_mprView2 add2DPoint: location];
-        }
-    }
-    [_mprView2 detect2DPointInThisSlice];
-     */
-}
+
 
 
 
@@ -608,9 +517,6 @@
     _curPlotImage1 = plotImage1;
     
     [self setTransverseSectionPosition:(pos / _slider2.maxValue)];
-
-    [_textView1 setString:[_textView1.string stringByAppendingString:[NSString stringWithFormat:@"%f", _slider2.floatValue]]];
-    [_textView1 setString:[_textView1.string stringByAppendingString:@"    "]];
 }
 
 
@@ -621,11 +527,6 @@
 - (NSImage*) setTransverseSectionPosition:(CGFloat)newPos {
     CPRTransverseView *middleTransverseView = _cprController.middleTransverseView;
     CPRCurvedPath *curvedPath = middleTransverseView.curvedPath;
-    
-    NSString *positionStr = [NSString stringWithFormat: @"%.3lf", curvedPath.transverseSectionPosition];
-    [_textView4 setString:[_textView4.string stringByAppendingString:positionStr]];
-    [_textView4 setString:[_textView4.string stringByAppendingString:@"    "]];
-    
     
     //transverseSectionPosition = MIN(MAX(_curvedPath.transverseSectionPosition + [theEvent deltaY] * .002, 0.0), 1.0);
     if ([middleTransverseView.delegate respondsToSelector:@selector(CPRViewWillEditCurvedPath:)]) {;
@@ -640,6 +541,10 @@
     
     _curTransverseImage = [middleTransverseView.curDCM image];
     [_imageView1 setImage:_curTransverseImage];
+    
+    NSString *positionStr = [NSString stringWithFormat: @"%.3lf    ", curvedPath.transverseSectionPosition];
+    [_textView4 setString:[_textView4.string stringByAppendingString:positionStr]];
+    
     return _curTransverseImage;
 }
 
@@ -653,10 +558,12 @@
 
 - (void) saveTransverseImage:(NSImage*)curImage index:(int) idx; {
     
-    NSString *idxWithFormat = [NSString stringWithFormat:@"%03d", idx];
+    NSString *idxWithFormat = [NSString stringWithFormat:@"%03d", idx+1];
     NSString *curFileName = [NSString stringWithFormat:@"/Users/wb-vesselwall/Documents/osirix_transverse/CPR%@.tiff", idxWithFormat];
     [[curImage TIFFRepresentation] writeToFile:curFileName atomically:YES];
 }
+
+
 
 
 - (NSImage *)imageWithCVImage:(IplImage *)iplImage {
@@ -951,6 +858,123 @@
 
 
 
+
+
+
+
+
+
+
+
+// unused methods
+
+- (IBAction)drawPlotWithCVNamedWindow:(id)sender {
+    [_objcWrapper showPlot];
+}
+
+
+
+
+- (IBAction)addNode:(id)sender {
+    _mprView2 = _cprController.mprView2;
+    
+    
+    // test //
+    
+    if (!_mprView2.curvedPath) {
+        [_textView2 setString:[_textView2.string stringByAppendingString:@"_mprView2.curvedPath == nil\n"]];
+    } else {
+        [_textView2 setString:[_textView2.string stringByAppendingString:@"_mprView2.curvedPath != nil\n"]];
+    }
+    NSArray* nodes = _mprView2.curvedPath.nodes;
+    if (!nodes) {
+        [_textView2 setString:[_textView2.string stringByAppendingString:@"nodes == nil\n"]];
+    } else {
+        [_textView2 setString:[_textView2.string stringByAppendingString:@"nodes != nil\n"]];
+    }
+    int nodeCount = nodes.count;
+    NSValue *pointValue1 = nodes[0];
+    N3Vector point1 = pointValue1.N3VectorValue;
+    [_textView2 setString:[_textView2.string stringByAppendingString:[NSString stringWithFormat:@"nodes.count: %d\n", nodeCount]]];
+    [_textView2 setString:[_textView2.string stringByAppendingString:[NSString stringWithFormat:@"%f  %f  %f\n", point1.x, point1.y, point1.z]]];
+    
+    // end test //
+    
+    
+    
+    // add this line when create a new curved path
+    [_mprView2 stopCurvedPathCreationMode];
+    
+    CPRController *windowController = [_mprView2 windowController];
+    if( windowController.curvedPathCreationMode == NO && windowController.curvedPath.nodes.count == 0)
+        windowController.curvedPathCreationMode = YES;
+    
+    NSPoint mouseLocation = {550, 150};
+    
+    if (windowController.curvedPathCreationMode) {
+        
+        N3AffineTransform viewToDicomTransform = N3AffineTransformConcat([_mprView2 viewToPixTransform], [_mprView2 pixToDicomTransform]);
+        N3Vector newCrossCenter = N3VectorApplyTransform(N3VectorMakeFromNSPoint(mouseLocation), viewToDicomTransform);
+        
+        //[_textView3 setString:[_textView3.string stringByAppendingString:[NSString stringWithFormat:@"%f   %f   %f\n", newCrossCenter.x, newCrossCenter.y, newCrossCenter.z]]];
+        /*
+         [_mprView2 sendWillEditCurvedPath];
+         
+         //[_curvedPath addNode:mouseLocation transform:viewToDicomTransform];
+         
+         N3Vector node = N3VectorMake(20, 10, 10);
+         [_curvedPath addPatientNode:node];
+         
+         [_mprView2 sendDidUpdateCurvedPath];
+         [_mprView2 sendDidEditCurvedPath];
+         [_mprView2 setNeedsDisplay:YES];
+         */
+        
+        if ([_mprView2.delegate respondsToSelector:@selector(CPRViewWillEditCurvedPath:)]) {;
+            [_mprView2.delegate CPRViewWillEditCurvedPath:_mprView2];
+        }
+        N3Vector node1 = N3VectorMake(50, 0, 0);
+        N3Vector node2 = N3VectorMake(0, 50, 0);
+        N3Vector node3 = N3VectorMake(0, 0, 50);
+        [_mprView2.curvedPath addPatientNode:node1];
+        [_mprView2.curvedPath addPatientNode:node2];
+        [_mprView2.curvedPath addPatientNode:node3];
+        
+        if ([_mprView2.delegate respondsToSelector:@selector(CPRViewDidEditCurvedPath:)])  {
+            [_mprView2.delegate CPRViewDidEditCurvedPath:_mprView2];
+        }
+        [_mprView2 setNeedsDisplay:YES];
+        
+        // Center the views to the last point
+        //[windowController CPRView:_mprView2 setCrossCenter:newCrossCenter];
+    }
+    
+    nodeCount = [windowController.curvedPath.nodes count];
+    [_textView2 setString:[_textView2.string stringByAppendingString:[NSString stringWithFormat:@"%d\n", nodeCount]]];
+    
+    
+    
+    // mouseUp
+    /*
+     [NSObject cancelPreviousPerformRequestsWithTarget: windowController selector:@selector(delayedFullLODRendering:) object: nil];
+     
+     windowController.lowLOD = NO;
+     
+     [_mprView2 restoreCamera];
+     
+     [windowController propagateWLWW: _mprView2];
+     for( ROI *r in _mprView2.curRoiList)
+     {
+     if( [r type] == t2DPoint && r.parentROI == nil)
+     {
+     float location[ 3];
+     [_mprView2.pix convertPixX: r.rect.origin.x pixY: r.rect.origin.y toDICOMCoords: location pixelCenter: YES];
+     [_mprView2 add2DPoint: location];
+     }
+     }
+     [_mprView2 detect2DPointInThisSlice];
+     */
+}
 
 
 
