@@ -127,8 +127,8 @@
 }
 
 
-- (IBAction)changeTransverseSectionPosition:(id)sender {
-    [self moveTransverseImageWithStepLength:0.01];
+- (IBAction)updateTransverseSectionPosition:(id)sender {
+    [self setTransverseSectionPosition:0.5];
 }
 
 
@@ -206,91 +206,7 @@
     [self sliderValueChanged:pos];
 }
 
-- (IBAction)invertImage:(id)sender {
-    long			i, x, z;
-    float			*fImage;
-    unsigned char   *rgbImage;
-    
-    
-    // Display a waiting window
-    id waitWindow = [_viewerController startWaitWindow:@"Inverting..."];
-    
-    // Contains a list of DCMPix objects: they contain the pixels of current series
-    //NSArray		*pixList = [viewerController pixList: z];
-    DCMPix		*curPix;
-    
-    // Loop through all images contained in the current series
 
-    //curPix = [pixList objectAtIndex: i];
-    curPix = _cprView.curDCM;
-    
-    // fImage is a pointer on the pixels, ALWAYS represented in float (float*) or in ARGB (unsigned char*)
-    
-    if( [curPix isRGB])
-    {
-        rgbImage = (unsigned char*) [curPix fImage];
-        
-        x = [curPix pheight] * [curPix pwidth] / 4;
-        
-        while ( x-- > 0)
-        {
-            rgbImage++;
-            *rgbImage = 255-*rgbImage;		rgbImage++;
-            *rgbImage = 255-*rgbImage;		rgbImage++;
-            *rgbImage = 255-*rgbImage;		rgbImage++;
-            
-            rgbImage++;
-            *rgbImage = 255-*rgbImage;		rgbImage++;
-            *rgbImage = 255-*rgbImage;		rgbImage++;
-            *rgbImage = 255-*rgbImage;		rgbImage++;
-            
-            rgbImage++;
-            *rgbImage = 255-*rgbImage;		rgbImage++;
-            *rgbImage = 255-*rgbImage;		rgbImage++;
-            *rgbImage = 255-*rgbImage;		rgbImage++;
-            
-            rgbImage++;
-            *rgbImage = 255-*rgbImage;		rgbImage++;
-            *rgbImage = 255-*rgbImage;		rgbImage++;
-            *rgbImage = 255-*rgbImage;		rgbImage++;
-        }
-    }
-    else
-    {
-        
-        fImage = [curPix fImage];
-        
-        x = [curPix pheight] * [curPix pwidth]/4;
-        
-        while ( x-- > 0)
-        {
-            *fImage = -*fImage;
-            fImage++;
-            *fImage = -*fImage;
-            fImage++;
-            *fImage = -*fImage;
-            fImage++;
-            *fImage = -*fImage;
-            fImage++;
-        }
-    }
-    
-    // Close the waiting window
-    [_viewerController endWaitWindow: waitWindow];
-    
-    // Update the current displayed WL & WW : we just inverted the image -> invert the WL !
-    {
-        
-        float wl, ww;
-        
-        [_cprView getWLWW: &wl :&ww];
-        if( [curPix isRGB]) wl = 255-wl;
-        else wl = -wl;
-        [_cprView setWLWW: wl :ww];
-    }
-    // We modified the pixels: OsiriX please update the display!
-    [_viewerController needsDisplayUpdate];
-}
 
 
 
@@ -655,22 +571,31 @@
     [self drawTextWithContext:pdfContext withRect:titleRect withFontSize:80.0f withString:@"Report"];
     
     //myDrawContent (pdfContext);
-    NSString *text1 = @"patientID: 00001";
+    NSString *text1 = @"Patient Info";
     CGRect textRect1 = CGRectMake(200, 2800, 900, 100);
     [self drawTextWithContext:pdfContext withRect:textRect1 withFontSize:50.0f withString:text1];
     
-    NSString *text2 = [NSString stringWithFormat:@"curTransverseSectionPosition: %f", _cprController.curvedPath.transverseSectionPosition];
-    CGRect textRect2 = CGRectMake(200, 2700, 900, 100);
+    
+    NSString *patientName = @"AAAA BBBB";
+    int patientAge = 100;
+    NSString *patientGender = @"Male";
+    NSString *patientPhysician = @"CCCC DDDD";
+    
+    NSString *text2 = [NSString stringWithFormat:@"Name: %@       Age: %d       Gender: %@       Physician: %@", patientName, patientAge, patientGender, patientPhysician];
+    CGRect textRect2 = CGRectMake(300, 2700, 1900, 100);
     [self drawTextWithContext:pdfContext withRect:textRect2 withFontSize:50.0f withString:text2];
+    
+    
+    NSString *text3 = [NSString stringWithFormat:@"curTransverseSectionPosition: %f", _cprController.curvedPath.transverseSectionPosition];
     
     
     CGRect imgRect1 = CGRectMake(300, 2000, 600, 600);
     //NSImage* img1 = [NSImage imageNamed:@"CPR001.tiff"];
-    [self drawImageWithContext:pdfContext withRect:imgRect1 withImage:_curTransverseImage];
+    [self drawImageWithContext:pdfContext withRect:imgRect1 withImage:_imageView1.image];
     
     
     CGRect imgRect2 = CGRectMake(1450, 2000, 800, 600);
-    [self drawImageWithContext:pdfContext withRect:imgRect2 withImage:_curPlotImage2];
+    [self drawImageWithContext:pdfContext withRect:imgRect2 withImage:_imageView2.image];
     
     
     CGPDFContextEndPage (pdfContext);
@@ -871,6 +796,103 @@
 - (IBAction)drawPlotWithCVNamedWindow:(id)sender {
     [_objcWrapper showPlot];
 }
+
+
+
+
+
+- (IBAction)invertImage:(id)sender {
+    long			i, x, z;
+    float			*fImage;
+    unsigned char   *rgbImage;
+    
+    
+    // Display a waiting window
+    id waitWindow = [_viewerController startWaitWindow:@"Inverting..."];
+    
+    // Contains a list of DCMPix objects: they contain the pixels of current series
+    //NSArray		*pixList = [viewerController pixList: z];
+    DCMPix		*curPix;
+    
+    // Loop through all images contained in the current series
+    
+    //curPix = [pixList objectAtIndex: i];
+    curPix = _cprView.curDCM;
+    
+    // fImage is a pointer on the pixels, ALWAYS represented in float (float*) or in ARGB (unsigned char*)
+    
+    if( [curPix isRGB])
+    {
+        rgbImage = (unsigned char*) [curPix fImage];
+        
+        x = [curPix pheight] * [curPix pwidth] / 4;
+        
+        while ( x-- > 0)
+        {
+            rgbImage++;
+            *rgbImage = 255-*rgbImage;		rgbImage++;
+            *rgbImage = 255-*rgbImage;		rgbImage++;
+            *rgbImage = 255-*rgbImage;		rgbImage++;
+            
+            rgbImage++;
+            *rgbImage = 255-*rgbImage;		rgbImage++;
+            *rgbImage = 255-*rgbImage;		rgbImage++;
+            *rgbImage = 255-*rgbImage;		rgbImage++;
+            
+            rgbImage++;
+            *rgbImage = 255-*rgbImage;		rgbImage++;
+            *rgbImage = 255-*rgbImage;		rgbImage++;
+            *rgbImage = 255-*rgbImage;		rgbImage++;
+            
+            rgbImage++;
+            *rgbImage = 255-*rgbImage;		rgbImage++;
+            *rgbImage = 255-*rgbImage;		rgbImage++;
+            *rgbImage = 255-*rgbImage;		rgbImage++;
+        }
+    }
+    else
+    {
+        
+        fImage = [curPix fImage];
+        
+        x = [curPix pheight] * [curPix pwidth]/4;
+        
+        while ( x-- > 0)
+        {
+            *fImage = -*fImage;
+            fImage++;
+            *fImage = -*fImage;
+            fImage++;
+            *fImage = -*fImage;
+            fImage++;
+            *fImage = -*fImage;
+            fImage++;
+        }
+    }
+    
+    // Close the waiting window
+    [_viewerController endWaitWindow: waitWindow];
+    
+    // Update the current displayed WL & WW : we just inverted the image -> invert the WL !
+    {
+        
+        float wl, ww;
+        
+        [_cprView getWLWW: &wl :&ww];
+        if( [curPix isRGB]) wl = 255-wl;
+        else wl = -wl;
+        [_cprView setWLWW: wl :ww];
+    }
+    // We modified the pixels: OsiriX please update the display!
+    [_viewerController needsDisplayUpdate];
+}
+
+
+
+
+
+
+
 
 
 

@@ -96,8 +96,9 @@
 
 - (IBAction)openCPRViewer:(id)sender;
 - (IBAction)testShowInfo:(id)sender;
-- (IBAction)saveTransverseImages:(id)sender;
+- (IBAction)updateTransverseSectionPosition:(id)sender;
 - (IBAction)drawPlotWithImageView:(id)sender;
+- (IBAction)saveTransverseImages:(id)sender;
 - (IBAction)slider2ValueChanged:(id)sender;
 - (IBAction)slider3ValueChanged:(id)sender;
 - (IBAction)slider4ValueChanged:(id)sender;
@@ -133,7 +134,6 @@
 
 // unused methods
 
-- (IBAction)changeTransverseSectionPosition:(id)sender;
 - (IBAction)drawPlotWithCVNamedWindow:(id)sender;
 - (IBAction)addNode:(id)sender;
 - (IBAction)invertImage:(id)sender;
