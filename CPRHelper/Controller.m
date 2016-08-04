@@ -165,6 +165,7 @@
 - (IBAction)drawPlotWithImageView:(id)sender {
     [_objcWrapper initArrays];
     
+    /*
     IplImage *cvPlotImage2 = [_objcWrapper getPlot:2];
     NSImage *plotImage2 = [self imageWithCVImage:cvPlotImage2];
     [_imageView2 setImage:plotImage2];
@@ -179,6 +180,14 @@
     NSImage *plotImage1 = [self imageWithCVImage:cvPlotImage1];
     [_imageView4 setImage:plotImage1];
     _curPlotImage1 = plotImage1;
+     */
+    
+    
+    _slider2.floatValue = _slider2.maxValue / 2;
+    _slider3.floatValue = _slider3.maxValue / 2;
+    _slider4.floatValue = _slider4.maxValue / 2;
+    [self sliderValueChanged:_slider2.maxValue / 2];
+    
 }
 
 
@@ -576,26 +585,69 @@
     [self drawTextWithContext:pdfContext withRect:textRect1 withFontSize:50.0f withString:text1];
     
     
-    NSString *patientName = @"AAAA BBBB";
+    NSString *patientName = @"******";
     int patientAge = 100;
     NSString *patientGender = @"Male";
-    NSString *patientPhysician = @"CCCC DDDD";
+    NSString *patientPhysician = @"******";
     
     NSString *text2 = [NSString stringWithFormat:@"Name: %@       Age: %d       Gender: %@       Physician: %@", patientName, patientAge, patientGender, patientPhysician];
     CGRect textRect2 = CGRectMake(300, 2700, 1900, 100);
-    [self drawTextWithContext:pdfContext withRect:textRect2 withFontSize:50.0f withString:text2];
+    [self drawTextWithContext:pdfContext withRect:textRect2 withFontSize:40.0f withString:text2];
     
     
-    NSString *text3 = [NSString stringWithFormat:@"curTransverseSectionPosition: %f", _cprController.curvedPath.transverseSectionPosition];
+    //NSString *text3 = [NSString stringWithFormat:@"curTransverseSectionPosition: %f", _cprController.curvedPath.transverseSectionPosition];
     
+    NSString *text3 = @"Lesion1";
+    CGRect textRect3 = CGRectMake(200, 2500, 900, 100);
+    [self drawTextWithContext:pdfContext withRect:textRect3 withFontSize:50.0f withString:text3];
     
-    CGRect imgRect1 = CGRectMake(300, 2000, 600, 600);
-    //NSImage* img1 = [NSImage imageNamed:@"CPR001.tiff"];
+    CGRect imgRect1 = CGRectMake(300, 2000, 400, 400);
     [self drawImageWithContext:pdfContext withRect:imgRect1 withImage:_imageView1.image];
     
+    CGRect imgRect2 = CGRectMake(800, 2000, 720, 420);
+    [self drawImageWithContext:pdfContext withRect:imgRect2 withImage:[_cprController.cprView.curDCM image]];
     
-    CGRect imgRect2 = CGRectMake(1450, 2000, 800, 600);
-    [self drawImageWithContext:pdfContext withRect:imgRect2 withImage:_imageView2.image];
+    
+    NSString *transverseFigText = @"Transverse Image";
+    CGRect transverseFigTextRect = CGRectMake(350, 1850, 400, 100);
+    [self drawTextWithContext:pdfContext withRect:transverseFigTextRect withFontSize:30.0f withString:transverseFigText];
+    
+    NSString *cprFigText = @"CPR Image";
+    CGRect cprFigTextRect = CGRectMake(1100, 1850, 400, 100);
+    [self drawTextWithContext:pdfContext withRect:cprFigTextRect withFontSize:30.0f withString:cprFigText];
+    
+    
+    
+    CGRect imgRect4 = CGRectMake(300, 1300, 600, 450);
+    [self drawImageWithContext:pdfContext withRect:imgRect4 withImage:_imageView2.image];
+    
+    CGRect imgRect5 = CGRectMake(1000, 1300, 600, 450);
+    [self drawImageWithContext:pdfContext withRect:imgRect5 withImage:_imageView3.image];
+    
+    CGRect imgRect6 = CGRectMake(1700, 1300, 600, 450);
+    [self drawImageWithContext:pdfContext withRect:imgRect6 withImage:_imageView4.image];
+    
+    
+    NSString *nwiFigText = @"Normalized Wall Index";
+    CGRect nwiFigTextRect = CGRectMake(450, 1150, 400, 100);
+    [self drawTextWithContext:pdfContext withRect:nwiFigTextRect withFontSize:30.0f withString:nwiFigText];
+    
+    NSString *waFigText = @"Wall Area";
+    CGRect waFigTextRect = CGRectMake(1250, 1150, 400, 100);
+    [self drawTextWithContext:pdfContext withRect:waFigTextRect withFontSize:30.0f withString:waFigText];
+    
+    NSString *laFigText = @"Lumen Area";
+    CGRect laFigTextRect = CGRectMake(1950, 1150, 400, 100);
+    [self drawTextWithContext:pdfContext withRect:laFigTextRect withFontSize:30.0f withString:laFigText];
+    
+    
+    float nwi = 1.0f;
+    float wa = 1.0f;
+    float la = 1.0f;
+    
+    NSString *dataText = [NSString stringWithFormat:@"Normalized Wall Index: %f \nWall Area: %f \nLumen Area: %f", nwi, wa, la];
+    CGRect dataTextRect = CGRectMake(300, 700, 900, 400);
+    [self drawTextWithContext:pdfContext withRect:dataTextRect withFontSize:50.0f withString:dataText];
     
     
     CGPDFContextEndPage (pdfContext);
@@ -752,7 +804,7 @@
 - (void) addNodesWithNodesArray:(NSMutableArray*)nodesArr {
     _mprView2 = _cprController.mprView2;
     
-    // add this line when create a new curved path
+    // add this line when creating a new curved path
     [_mprView2 stopCurvedPathCreationMode];
     
     CPRController *windowController = [_mprView2 windowController];
@@ -924,7 +976,7 @@
     
     
     
-    // add this line when create a new curved path
+    // add this line when creating a new curved path
     [_mprView2 stopCurvedPathCreationMode];
     
     CPRController *windowController = [_mprView2 windowController];
