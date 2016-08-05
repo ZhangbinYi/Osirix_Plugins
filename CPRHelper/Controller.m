@@ -149,13 +149,39 @@
     NSString *numImagesString = [NSString stringWithFormat:@"%d  ", numImages];
     [_textView1 setString:[_textView1.string stringByAppendingString:numImagesString]];
     
-    for (int i = 0; i < numImages; i++) {
-        NSImage *curImage = [self setTransverseSectionPosition:((1.0 * i) / numImages)];
-        
-        NSString *positionString = [NSString stringWithFormat:@"%f  ", ((1.0 * i) / numImages)];
-        [_textView1 setString:[_textView1.string stringByAppendingString:positionString]];
-        [self saveTransverseImage:curImage index:i];
-    }
+    
+    
+    NSOpenPanel* panel = [NSOpenPanel openPanel];
+    [panel setCanChooseDirectories:YES];
+    [panel setCanCreateDirectories:YES];
+    [panel beginWithCompletionHandler:^(NSInteger result){
+        if (result == NSFileHandlingPanelOKButton) {
+            NSURL *dirURL = [[panel URLs] objectAtIndex:0];
+            NSString *dirURLString = dirURL.path;
+            
+            for (int i = 0; i < numImages; i++) {
+                NSImage *curImage = [self setTransverseSectionPosition:((1.0 * i) / numImages)];
+                
+                NSString *positionString = [NSString stringWithFormat:@"%f  ", ((1.0 * i) / numImages)];
+                [_textView1 setString:[_textView1.string stringByAppendingString:positionString]];
+                
+                NSString *idxWithFormat = [NSString stringWithFormat:@"%03d", i+1];
+                NSString *curFileName = [NSString stringWithFormat:[dirURLString stringByAppendingString:[NSString stringWithFormat:@"/CPR%@.tiff", idxWithFormat]]];
+                NSLog(curFileName);
+                [[curImage TIFFRepresentation] writeToFile:curFileName atomically:YES];
+            }
+        }
+    }];
+    
+}
+
+
+
+- (void) saveTransverseImage:(NSImage*)curImage index:(int) idx; {
+    
+    NSString *idxWithFormat = [NSString stringWithFormat:@"%03d", idx+1];
+    NSString *curFileName = [NSString stringWithFormat:@"/Users/wb-vesselwall/Documents/osirix_transverse/CPR%@.tiff", idxWithFormat];
+    [[curImage TIFFRepresentation] writeToFile:curFileName atomically:YES];
 }
 
 
@@ -480,13 +506,6 @@
 }
 
 
-
-- (void) saveTransverseImage:(NSImage*)curImage index:(int) idx; {
-    
-    NSString *idxWithFormat = [NSString stringWithFormat:@"%03d", idx+1];
-    NSString *curFileName = [NSString stringWithFormat:@"/Users/wb-vesselwall/Documents/osirix_transverse/CPR%@.tiff", idxWithFormat];
-    [[curImage TIFFRepresentation] writeToFile:curFileName atomically:YES];
-}
 
 
 
@@ -830,6 +849,11 @@
         //[windowController CPRView:_mprView2 setCrossCenter:newCrossCenter];
     }
 }
+
+
+
+
+
 
 
 

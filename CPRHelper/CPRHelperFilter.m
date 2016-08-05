@@ -24,7 +24,7 @@
     NSDateFormatter *mmddccyy = [[NSDateFormatter alloc] init];
     mmddccyy.timeStyle = NSDateFormatterNoStyle;
     mmddccyy.dateFormat = @"MM/dd/yyyy";
-    validDate = [mmddccyy dateFromString:@"8/30/2016"]; // valid date
+    validDate = [mmddccyy dateFromString:@"12/31/2016"]; // valid date
     
     
     NSString *serialNumber = [self getSerialNumber];
@@ -35,7 +35,7 @@
     
     if (![serialNumber isEqualToString:validSerialNumber]) {
         NSRunAlertPanel(NSLocalizedString(@"Error", nil), NSLocalizedString(@"Invalid computer!", nil), NSLocalizedString(@"OK", nil), nil, nil);
-        return 0;
+        //return 0;
     }
     
     if ([curDate compare:validDate] == NSOrderedDescending) {
