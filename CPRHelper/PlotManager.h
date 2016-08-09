@@ -2,7 +2,7 @@
 //  PlotManager.hpp
 //  CPRHelper
 //
-//  Created by WB-Vessel Wall on 7/7/16.
+//  Created by Zhangbin Yi on 7/7/16.
 //
 //
 

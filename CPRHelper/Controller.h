@@ -2,7 +2,7 @@
 //  Controller.h
 //  CPRHelper
 //
-//  Created by WB-Vessel Wall on 6/23/16.
+//  Created by Zhangbin Yi on 6/23/16.
 //
 //
 
@@ -17,6 +17,7 @@
 
 #import <opencv/cv.h>
 #import "ObjcWrapper.h"
+#import "ReportImageView.h"
 
 
 
@@ -79,6 +80,7 @@
 @property (assign) IBOutlet NSSlider *slider4;
 @property (assign) IBOutlet NSTextField *textField1;
 @property (assign) IBOutlet NSTextField *textFieldStepLength;
+@property (assign) IBOutlet NSImageView *vesselImageView;
 
 @property (assign) ObjcWrapper *objcWrapper;
 
@@ -88,6 +90,8 @@
 @property (assign) NSImage *curPlotImage0;
 @property (assign) NSImage *curPlotImage1;
 @property (assign) NSImage *curPlotImage2;
+
+@property (assign) NSImage *vesselImage;
 
 
 
@@ -118,11 +122,12 @@
 - (void) assistedCurvedPath;
 
 
-// PDF
+// PDF Report
 
 - (void)createPDFFileWithRect:(CGRect)pageRect withSaveURL:(NSURL*)saveURL;
 - (void)drawTextWithContext:(CGContextRef)pdfContext withRect:(CGRect)textRect withFontSize:(float)fontSize withString:(NSString*)inputString;
 - (void)drawImageWithContext:(CGContextRef)pdfContext withRect:(CGRect)imgRect withImage:(NSImage*)img;
+//+ (NSImage*)getVesselImage;
 
 
 // JSON

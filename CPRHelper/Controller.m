@@ -2,7 +2,7 @@
 //  Controller.m
 //  CPRHelper
 //
-//  Created by WB-Vessel Wall on 6/23/16.
+//  Created by Zhangbin Yi on 6/23/16.
 //
 //
 
@@ -66,8 +66,21 @@
     
     _objcWrapper = [[ObjcWrapper alloc] init];
     
+    [_vesselImageView setImageScaling: NSImageScaleProportionallyUpOrDown];
+    
+    // save vessel image to file
+    NSData *imageData = [_vesselImageView.image TIFFRepresentation];
+    NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData:imageData];
+    NSDictionary *imageProps = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:1.0] forKey:NSImageCompressionFactor];
+    imageData = [imageRep representationUsingType:NSJPEGFileType properties:imageProps];
+    [imageData writeToFile:@"/Users/wb-vesselwall/Documents/OsiriX Data/REPORTS/vessel.jpg" atomically:NO];
+    
+    _vesselImage = [NSImage imageNamed:@"vessel.jpg"];
+    
     return self;    
 }
+
+
 
 - (IBAction)openCPRViewer:(id)sender {
     //_viewerController = [_filter duplicateCurrent2DViewerWindow];
@@ -82,6 +95,8 @@
     _cprView = _cprController.cprView;
     
 }
+
+
 
 - (IBAction)testShowInfo:(id)sender {
     
@@ -129,6 +144,22 @@
 
 - (IBAction)updateTransverseSectionPosition:(id)sender {
     [self setTransverseSectionPosition:0.5];
+    
+    /*
+    //NSString* imageName = [[NSBundle mainBundle] pathForResource:@"vessel" ofType:@"jpg"];
+    //NSImage* vesselImage = [[NSImage alloc] initWithContentsOfFile:imageName];
+    
+    //NSImage* vesselImage = [NSImage imageNamed:@"vessel"];
+    NSImage *vesselImage = [[NSImage alloc] initWithContentsOfFile:@"/Users/wb-vesselwall/Documents/Projects/Practice1/CPR001.tiff"];
+    
+    [_vesselImageView setImage:vesselImage];
+    if (vesselImage == nil) {
+        NSLog(@"vesselImage == nil\n");
+    } else {
+        NSLog(@"vesselImage != nil\n");
+    }
+     */
+    
 }
 
 
