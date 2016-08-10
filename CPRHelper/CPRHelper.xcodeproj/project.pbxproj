@@ -19,8 +19,8 @@
 		FC5E43C41D1C902100AEC5F8 /* CPRHelperWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = FC5E43C31D1C902100AEC5F8 /* CPRHelperWindow.xib */; };
 		FC7A76A81D59307C00153390 /* ReportImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = FC7A76A61D59307C00153390 /* ReportImageView.h */; };
 		FC7A76A91D59307C00153390 /* ReportImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FC7A76A71D59307C00153390 /* ReportImageView.m */; };
-		FC7A76AB1D59333900153390 /* vessel.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FC7A76AA1D59333900153390 /* vessel.jpg */; };
-		FC7A76AF1D59441700153390 /* CPR001.tiff in Resources */ = {isa = PBXBuildFile; fileRef = FC7A76AE1D59441700153390 /* CPR001.tiff */; };
+		FC7A76BD1D5BA62700153390 /* Resources.h in Headers */ = {isa = PBXBuildFile; fileRef = FC7A76BB1D5BA62700153390 /* Resources.h */; };
+		FC7A76BE1D5BA62700153390 /* Resources.m in Sources */ = {isa = PBXBuildFile; fileRef = FC7A76BC1D5BA62700153390 /* Resources.m */; };
 		FCE73AF71D2F062F00C34F89 /* PlotManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FCE73AF51D2F062F00C34F89 /* PlotManager.cpp */; };
 		FCE73AF81D2F062F00C34F89 /* PlotManager.h in Headers */ = {isa = PBXBuildFile; fileRef = FCE73AF61D2F062F00C34F89 /* PlotManager.h */; };
 		FCE73AFB1D2F0C2F00C34F89 /* ObjcWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = FCE73AFA1D2F0C2F00C34F89 /* ObjcWrapper.mm */; };
@@ -49,8 +49,8 @@
 		FC5E43C31D1C902100AEC5F8 /* CPRHelperWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CPRHelperWindow.xib; sourceTree = "<group>"; };
 		FC7A76A61D59307C00153390 /* ReportImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportImageView.h; sourceTree = "<group>"; };
 		FC7A76A71D59307C00153390 /* ReportImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportImageView.m; sourceTree = "<group>"; };
-		FC7A76AA1D59333900153390 /* vessel.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = vessel.jpg; sourceTree = "<group>"; };
-		FC7A76AE1D59441700153390 /* CPR001.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = CPR001.tiff; sourceTree = "<group>"; };
+		FC7A76BB1D5BA62700153390 /* Resources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Resources.h; sourceTree = "<group>"; };
+		FC7A76BC1D5BA62700153390 /* Resources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Resources.m; sourceTree = "<group>"; };
 		FCE73AF51D2F062F00C34F89 /* PlotManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlotManager.cpp; sourceTree = "<group>"; };
 		FCE73AF61D2F062F00C34F89 /* PlotManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlotManager.h; sourceTree = "<group>"; };
 		FCE73AF91D2F0C0000C34F89 /* ObjcWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjcWrapper.h; sourceTree = "<group>"; };
@@ -150,12 +150,14 @@
 		AB2C26750677B0C400A08910 /* CPRHelperFilter */ = {
 			isa = PBXGroup;
 			children = (
-				FCE73AFD1D2F0F2700C34F89 /* GraphUtils.h */,
-				FCE73AFC1D2F0F2700C34F89 /* GraphUtils.cpp */,
 				ABA48A640680BB600089EB4F /* CPRHelperFilter.h */,
 				ABA48A660680BB690089EB4F /* CPRHelperFilter.m */,
 				FC5E43C21D1C8EBE00AEC5F8 /* Controller.h */,
 				FC5E43C01D1C8EAD00AEC5F8 /* Controller.m */,
+				FC7A76BB1D5BA62700153390 /* Resources.h */,
+				FC7A76BC1D5BA62700153390 /* Resources.m */,
+				FCE73AFD1D2F0F2700C34F89 /* GraphUtils.h */,
+				FCE73AFC1D2F0F2700C34F89 /* GraphUtils.cpp */,
 				FCE73AF61D2F062F00C34F89 /* PlotManager.h */,
 				FCE73AF51D2F062F00C34F89 /* PlotManager.cpp */,
 				FCE73AF91D2F0C0000C34F89 /* ObjcWrapper.h */,
@@ -167,8 +169,6 @@
 				FC7A76A61D59307C00153390 /* ReportImageView.h */,
 				FC7A76A71D59307C00153390 /* ReportImageView.m */,
 				FC5E43C31D1C902100AEC5F8 /* CPRHelperWindow.xib */,
-				FC7A76AE1D59441700153390 /* CPR001.tiff */,
-				FC7A76AA1D59333900153390 /* vessel.jpg */,
 			);
 			name = CPRHelperFilter;
 			sourceTree = "<group>";
@@ -184,6 +184,7 @@
 				FCE73AF81D2F062F00C34F89 /* PlotManager.h in Headers */,
 				FCE73AFF1D2F0F2700C34F89 /* GraphUtils.h in Headers */,
 				8D5B49AE048680CD000E48DA /* CPRHelper_Prefix.pch in Headers */,
+				FC7A76BD1D5BA62700153390 /* Resources.h in Headers */,
 				ABA48A650680BB600089EB4F /* CPRHelperFilter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -242,10 +243,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FC7A76AF1D59441700153390 /* CPR001.tiff in Resources */,
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
 				FC5E43C41D1C902100AEC5F8 /* CPRHelperWindow.xib in Resources */,
-				FC7A76AB1D59333900153390 /* vessel.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,6 +269,7 @@
 				FCE73AF71D2F062F00C34F89 /* PlotManager.cpp in Sources */,
 				ABA48A670680BB690089EB4F /* CPRHelperFilter.m in Sources */,
 				FC01B4671D40190000D81D59 /* FlyAssistant2.mm in Sources */,
+				FC7A76BE1D5BA62700153390 /* Resources.m in Sources */,
 				FC5E43C11D1C8EAD00AEC5F8 /* Controller.m in Sources */,
 				FCE73AFB1D2F0C2F00C34F89 /* ObjcWrapper.mm in Sources */,
 				FC7A76A91D59307C00153390 /* ReportImageView.m in Sources */,

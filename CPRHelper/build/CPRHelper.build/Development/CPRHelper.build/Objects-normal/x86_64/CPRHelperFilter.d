@@ -48,4 +48,5 @@ dependencies: \
   /usr/local/opt/opencv3/include/opencv2/video/tracking_c.h \
   /usr/local/opt/opencv3/include/opencv2/objdetect/objdetect_c.h \
   /Applications/osirixplugins/_help/CPRHelper/ObjcWrapper.h \
-  /Applications/osirixplugins/_help/CPRHelper/ReportImageView.h
+  /Applications/osirixplugins/_help/CPRHelper/ReportImageView.h \
+  /Applications/osirixplugins/_help/CPRHelper/Resources.h

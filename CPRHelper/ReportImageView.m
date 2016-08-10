@@ -15,8 +15,14 @@
     [self setImage:nil];
     
     //NSImage* img1 = [NSImage imageNamed:@"CPR001.tiff"];
-    NSImage *img1 = [[NSImage alloc] initWithContentsOfFile:@"/Users/wb-vesselwall/Documents/OsiriX Data/REPORTS/vessel.jpg"];
+    //NSImage *img1 = [[NSImage alloc] initWithContentsOfFile:@"/Users/wb-vesselwall/Documents/OsiriX Data/REPORTS/vessel.jpg"];
     //NSImage *img1 = [[NSImage alloc] initWithData:_vesselImageData];
+    
+    Resources *resourcesObject = [[Resources alloc] init];
+    
+    NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:resourcesObject.imageEncodedString options:0];
+    NSImage *img1 = [[NSImage alloc] initWithData:decodedData];
+    
     
     [img1 lockFocus];
     NSGraphicsContext* gc = [NSGraphicsContext currentContext];
@@ -32,7 +38,7 @@
     NSPoint mouseLocation = [self convertPoint:[theEvent locationInWindow] fromView:nil];
     NSLog(@"%f  %f", mouseLocation.x, mouseLocation.y);
     
-    float diameter = self.frame.size.width / 10;
+    float diameter = img1.size.width / 15;
     float x = (img1.size.width * (mouseLocation.x / self.frame.size.width)) - diameter / 2;
     float y = (img1.size.height * (mouseLocation.y / self.frame.size.height)) - diameter / 2;
     

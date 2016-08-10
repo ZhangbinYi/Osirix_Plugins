@@ -26,6 +26,8 @@
 
 
 
+
+
 @implementation Controller
 
 @synthesize filter = _filter;
@@ -69,13 +71,20 @@
     [_vesselImageView setImageScaling: NSImageScaleProportionallyUpOrDown];
     
     // save vessel image to file
+    /*
     NSData *imageData = [_vesselImageView.image TIFFRepresentation];
     NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData:imageData];
     NSDictionary *imageProps = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:1.0] forKey:NSImageCompressionFactor];
     imageData = [imageRep representationUsingType:NSJPEGFileType properties:imageProps];
     [imageData writeToFile:@"/Users/wb-vesselwall/Documents/OsiriX Data/REPORTS/vessel.jpg" atomically:NO];
+     */
     
-    _vesselImage = [NSImage imageNamed:@"vessel.jpg"];
+    Resources *resourcesObject = [[Resources alloc] init];
+    
+    NSData *decodedData = [[NSData alloc] initWithBase64EncodedString:resourcesObject.imageEncodedString options:0];
+    NSImage *img1 = [[NSImage alloc] initWithData:decodedData];
+    
+    [_vesselImageView setImage:img1];
     
     return self;    
 }
@@ -651,19 +660,27 @@
     CGRect textRect3 = CGRectMake(200, 2500, 900, 100);
     [self drawTextWithContext:pdfContext withRect:textRect3 withFontSize:50.0f withString:text3];
     
+    
     CGRect imgRect1 = CGRectMake(300, 2000, 400, 400);
-    [self drawImageWithContext:pdfContext withRect:imgRect1 withImage:_imageView1.image];
+    [self drawImageWithContext:pdfContext withRect:imgRect1 withImage:_vesselImageView.image];
     
-    CGRect imgRect2 = CGRectMake(800, 2000, 720, 420);
-    [self drawImageWithContext:pdfContext withRect:imgRect2 withImage:[_cprController.cprView.curDCM image]];
+    CGRect imgRect2 = CGRectMake(800, 2000, 400, 400);
+    [self drawImageWithContext:pdfContext withRect:imgRect2 withImage:_imageView1.image];
     
+    CGRect imgRect3 = CGRectMake(1300, 2000, 720, 420);
+    [self drawImageWithContext:pdfContext withRect:imgRect3 withImage:[_cprController.cprView.curDCM image]];
+    
+    
+    NSString *vesselFigText = @"Lesion Location";
+    CGRect vesselFigTextRect = CGRectMake(400, 1850, 400, 100);
+    [self drawTextWithContext:pdfContext withRect:vesselFigTextRect withFontSize:30.0f withString:vesselFigText];
     
     NSString *transverseFigText = @"Transverse Image";
-    CGRect transverseFigTextRect = CGRectMake(350, 1850, 400, 100);
+    CGRect transverseFigTextRect = CGRectMake(900, 1850, 400, 100);
     [self drawTextWithContext:pdfContext withRect:transverseFigTextRect withFontSize:30.0f withString:transverseFigText];
     
     NSString *cprFigText = @"CPR Image";
-    CGRect cprFigTextRect = CGRectMake(1100, 1850, 400, 100);
+    CGRect cprFigTextRect = CGRectMake(1550, 1850, 400, 100);
     [self drawTextWithContext:pdfContext withRect:cprFigTextRect withFontSize:30.0f withString:cprFigText];
     
     
@@ -771,6 +788,9 @@
     CGImageRef imgRef =  CGImageSourceCreateImageAtIndex(source, 0, NULL);
     CGContextDrawImage(pdfContext, imgRect, imgRef);
 }
+
+
+
 
 
 

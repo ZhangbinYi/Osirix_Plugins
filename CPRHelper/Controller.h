@@ -18,6 +18,7 @@
 #import <opencv/cv.h>
 #import "ObjcWrapper.h"
 #import "ReportImageView.h"
+#import "Resources.h"
 
 
 
@@ -82,16 +83,15 @@
 @property (assign) IBOutlet NSTextField *textFieldStepLength;
 @property (assign) IBOutlet NSImageView *vesselImageView;
 
-@property (assign) ObjcWrapper *objcWrapper;
+@property (retain) ObjcWrapper *objcWrapper;
 
 
 //@property (assign) float curTransverseSectionPosition;
-@property (assign) NSImage *curTransverseImage;
-@property (assign) NSImage *curPlotImage0;
-@property (assign) NSImage *curPlotImage1;
-@property (assign) NSImage *curPlotImage2;
+@property (retain) NSImage *curTransverseImage;
+@property (retain) NSImage *curPlotImage0;
+@property (retain) NSImage *curPlotImage1;
+@property (retain) NSImage *curPlotImage2;
 
-@property (assign) NSImage *vesselImage;
 
 
 
@@ -127,7 +127,7 @@
 - (void)createPDFFileWithRect:(CGRect)pageRect withSaveURL:(NSURL*)saveURL;
 - (void)drawTextWithContext:(CGContextRef)pdfContext withRect:(CGRect)textRect withFontSize:(float)fontSize withString:(NSString*)inputString;
 - (void)drawImageWithContext:(CGContextRef)pdfContext withRect:(CGRect)imgRect withImage:(NSImage*)img;
-//+ (NSImage*)getVesselImage;
+
 
 
 // JSON
