@@ -26,7 +26,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
+        <window title="CPR Helper" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="1331" height="912"/>
@@ -369,14 +369,11 @@
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" id="8ft-jq-oFf" customClass="ReportImageView">
                         <rect key="frame" x="37" y="221" width="306" height="306"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="groove" image="vessel" id="atL-lE-cAc"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="groove" id="atL-lE-cAc"/>
                     </imageView>
                 </subviews>
             </view>
             <point key="canvasLocation" x="609.5" y="718"/>
         </window>
     </objects>
-    <resources>
-        <image name="vessel" width="841.91998291015625" height="838.08001708984375"/>
-    </resources>
 </document>

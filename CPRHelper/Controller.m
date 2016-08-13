@@ -59,7 +59,7 @@
 @synthesize objcWrapper = _objcWrapper;
 
 
-
+// init the Controller instance with CPRHelperWindow
 - (id) init: (CPRHelperFilter*) f
 {
     _filter = f;
@@ -90,7 +90,7 @@
 }
 
 
-
+// open the Curved MPR window
 - (IBAction)openCPRViewer:(id)sender {
     //_viewerController = [_filter duplicateCurrent2DViewerWindow];
     _viewerController = _filter.curViewerController;
@@ -107,52 +107,22 @@
 
 
 
-- (IBAction)testShowInfo:(id)sender {
-    
-    //NSUInteger size = [_cprController.topTransverseView.dcmPixList count];
-    CPRTransverseView *middleTransverseView = _cprController.middleTransverseView;
-    NSMutableArray *middleDCMPixList = middleTransverseView.dcmPixList; // 1
-    DCMPix *middleCurDCM = middleTransverseView.curDCM;
-    NSArray *middleCurPixArray = middleCurDCM.pixArray; // 2
-    NSArray *middleDCMFilesList = middleTransverseView.dcmFilesList; // 3
-    NSMutableArray *pixList = _viewerController.pixList;  // 4
-    
-    CPRView *cprView = _cprController.cprView;
-    DCMPix *cprCurDCM = cprView.curDCM;
-    NSArray *cprCurPixArray = cprCurDCM.pixArray; // 5
-    
-    
-    NSInteger size1 = [middleDCMPixList count];
-    NSInteger size2 = [middleCurPixArray count];
-    NSInteger size3 = [middleDCMFilesList count];
-    NSInteger size4 = [pixList count];
-    NSInteger size5 = [cprCurPixArray count];
-    
-    NSString *sizeStr1 = [NSString stringWithFormat: @"%ld", (long)size1];
-    NSString *sizeStr2 = [NSString stringWithFormat: @"%ld", (long)size2];
-    NSString *sizeStr3 = [NSString stringWithFormat: @"%ld", (long)size3];
-    NSString *sizeStr4 = [NSString stringWithFormat: @"%ld", (long)size4];
-    NSString *sizeStr5 = [NSString stringWithFormat: @"%ld", (long)size5];
-    
-    NSString * result1 = [[middleDCMPixList valueForKey:@"description"] componentsJoinedByString:@""];
-    NSString * result2 = [[middleCurPixArray valueForKey:@"description"] componentsJoinedByString:@""];
-    NSString * result3 = [[middleDCMFilesList valueForKey:@"description"] componentsJoinedByString:@""];
-    NSString * result4 = [[pixList valueForKey:@"description"] componentsJoinedByString:@""];
-    NSString * result5 = [[cprCurPixArray valueForKey:@"description"] componentsJoinedByString:@""];
-    
-    NSImage *image1 = [middleCurDCM image];
-    
-    [_textView1 setString:[_textView1.string stringByAppendingString:sizeStr2]];
-    [_textView2 setString:[_textView2.string stringByAppendingString:result2]];
-    [_textView2 setString:[_textView2.string stringByAppendingString:@"\n\n"]];
-    
-    //[_imageView1 setImage:image1];
-    
-}
 
 
+
+
+
+
+// transverse images and glots
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+// update the transverse image on the image view
 - (IBAction)updateTransverseSectionPosition:(id)sender {
     [self setTransverseSectionPosition:0.5];
+    
+    // ***** the following are the ways I tried to get the resource image when the plugin were running, but none of them works *****
     
     /*
     //NSString* imageName = [[NSBundle mainBundle] pathForResource:@"vessel" ofType:@"jpg"];
@@ -174,7 +144,7 @@
 
 
 
-
+// given a certain step length, save all the transverse images on the current curvedPath to a folder
 - (IBAction)saveTransverseImages:(id)sender {
     CPRTransverseView *middleTransverseView = _cprController.middleTransverseView;
     CPRCurvedPath *curvedPath = middleTransverseView.curvedPath;
@@ -216,7 +186,7 @@
 }
 
 
-
+// save one curImage with an idx number
 - (void) saveTransverseImage:(NSImage*)curImage index:(int) idx; {
     
     NSString *idxWithFormat = [NSString stringWithFormat:@"%03d", idx+1];
@@ -227,7 +197,7 @@
 
 
 
-
+// init the three arrays and plot the graph
 - (IBAction)drawPlotWithImageView:(id)sender {
     [_objcWrapper initArrays];
     
@@ -259,7 +229,7 @@
 
 
 
-
+// move the transverseSectionPosition on the current curvedPath
 - (IBAction)slider2ValueChanged:(id)sender {
     float pos = _slider2.floatValue;
     _slider3.floatValue = pos;
@@ -284,11 +254,107 @@
 
 
 
+// sychronize everything when slider value changed
+- (void)sliderValueChanged:(float)pos {
+    IplImage* cvPlotImage2 = [_objcWrapper getPlotWithLineOfIdx:2 atPosition:pos];
+    NSImage *plotImage2 = [self imageWithCVImage:cvPlotImage2];
+    [_imageView2 setImage:plotImage2];
+    _curPlotImage2 = plotImage2;
+    
+    IplImage* cvPlotImage0 = [_objcWrapper getPlotWithLineOfIdx:0 atPosition:pos];
+    NSImage *plotImage0 = [self imageWithCVImage:cvPlotImage0];
+    [_imageView3 setImage:plotImage0];
+    _curPlotImage0 = plotImage0;
+    
+    IplImage* cvPlotImage1 = [_objcWrapper getPlotWithLineOfIdx:1 atPosition:pos];
+    NSImage *plotImage1 = [self imageWithCVImage:cvPlotImage1];
+    [_imageView4 setImage:plotImage1];
+    _curPlotImage1 = plotImage1;
+    
+    [self setTransverseSectionPosition:(pos / _slider2.maxValue)];
+}
 
 
 
 
 
+
+// set transverseSectionPosition to newPos and update the related images
+- (NSImage*) setTransverseSectionPosition:(CGFloat)newPos {
+    CPRTransverseView *middleTransverseView = _cprController.middleTransverseView;
+    CPRCurvedPath *curvedPath = middleTransverseView.curvedPath;
+    
+    //transverseSectionPosition = MIN(MAX(_curvedPath.transverseSectionPosition + [theEvent deltaY] * .002, 0.0), 1.0);
+    if ([middleTransverseView.delegate respondsToSelector:@selector(CPRViewWillEditCurvedPath:)]) {;
+        [middleTransverseView.delegate CPRViewWillEditCurvedPath:middleTransverseView];
+    }
+    curvedPath.transverseSectionPosition = newPos;
+    if ([middleTransverseView.delegate respondsToSelector:@selector(CPRViewDidEditCurvedPath:)])  {
+        [middleTransverseView.delegate CPRViewDidEditCurvedPath:middleTransverseView];
+    }
+    [middleTransverseView _sendNewRequest];
+    [middleTransverseView setNeedsDisplay:YES];
+    
+    _curTransverseImage = [middleTransverseView.curDCM image];
+    [_imageView1 setImage:_curTransverseImage];
+    
+    NSString *positionStr = [NSString stringWithFormat: @"%.3lf    ", curvedPath.transverseSectionPosition];
+    [_textView4 setString:[_textView4.string stringByAppendingString:positionStr]];
+    
+    return _curTransverseImage;
+}
+
+
+- (NSImage*) moveTransverseImageWithStepLength:(CGFloat)stepLength {
+    CGFloat curPos = _cprController.middleTransverseView.curvedPath.transverseSectionPosition;
+    return [self setTransverseSectionPosition:(curPos + stepLength)];
+}
+
+
+
+
+
+// convert IplImage* to NSImage*
+- (NSImage *)imageWithCVImage:(IplImage *)iplImage {
+    NSBitmapImageRep *bmp= [[NSBitmapImageRep alloc]
+                            initWithBitmapDataPlanes:0
+                            pixelsWide:iplImage->width
+                            pixelsHigh:iplImage->height
+                            bitsPerSample:iplImage->depth
+                            samplesPerPixel:iplImage->nChannels
+                            hasAlpha:NO isPlanar:NO
+                            colorSpaceName:NSDeviceRGBColorSpace
+                            bytesPerRow:iplImage->widthStep
+                            bitsPerPixel:0];
+    NSUInteger val[3]= {0, 0, 0};
+    for(int x=0; x < iplImage->width; x++) {
+        for(int y=0; y < iplImage->height; y++) {
+            CvScalar scal= cvGet2D(iplImage, y, x);
+            val[0]= scal.val[2];
+            val[1]= scal.val[1];
+            val[2]= scal.val[0];
+            [bmp setPixel:val atX:x y:y];
+        }
+    }
+    NSImage *im= [[NSImage alloc] initWithData:[bmp TIFFRepresentation]];
+    return [im autorelease];
+}
+
+
+
+
+
+
+
+
+
+
+// find path automatically
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+// find the path automatically (not very robust)
 - (IBAction)findPath:(id)sender {
     if( [_cprController.curvedPath.nodes count] > 1 && [_cprController.curvedPath.nodes count] <= 5) {
         [self assistedCurvedPath];
@@ -301,7 +367,7 @@
 
 
 
-
+// main part of findPath
 - (void) assistedCurvedPath {
     
     unsigned int nodeCount1 = [_cprController.curvedPath.nodes count];
@@ -309,11 +375,11 @@
     //[_textView2 setString:[_textView2.string stringByAppendingString:@"    "]];
     
     /*
-    
-    if( [_cprController.curvedPath.nodes count] > 1 && [_cprController.curvedPath.nodes count] <= 5)
-        [_cprController assistedCurvedPath:nil];
-    else
-        NSRunAlertPanel(NSLocalizedString(@"Path Assistant error", nil), NSLocalizedString(@"Path Assistant requires at least 2 points, and no more than 5 points. Use the Curved Path tool to define at least two points.", nil), NSLocalizedString(@"OK", nil), nil, nil);
+     
+     if( [_cprController.curvedPath.nodes count] > 1 && [_cprController.curvedPath.nodes count] <= 5)
+     [_cprController assistedCurvedPath:nil];
+     else
+     NSRunAlertPanel(NSLocalizedString(@"Path Assistant error", nil), NSLocalizedString(@"Path Assistant requires at least 2 points, and no more than 5 points. Use the Curved Path tool to define at least two points.", nil), NSLocalizedString(@"OK", nil), nil, nil);
      */
     
     
@@ -486,98 +552,6 @@
 
 
 
-////////////////////////////////////////////////////////////////////
-
-
-
-
-- (void)sliderValueChanged:(float)pos {
-    IplImage* cvPlotImage2 = [_objcWrapper getPlotWithLineOfIdx:2 atPosition:pos];
-    NSImage *plotImage2 = [self imageWithCVImage:cvPlotImage2];
-    [_imageView2 setImage:plotImage2];
-    _curPlotImage2 = plotImage2;
-    
-    IplImage* cvPlotImage0 = [_objcWrapper getPlotWithLineOfIdx:0 atPosition:pos];
-    NSImage *plotImage0 = [self imageWithCVImage:cvPlotImage0];
-    [_imageView3 setImage:plotImage0];
-    _curPlotImage0 = plotImage0;
-    
-    IplImage* cvPlotImage1 = [_objcWrapper getPlotWithLineOfIdx:1 atPosition:pos];
-    NSImage *plotImage1 = [self imageWithCVImage:cvPlotImage1];
-    [_imageView4 setImage:plotImage1];
-    _curPlotImage1 = plotImage1;
-    
-    [self setTransverseSectionPosition:(pos / _slider2.maxValue)];
-}
-
-
-
-
-
-
-- (NSImage*) setTransverseSectionPosition:(CGFloat)newPos {
-    CPRTransverseView *middleTransverseView = _cprController.middleTransverseView;
-    CPRCurvedPath *curvedPath = middleTransverseView.curvedPath;
-    
-    //transverseSectionPosition = MIN(MAX(_curvedPath.transverseSectionPosition + [theEvent deltaY] * .002, 0.0), 1.0);
-    if ([middleTransverseView.delegate respondsToSelector:@selector(CPRViewWillEditCurvedPath:)]) {;
-        [middleTransverseView.delegate CPRViewWillEditCurvedPath:middleTransverseView];
-    }
-    curvedPath.transverseSectionPosition = newPos;
-    if ([middleTransverseView.delegate respondsToSelector:@selector(CPRViewDidEditCurvedPath:)])  {
-        [middleTransverseView.delegate CPRViewDidEditCurvedPath:middleTransverseView];
-    }
-    [middleTransverseView _sendNewRequest];
-    [middleTransverseView setNeedsDisplay:YES];
-    
-    _curTransverseImage = [middleTransverseView.curDCM image];
-    [_imageView1 setImage:_curTransverseImage];
-    
-    NSString *positionStr = [NSString stringWithFormat: @"%.3lf    ", curvedPath.transverseSectionPosition];
-    [_textView4 setString:[_textView4.string stringByAppendingString:positionStr]];
-    
-    return _curTransverseImage;
-}
-
-
-- (NSImage*) moveTransverseImageWithStepLength:(CGFloat)stepLength {
-    CGFloat curPos = _cprController.middleTransverseView.curvedPath.transverseSectionPosition;
-    return [self setTransverseSectionPosition:(curPos + stepLength)];
-}
-
-
-
-
-
-
-- (NSImage *)imageWithCVImage:(IplImage *)iplImage {
-    NSBitmapImageRep *bmp= [[NSBitmapImageRep alloc]
-                            initWithBitmapDataPlanes:0
-                            pixelsWide:iplImage->width
-                            pixelsHigh:iplImage->height
-                            bitsPerSample:iplImage->depth
-                            samplesPerPixel:iplImage->nChannels
-                            hasAlpha:NO isPlanar:NO
-                            colorSpaceName:NSDeviceRGBColorSpace
-                            bytesPerRow:iplImage->widthStep
-                            bitsPerPixel:0];
-    NSUInteger val[3]= {0, 0, 0};
-    for(int x=0; x < iplImage->width; x++) {
-        for(int y=0; y < iplImage->height; y++) {
-            CvScalar scal= cvGet2D(iplImage, y, x);
-            val[0]= scal.val[2];
-            val[1]= scal.val[1];
-            val[2]= scal.val[0];
-            [bmp setPixel:val atX:x y:y];
-        }
-    }
-    NSImage *im= [[NSImage alloc] initWithData:[bmp TIFFRepresentation]];
-    return [im autorelease];
-}
-
-
-
-
 
 
 
@@ -587,6 +561,8 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+
+// create a PDF report with the current data and images
 - (IBAction)createPDFFile:(id)sender {
     //CGRect pageRect1 = CGRectMake(0, 0, 2550, 3300);
     //const char *filename1 = "/Users/wb-vesselwall/Documents/Projects/Practice1/Practice1/files/file1.pdf";
@@ -597,6 +573,9 @@
     // display the panel
     [panel beginWithCompletionHandler:^(NSInteger result) {
         if (result == NSFileHandlingPanelOKButton) {
+            
+            // the size of the PDF page
+            // (x, y, width, height)
             CGRect pageRect1 = CGRectMake(0, 0, 2550, 3300);
             NSURL *saveURL = [panel URL];
             
@@ -607,6 +586,7 @@
 
 
 
+// the main method to draw and save the PDF file
 - (void)createPDFFileWithRect:(CGRect)pageRect withSaveURL:(NSURL*)saveURL {
     CGContextRef pdfContext;
     //CFStringRef path;
@@ -726,7 +706,7 @@
 
 
 
-
+// draw text on pdfContext
 - (void)drawTextWithContext:(CGContextRef)pdfContext withRect:(CGRect)textRect withFontSize:(float)fontSize withString:(NSString*)inputString {
     
     // Set the text matrix.
@@ -781,6 +761,7 @@
 
 
 
+// draw a image on pdfContext
 - (void)drawImageWithContext:(CGContextRef)pdfContext withRect:(CGRect)imgRect withImage:(NSImage*)img {
     
     CGImageSourceRef source;
@@ -801,7 +782,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
+// export current information to a json file (mainly the information of the curvedPath)
 - (IBAction)exportJSON:(id)sender {
     NSArray *nodes = _cprController.curvedPath.nodes;
     NSMutableArray *nodesArr = [[NSMutableArray alloc] init];
@@ -832,6 +813,7 @@
     }];
 }
 
+// import the history records and the curvedPath will be restored
 - (IBAction)importJSON:(id)sender {
     
     NSOpenPanel* panel = [NSOpenPanel openPanel];
@@ -846,6 +828,7 @@
 }
 
 
+// get current local time
 - (NSString*)getCurrentTime {
     NSLocale* currentLocale = [NSLocale currentLocale];
     [[NSDate date] descriptionWithLocale:currentLocale];
@@ -858,7 +841,7 @@
 }
 
 
-
+// parse the imported JSON string
 - (void) parseJSON:(NSString*)jsonString {
     NSError* error;
     NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
@@ -871,6 +854,7 @@
 }
 
 
+// add an array of nodes to curvedPath
 - (void) addNodesWithNodesArray:(NSMutableArray*)nodesArr {
     _mprView2 = _cprController.mprView2;
     
@@ -919,6 +903,59 @@
 
 
 // unused methods
+
+
+
+
+- (IBAction)testShowInfo:(id)sender {
+    
+    //NSUInteger size = [_cprController.topTransverseView.dcmPixList count];
+    CPRTransverseView *middleTransverseView = _cprController.middleTransverseView;
+    NSMutableArray *middleDCMPixList = middleTransverseView.dcmPixList; // 1
+    DCMPix *middleCurDCM = middleTransverseView.curDCM;
+    NSArray *middleCurPixArray = middleCurDCM.pixArray; // 2
+    NSArray *middleDCMFilesList = middleTransverseView.dcmFilesList; // 3
+    NSMutableArray *pixList = _viewerController.pixList;  // 4
+    
+    CPRView *cprView = _cprController.cprView;
+    DCMPix *cprCurDCM = cprView.curDCM;
+    NSArray *cprCurPixArray = cprCurDCM.pixArray; // 5
+    
+    
+    NSInteger size1 = [middleDCMPixList count];
+    NSInteger size2 = [middleCurPixArray count];
+    NSInteger size3 = [middleDCMFilesList count];
+    NSInteger size4 = [pixList count];
+    NSInteger size5 = [cprCurPixArray count];
+    
+    NSString *sizeStr1 = [NSString stringWithFormat: @"%ld", (long)size1];
+    NSString *sizeStr2 = [NSString stringWithFormat: @"%ld", (long)size2];
+    NSString *sizeStr3 = [NSString stringWithFormat: @"%ld", (long)size3];
+    NSString *sizeStr4 = [NSString stringWithFormat: @"%ld", (long)size4];
+    NSString *sizeStr5 = [NSString stringWithFormat: @"%ld", (long)size5];
+    
+    NSString * result1 = [[middleDCMPixList valueForKey:@"description"] componentsJoinedByString:@""];
+    NSString * result2 = [[middleCurPixArray valueForKey:@"description"] componentsJoinedByString:@""];
+    NSString * result3 = [[middleDCMFilesList valueForKey:@"description"] componentsJoinedByString:@""];
+    NSString * result4 = [[pixList valueForKey:@"description"] componentsJoinedByString:@""];
+    NSString * result5 = [[cprCurPixArray valueForKey:@"description"] componentsJoinedByString:@""];
+    
+    NSImage *image1 = [middleCurDCM image];
+    
+    [_textView1 setString:[_textView1.string stringByAppendingString:sizeStr2]];
+    [_textView2 setString:[_textView2.string stringByAppendingString:result2]];
+    [_textView2 setString:[_textView2.string stringByAppendingString:@"\n\n"]];
+    
+    //[_imageView1 setImage:image1];
+    
+}
+
+
+
+
+
+
+
 
 - (IBAction)drawPlotWithCVNamedWindow:(id)sender {
     [_objcWrapper showPlot];

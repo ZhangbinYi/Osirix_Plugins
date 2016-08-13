@@ -98,46 +98,97 @@
 
 - (id) init: (CPRHelperFilter*) f;
 
+
+// open the Curved MPR window
 - (IBAction)openCPRViewer:(id)sender;
-- (IBAction)testShowInfo:(id)sender;
+
+// update the transverse image on the image view
 - (IBAction)updateTransverseSectionPosition:(id)sender;
+
+// init the three arrays and plot the graph
 - (IBAction)drawPlotWithImageView:(id)sender;
+
+// given a certain step length, save all the transverse images on the current curvedPath to a folder
 - (IBAction)saveTransverseImages:(id)sender;
+
+// move the transverseSectionPosition on the current curvedPath
 - (IBAction)slider2ValueChanged:(id)sender;
 - (IBAction)slider3ValueChanged:(id)sender;
 - (IBAction)slider4ValueChanged:(id)sender;
+
+
+// find the path automatically (not very robust)
 - (IBAction)findPath:(id)sender;
+
+// create a PDF report with the current data and images
 - (IBAction)createPDFFile:(id)sender;
+
+// export current information to a json file (mainly the information of the curvedPath)
 - (IBAction)exportJSON:(id)sender;
+
+// import the history records and the curvedPath will be restored
 - (IBAction)importJSON:(id)sender;
 
+- (IBAction)testShowInfo:(id)sender;
 
+
+
+
+
+// transverse images and plots
+
+
+// sychronize everything when slider value changed
 - (void) sliderValueChanged:(float)pos;
+// set transverseSectionPosition to newPos and update the related images
 - (NSImage*) setTransverseSectionPosition:(CGFloat)newPos;
-
 - (NSImage*) moveTransverseImageWithStepLength:(CGFloat)stepLength;
+
+// save one curImage with an idx number
 - (void) saveTransverseImage:(NSImage*)curImage index:(int) idx;
+// convert IplImage* to NSImage*
 - (NSImage*)imageWithCVImage:(IplImage *)cvImage;
 
+
+
+
+
+// find path automatically
+
+// main part of findPath
 - (void) assistedCurvedPath;
+
+
+
 
 
 // PDF Report
 
+
+// the main method to draw and save the PDF file
 - (void)createPDFFileWithRect:(CGRect)pageRect withSaveURL:(NSURL*)saveURL;
+// draw text on pdfContext
 - (void)drawTextWithContext:(CGContextRef)pdfContext withRect:(CGRect)textRect withFontSize:(float)fontSize withString:(NSString*)inputString;
+// draw a image on pdfContext
 - (void)drawImageWithContext:(CGContextRef)pdfContext withRect:(CGRect)imgRect withImage:(NSImage*)img;
+
 
 
 
 // JSON
 
+// get current local time
 - (NSString*)getCurrentTime;
+// parse the imported JSON string
 - (void) parseJSON:(NSString*)jsonString;
+// add an array of nodes to curvedPath
 - (void) addNodesWithNodesArray:(NSMutableArray*)nodesArr;
 
 
+
+
 // unused methods
+
 
 - (IBAction)drawPlotWithCVNamedWindow:(id)sender;
 - (IBAction)addNode:(id)sender;

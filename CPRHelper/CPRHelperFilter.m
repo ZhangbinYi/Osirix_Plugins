@@ -15,6 +15,7 @@
 {
 }
 
+// OsiriX will always use this function to call the plugin
 - (long) filterImage:(NSString*) menuName
 {
     // init valid Serial Number and valid date
@@ -50,6 +51,8 @@
     return 0;
 }
 
+
+// get serial number of the Mac
 - (NSString*)getSerialNumber {
     NSString *serial = nil;
     io_service_t platformExpert = IOServiceGetMatchingService(kIOMasterPortDefault,
@@ -69,6 +72,7 @@
 }
 
 
+// get network date from "http://www.timeanddate.com/"
 - (NSDate*)getNetworkDate {
     NSURL *URL = [NSURL URLWithString:@"http://www.timeanddate.com/"];
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];

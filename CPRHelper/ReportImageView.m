@@ -11,7 +11,10 @@
 
 @implementation ReportImageView
 
-- (void) mouseUp:(NSEvent *)theEvent {
+
+// override the mouseDown method in the super class (NSImageView)
+// draw a circle at mouse location
+- (void) mouseDown:(NSEvent *)theEvent {
     [self setImage:nil];
     
     //NSImage* img1 = [NSImage imageNamed:@"CPR001.tiff"];
