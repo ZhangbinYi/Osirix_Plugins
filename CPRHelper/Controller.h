@@ -41,10 +41,6 @@
     CPRView *_cprView;
     
     
-    NSTextView *_textView1;
-    NSTextView *_textView2;
-    NSTextView *_textView3;
-    NSTextView *_textView4;
     NSImageView *_imageView1;
     NSImageView *_imageView2;
     NSImageView *_imageView3;
@@ -129,8 +125,6 @@
 // import the history records and the curvedPath will be restored
 - (IBAction)importJSON:(id)sender;
 
-- (IBAction)testShowInfo:(id)sender;
-
 
 
 
@@ -189,7 +183,7 @@
 
 // unused methods
 
-
+- (IBAction)testShowInfo:(id)sender;
 - (IBAction)drawPlotWithCVNamedWindow:(id)sender;
 - (IBAction)addNode:(id)sender;
 - (IBAction)invertImage:(id)sender;

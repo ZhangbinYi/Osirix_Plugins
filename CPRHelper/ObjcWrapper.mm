@@ -19,9 +19,25 @@
 
 @implementation ObjcWrapper
 
+
 - (void) initArrays {
     wrapped.initArrays();
 }
+
+- (int)getSize {
+    return wrapped.numFloats;
+}
+
+
+- (float) getValueWithArray:(int)arrayNum atIndex:(int)idx {
+    if (arrayNum == 0) return wrapped.floatArray0[idx];
+    else if (arrayNum == 1) return wrapped.floatArray1[idx];
+    else if (arrayNum == 2) return wrapped.floatArray2[idx];
+    return -1;
+}
+
+
+
 
 - (void) printWithString:(NSString*)str
 {

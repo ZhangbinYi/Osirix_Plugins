@@ -42,11 +42,6 @@
 @synthesize cprView = _cprView;
  
 
-
-@synthesize textView1 = _textView1;
-@synthesize textView2 = _textView2;
-@synthesize textView3 = _textView3;
-@synthesize textView4 = _textView4;
 @synthesize imageView1 = _imageView1;
 @synthesize imageView2 = _imageView2;
 @synthesize imageView3 = _imageView3;
@@ -157,7 +152,6 @@
     }
     int numImages = (int) (length / stepLength);
     NSString *numImagesString = [NSString stringWithFormat:@"%d  ", numImages];
-    [_textView1 setString:[_textView1.string stringByAppendingString:numImagesString]];
     
     
     
@@ -173,7 +167,6 @@
                 NSImage *curImage = [self setTransverseSectionPosition:((1.0 * i) / numImages)];
                 
                 NSString *positionString = [NSString stringWithFormat:@"%f  ", ((1.0 * i) / numImages)];
-                [_textView1 setString:[_textView1.string stringByAppendingString:positionString]];
                 
                 NSString *idxWithFormat = [NSString stringWithFormat:@"%03d", i+1];
                 NSString *curFileName = [NSString stringWithFormat:[dirURLString stringByAppendingString:[NSString stringWithFormat:@"/CPR%@.tiff", idxWithFormat]]];
@@ -299,7 +292,6 @@
     [_imageView1 setImage:_curTransverseImage];
     
     NSString *positionStr = [NSString stringWithFormat: @"%.3lf    ", curvedPath.transverseSectionPosition];
-    [_textView4 setString:[_textView4.string stringByAppendingString:positionStr]];
     
     return _curTransverseImage;
 }
@@ -370,10 +362,6 @@
 // main part of findPath
 - (void) assistedCurvedPath {
     
-    unsigned int nodeCount1 = [_cprController.curvedPath.nodes count];
-    //[_textView2 setString:[_textView2.string stringByAppendingString:[NSString stringWithFormat:@"%d", nodeCount1]]];
-    //[_textView2 setString:[_textView2.string stringByAppendingString:@"    "]];
-    
     /*
      
      if( [_cprController.curvedPath.nodes count] > 1 && [_cprController.curvedPath.nodes count] <= 5)
@@ -441,8 +429,6 @@
             
             Point3D *pta = [[[Point3D alloc] initWithX:na.x y:na.y z:na.z] autorelease];
             Point3D *ptb = [[[Point3D alloc] initWithX:nb.x y:nb.y z:nb.z] autorelease];
-            //[_textView3 setString:[_textView3.string stringByAppendingString:[NSString stringWithFormat:@"pta: %f   %f   %f\n", pta.x, pta.y, pta.z]]];
-            //[_textView3 setString:[_textView3.string stringByAppendingString:[NSString stringWithFormat:@"ptb: %f   %f   %f\n", ptb.x, ptb.y, ptb.z]]];
             NSLog(@"pta: %f   %f   %f\n", pta.x, pta.y, pta.z);
             NSLog(@"ptb: %f   %f   %f\n", ptb.x, ptb.y, ptb.z);
             
@@ -688,9 +674,12 @@
     [self drawTextWithContext:pdfContext withRect:laFigTextRect withFontSize:30.0f withString:laFigText];
     
     
-    float nwi = 1.0f;
-    float wa = 1.0f;
-    float la = 1.0f;
+    int size = [_objcWrapper getSize];
+    int idx = _cprController.curvedPath.transverseSectionPosition * size;
+    
+    float nwi = [_objcWrapper getValueWithArray:2 atIndex:idx];
+    float wa = [_objcWrapper getValueWithArray:0 atIndex:idx];
+    float la = [_objcWrapper getValueWithArray:1 atIndex:idx];
     
     NSString *dataText = [NSString stringWithFormat:@"Normalized Wall Index: %f \nWall Area: %f \nLumen Area: %f", nwi, wa, la];
     CGRect dataTextRect = CGRectMake(300, 700, 900, 400);
@@ -800,7 +789,6 @@
     NSError* error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:inventory options:NSJSONWritingPrettyPrinted error:&error];
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    [_textView3 setString:[_textView3.string stringByAppendingString:jsonString]];
     
     NSSavePanel *panel = [NSSavePanel savePanel];
     [panel setNameFieldStringValue:@"record1.txt"];
@@ -906,7 +894,7 @@
 
 
 
-
+/*
 - (IBAction)testShowInfo:(id)sender {
     
     //NSUInteger size = [_cprController.topTransverseView.dcmPixList count];
@@ -949,6 +937,7 @@
     //[_imageView1 setImage:image1];
     
 }
+ */
 
 
 
@@ -1067,6 +1056,7 @@
     
     // test //
     
+    /*
     if (!_mprView2.curvedPath) {
         [_textView2 setString:[_textView2.string stringByAppendingString:@"_mprView2.curvedPath == nil\n"]];
     } else {
@@ -1083,6 +1073,7 @@
     N3Vector point1 = pointValue1.N3VectorValue;
     [_textView2 setString:[_textView2.string stringByAppendingString:[NSString stringWithFormat:@"nodes.count: %d\n", nodeCount]]];
     [_textView2 setString:[_textView2.string stringByAppendingString:[NSString stringWithFormat:@"%f  %f  %f\n", point1.x, point1.y, point1.z]]];
+     */
     
     // end test //
     
@@ -1134,9 +1125,6 @@
         // Center the views to the last point
         //[windowController CPRView:_mprView2 setCrossCenter:newCrossCenter];
     }
-    
-    nodeCount = [windowController.curvedPath.nodes count];
-    [_textView2 setString:[_textView2.string stringByAppendingString:[NSString stringWithFormat:@"%d\n", nodeCount]]];
     
     
     
