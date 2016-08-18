@@ -192,7 +192,7 @@
 
 
 - (IBAction)imageSegmentation:(id)sender {
-    // add code to do the segmentation
+    // add segmentation code
 }
 
 

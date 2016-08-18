@@ -106,7 +106,11 @@
 
 // given a certain step length, save all the transverse images on the current curvedPath to a folder
 - (IBAction)saveTransverseImages:(id)sender;
+
+// segmentation process
 - (IBAction)imageSegmentation:(id)sender;
+
+// load the segmentation data file(txt), init the three vectors and draw the plot in the image views
 - (IBAction)loadSegmentation:(id)sender;
 
 // move the transverseSectionPosition on the current curvedPath
