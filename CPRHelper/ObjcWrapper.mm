@@ -20,19 +20,20 @@
 @implementation ObjcWrapper
 
 
-- (void) initArrays {
-    wrapped.initArrays();
+- (void) initvectorsWithString:(NSString*)vectorString {
+    std::string cpp_str([vectorString UTF8String], [vectorString lengthOfBytesUsingEncoding:NSUTF8StringEncoding]);
+    wrapped.initVectors(cpp_str);
 }
 
 - (int)getSize {
-    return wrapped.numFloats;
+    return wrapped.waVec.size();
 }
 
 
 - (float) getValueWithArray:(int)arrayNum atIndex:(int)idx {
-    if (arrayNum == 0) return wrapped.floatArray0[idx];
-    else if (arrayNum == 1) return wrapped.floatArray1[idx];
-    else if (arrayNum == 2) return wrapped.floatArray2[idx];
+    if (arrayNum == 0) return wrapped.waVec[idx];
+    else if (arrayNum == 1) return wrapped.laVec[idx];
+    else if (arrayNum == 2) return wrapped.nwiVec[idx];
     return -1;
 }
 

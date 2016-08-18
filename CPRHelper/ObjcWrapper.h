@@ -11,7 +11,7 @@
 
 @interface ObjcWrapper : NSObject
 
-- (void) initArrays;
+- (void) initvectorsWithString:(NSString*)vectorString;
 - (int) getSize;
 - (float) getValueWithArray:(int)arrayNum atIndex:(int)idx;
 

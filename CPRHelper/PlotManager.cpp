@@ -7,21 +7,50 @@
 //
 
 #include "PlotManager.h"
+#include <iostream>
+#include <fstream>
+#include <string>
 
 using namespace std;
 using namespace cv;
 
 
-void PlotManager::initArrays() {
+void PlotManager::initVectors(string vectorStr) {
+    istringstream input(vectorStr);
+    string waVecStr, laVecStr;
+    getline(input, waVecStr);
+    getline(input, laVecStr);
+    istringstream waIs(waVecStr);
+    istringstream laIs(laVecStr);
+    
+    string waFloatStr;
+    while (waIs >> waFloatStr) {
+        waVec.push_back(stof(waFloatStr));
+    }
+    string laFloatStr;
+    while (laIs >> laFloatStr) {
+        laVec.push_back(stof(laFloatStr));
+    }
+    
+    for (int i = 0; i < waVec.size(); i++) {
+        nwiVec[i] = waVec[i] / laVec[i];
+    }
+    
+    
+    /*
+    waVec.resize(100);
+    laVec.resize(100);
+    nwiVec.resize(100);
     for (int i = 0; i < 100; i++) {
-        floatArray0[i] = 4.0 + static_cast <float> (rand()) / static_cast <float> (RAND_MAX/2);
+        waVec[i] = 4.0 + static_cast <float> (rand()) / static_cast <float> (RAND_MAX/2);
     }
     for (int i = 0; i < 100; i++) {
-        floatArray1[i] = 1.0 + static_cast <float> (rand()) / static_cast <float> (RAND_MAX/2);
+        laVec[i] = 1.0 + static_cast <float> (rand()) / static_cast <float> (RAND_MAX/2);
     }
     for (int i = 0; i < 100; i++) {
-        floatArray2[i] = floatArray1[i] / floatArray0[i];
+        nwiVec[i] = waVec[i] / laVec[i];
     }
+     */
 }
 
 
@@ -37,12 +66,22 @@ IplImage* PlotManager::getFloatPlot(const float *arraySrc, int nArrayLength) {
 
 IplImage* PlotManager::getPlot(int idx) {
     if (idx == 0) {
-        return getFloatPlot(floatArray0, numFloats);
+        int size = waVec.size();
+        float waArray[size];
+        std::copy(waVec.begin(), waVec.end(), waArray);
+        return getFloatPlot(waArray, size);
     } else if (idx == 1) {
-        return getFloatPlot(floatArray1, numFloats);
+        int size = laVec.size();
+        float laArray[size];
+        std::copy(laVec.begin(), laVec.end(), laArray);
+        return getFloatPlot(laArray, size);
     } else if (idx == 2) {
-        return getFloatPlot(floatArray2, numFloats);
+        int size = nwiVec.size();
+        float nwiArray[size];
+        std::copy(nwiVec.begin(), nwiVec.end(), nwiArray);
+        return getFloatPlot(nwiArray, size);
     }
+    return NULL;
 }
 
 
@@ -52,7 +91,7 @@ void PlotManager::showFloatPlot(const char *name, const float *arraySrc, int nAr
 
 
 void PlotManager::showPlot() {
-    showFloatPlot("Ratio Plot", floatArray2, numFloats);
+    //showFloatPlot("Ratio Plot", floatArray2, numFloats);
 }
 
 

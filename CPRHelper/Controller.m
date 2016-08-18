@@ -188,11 +188,32 @@
 }
 
 
+- (IBAction)imageSegmentation:(id)sender {
+    // add code to do the segmentation
+}
+
+- (IBAction)loadSegmentation:(id)sender {
+    
+}
+
+
 
 
 // init the three arrays and plot the graph
 - (IBAction)drawPlotWithImageView:(id)sender {
-    [_objcWrapper initArrays];
+    NSOpenPanel* panel = [NSOpenPanel openPanel];
+    [panel beginWithCompletionHandler:^(NSInteger result){
+        if (result == NSFileHandlingPanelOKButton) {
+            NSURL*  openURL = [[panel URLs] objectAtIndex:0];
+            NSString *vectorString = [[NSString alloc] initWithContentsOfURL:openURL encoding:NSUTF8StringEncoding error:nil];
+            [_objcWrapper initvectorsWithString:vectorString];
+            _slider2.floatValue = _slider2.maxValue / 2;
+            _slider3.floatValue = _slider3.maxValue / 2;
+            _slider4.floatValue = _slider4.maxValue / 2;
+            [self sliderValueChanged:_slider2.maxValue / 2];
+        }
+    }];
+    
     
     /*
     IplImage *cvPlotImage2 = [_objcWrapper getPlot:2];
@@ -210,12 +231,6 @@
     [_imageView4 setImage:plotImage1];
     _curPlotImage1 = plotImage1;
      */
-    
-    
-    _slider2.floatValue = _slider2.maxValue / 2;
-    _slider3.floatValue = _slider3.maxValue / 2;
-    _slider4.floatValue = _slider4.maxValue / 2;
-    [self sliderValueChanged:_slider2.maxValue / 2];
     
 }
 

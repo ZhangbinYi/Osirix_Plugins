@@ -17,16 +17,25 @@
 
 #include "GraphUtils.h"
 
+using namespace std;
+
+
 class PlotManager {
 public:
+    vector<float> waVec;
+    vector<float> laVec;
+    vector<float> nwiVec;
+    
+    /*
     int numFloats = 100;
     float floatArray0[100] = {0};
     float floatArray1[100] = {0};
     float floatArray2[100] = {0};
+     */
 
     void print(std::string& str);
     
-    void initArrays();
+    void initVectors(string vectorStr);
     IplImage* getFloatPlot(const float *arraySrc, int nArrayLength);
     IplImage* getPlot(int i);
     void showFloatPlot(const char *name, const float *arraySrc, int nArrayLength);

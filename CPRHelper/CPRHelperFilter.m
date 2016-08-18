@@ -36,6 +36,7 @@
     
     if (![serialNumber isEqualToString:validSerialNumber]) {
         NSRunAlertPanel(NSLocalizedString(@"Error", nil), NSLocalizedString(@"Invalid computer!", nil), NSLocalizedString(@"OK", nil), nil, nil);
+        //uncomment this line to close the plugin when the serial number is wrong
         //return 0;
     }
     
@@ -72,7 +73,7 @@
 }
 
 
-// get network date from "http://www.timeanddate.com/"
+// get network date from 
 - (NSDate*)getNetworkDate {
     NSURL *URL = [NSURL URLWithString:@"http://www.timeanddate.com/"];
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];

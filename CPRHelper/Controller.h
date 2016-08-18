@@ -106,6 +106,8 @@
 
 // given a certain step length, save all the transverse images on the current curvedPath to a folder
 - (IBAction)saveTransverseImages:(id)sender;
+- (IBAction)imageSegmentation:(id)sender;
+- (IBAction)loadSegmentation:(id)sender;
 
 // move the transverseSectionPosition on the current curvedPath
 - (IBAction)slider2ValueChanged:(id)sender;
