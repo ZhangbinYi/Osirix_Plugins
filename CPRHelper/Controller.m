@@ -188,19 +188,18 @@
 }
 
 
+
+
+
 - (IBAction)imageSegmentation:(id)sender {
     // add code to do the segmentation
 }
 
+
+
+
+
 - (IBAction)loadSegmentation:(id)sender {
-    
-}
-
-
-
-
-// init the three arrays and plot the graph
-- (IBAction)drawPlotWithImageView:(id)sender {
     NSOpenPanel* panel = [NSOpenPanel openPanel];
     [panel beginWithCompletionHandler:^(NSInteger result){
         if (result == NSFileHandlingPanelOKButton) {
@@ -213,6 +212,14 @@
             [self sliderValueChanged:_slider2.maxValue / 2];
         }
     }];
+}
+
+
+
+
+// init the three arrays and plot the graph
+- (IBAction)drawPlotWithImageView:(id)sender {
+    
     
     
     /*

@@ -25,13 +25,6 @@ public:
     vector<float> waVec;
     vector<float> laVec;
     vector<float> nwiVec;
-    
-    /*
-    int numFloats = 100;
-    float floatArray0[100] = {0};
-    float floatArray1[100] = {0};
-    float floatArray2[100] = {0};
-     */
 
     void print(std::string& str);
     

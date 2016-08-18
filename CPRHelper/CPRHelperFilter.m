@@ -36,6 +36,7 @@
     
     if (![serialNumber isEqualToString:validSerialNumber]) {
         NSRunAlertPanel(NSLocalizedString(@"Error", nil), NSLocalizedString(@"Invalid computer!", nil), NSLocalizedString(@"OK", nil), nil, nil);
+        
         //uncomment this line to close the plugin when the serial number is wrong
         //return 0;
     }

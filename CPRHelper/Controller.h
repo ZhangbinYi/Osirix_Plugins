@@ -185,7 +185,6 @@
 
 // unused methods
 
-- (IBAction)testShowInfo:(id)sender;
 - (IBAction)drawPlotWithCVNamedWindow:(id)sender;
 - (IBAction)addNode:(id)sender;
 - (IBAction)invertImage:(id)sender;

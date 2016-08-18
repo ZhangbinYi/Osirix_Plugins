@@ -1,0 +1,26 @@
+dependencies: \
+  /Users/zhangbinyi/Documents/Cedars-Sinai/plugins/Osirix_Plugins/CPRHelper/FlyAssistant2.mm \
+  /Users/zhangbinyi/Documents/Cedars-Sinai/plugins/Osirix_Plugins/CPRHelper/FlyAssistant2.h \
+  /Users/zhangbinyi/Documents/Cedars-Sinai/plugins/Osirix_Plugins/CPRHelper/OsiriXAPI.framework/Headers/Point3D.h \
+  /Users/zhangbinyi/Documents/Cedars-Sinai/plugins/Osirix_Plugins/CPRHelper/OsiriXAPI.framework/Headers/N3Geometry.h \
+  /Users/zhangbinyi/Documents/Cedars-Sinai/plugins/Osirix_Plugins/CPRHelper/OsiriXAPI.framework/Headers/OSIVoxel.h \
+  /Users/zhangbinyi/Documents/Cedars-Sinai/plugins/Osirix_Plugins/CPRHelper/FlyAssistant2+Histo.h \
+  /Users/zhangbinyi/Documents/Cedars-Sinai/plugins/Osirix_Plugins/CPRHelper/OsiriXAPI.framework/Headers/Quaternion.h \
+  /Users/zhangbinyi/Documents/Cedars-Sinai/plugins/Osirix_Plugins/CPRHelper/OsiriXAPI.framework/Headers/Spline3D.h \
+  /Users/zhangbinyi/Documents/Cedars-Sinai/plugins/Osirix_Plugins/CPRHelper/OsiriXAPI.framework/Headers/Interpolation3D.h \
+  /Users/zhangbinyi/Documents/Cedars-Sinai/plugins/Osirix_Plugins/CPRHelper/OsiriXAPI.framework/Headers/vtkCardinalSpline.h \
+  /Users/zhangbinyi/Documents/Cedars-Sinai/plugins/Osirix_Plugins/CPRHelper/OsiriXAPI.framework/Headers/vtkSpline.h \
+  /Users/zhangbinyi/Documents/Cedars-Sinai/plugins/Osirix_Plugins/CPRHelper/OsiriXAPI.framework/Headers/vtkObject.h \
+  /Users/zhangbinyi/Documents/Cedars-Sinai/plugins/Osirix_Plugins/CPRHelper/OsiriXAPI.framework/Headers/vtkObjectBase.h \
+  /Users/zhangbinyi/Documents/Cedars-Sinai/plugins/Osirix_Plugins/CPRHelper/OsiriXAPI.framework/Headers/vtkIndent.h \
+  /Users/zhangbinyi/Documents/Cedars-Sinai/plugins/Osirix_Plugins/CPRHelper/OsiriXAPI.framework/Headers/vtkSystemIncludes.h \
+  /Users/zhangbinyi/Documents/Cedars-Sinai/plugins/Osirix_Plugins/CPRHelper/OsiriXAPI.framework/Headers/vtkWin32Header.h \
+  /Users/zhangbinyi/Documents/Cedars-Sinai/plugins/Osirix_Plugins/CPRHelper/OsiriXAPI.framework/Headers/vtkConfigure.h \
+  /Users/zhangbinyi/Documents/Cedars-Sinai/plugins/Osirix_Plugins/CPRHelper/OsiriXAPI.framework/Headers/vtkABI.h \
+  /Users/zhangbinyi/Documents/Cedars-Sinai/plugins/Osirix_Plugins/CPRHelper/OsiriXAPI.framework/Headers/vtkIOStream.h \
+  /Users/zhangbinyi/Documents/Cedars-Sinai/plugins/Osirix_Plugins/CPRHelper/OsiriXAPI.framework/Headers/vtkType.h \
+  /Users/zhangbinyi/Documents/Cedars-Sinai/plugins/Osirix_Plugins/CPRHelper/OsiriXAPI.framework/Headers/vtkOStreamWrapper.h \
+  /Users/zhangbinyi/Documents/Cedars-Sinai/plugins/Osirix_Plugins/CPRHelper/OsiriXAPI.framework/Headers/vtkOStrStreamWrapper.h \
+  /Users/zhangbinyi/Documents/Cedars-Sinai/plugins/Osirix_Plugins/CPRHelper/OsiriXAPI.framework/Headers/vtkSetGet.h \
+  /Users/zhangbinyi/Documents/Cedars-Sinai/plugins/Osirix_Plugins/CPRHelper/OsiriXAPI.framework/Headers/vtkTimeStamp.h \
+  /Users/zhangbinyi/Documents/Cedars-Sinai/plugins/Osirix_Plugins/CPRHelper/OsiriXAPI.framework/Headers/vtkWeakPointerBase.h

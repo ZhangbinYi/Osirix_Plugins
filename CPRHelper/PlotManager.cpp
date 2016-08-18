@@ -16,6 +16,10 @@ using namespace cv;
 
 
 void PlotManager::initVectors(string vectorStr) {
+    waVec.clear();
+    laVec.clear();
+    nwiVec.clear();
+    
     istringstream input(vectorStr);
     string waVecStr, laVecStr;
     getline(input, waVecStr);
@@ -25,18 +29,25 @@ void PlotManager::initVectors(string vectorStr) {
     
     string waFloatStr;
     while (waIs >> waFloatStr) {
-        waVec.push_back(stof(waFloatStr));
+        waVec.push_back(atof(waFloatStr.c_str()));
     }
+
     string laFloatStr;
     while (laIs >> laFloatStr) {
-        laVec.push_back(stof(laFloatStr));
+        laVec.push_back(atof(laFloatStr.c_str()));
     }
     
+    if (waVec.size() != laVec.size()) {
+        cout << "waVec.size() != laVec.size()" << endl;
+    }
+    
+    nwiVec.resize(waVec.size());
     for (int i = 0; i < waVec.size(); i++) {
         nwiVec[i] = waVec[i] / laVec[i];
     }
     
     
+    // random data
     /*
     waVec.resize(100);
     laVec.resize(100);

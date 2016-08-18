@@ -1,0 +1,20 @@
+-x
+c++
+-arch
+x86_64
+-fpascal-strings
+-O0
+-isysroot
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk
+-fasm-blocks
+-mmacosx-version-min=10.5
+-g
+-fvisibility-inlines-hidden
+-I/Users/zhangbinyi/Documents/Cedars-Sinai/plugins/Osirix_Plugins/CPRHelper/Build/Products/Development/include
+-I/usr/local/opt/opencv3/include
+-F/Users/zhangbinyi/Documents/Cedars-Sinai/plugins/Osirix_Plugins/CPRHelper/Build/Products/Development
+-F/Users/zhangbinyi/Documents/Cedars-Sinai/plugins/Osirix_Plugins/CPRHelper
+x86_64-apple-darwin15.5.0
+"4.2.1 Compatible Apple LLVM 7.3.0 (clang-703.0.31)"
+SDK_PRODUCT_BUILD_VERSION=15E60
+15E60
